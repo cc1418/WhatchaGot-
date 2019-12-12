@@ -4,8 +4,9 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>You're an Idiot!</Text>
+      <Text /**style={{fontSize: 130}}**/>You're an Idiot!</Text>
     </View>
+    
   );
 }
 
