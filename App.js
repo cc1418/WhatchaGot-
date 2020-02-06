@@ -199,10 +199,14 @@ class SearchScreen extends React.Component {
           overlay={true}
           opacity={0.4}>  
           <TouchableOpacity onPress={this.toggleOpen} style={styles.body}>
-            <Text> </Text>
+            <Text>
+
+           </Text>
           </TouchableOpacity>    
         </MenuDrawer>
-
+        <Text>
+          Cory
+        </Text>
         </View>
     );
   }
