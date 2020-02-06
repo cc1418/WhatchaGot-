@@ -28,20 +28,20 @@ class Header extends React.Component {
 class LoginScreen extends React.Component {
 
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   }
 
   render() {
     return (
       <View>
-        <ImageBackground source={require('./assets/BG.png')} style={{height: "100%", width: "100%"}} imageStyle= {{opacity:0.35}}>
-            <Image style={styles.logo} source={require('./assets/gamelib.png')}/>
+        {/* <ImageBackground source={require('./assets/BG.png')} style={{height: "100%", width: "100%"}} imageStyle= {{opacity:0.35}}> */}
+            {/* <Image style={styles.logo} source={require('./assets/gamelib.png')}/> */}
             <TextInput style={styles.textbox} placeholder = {"    Username"}/>
             <TextInput style={styles.textbox2} placeholder = {"    Password"}/>
             <TouchableOpacity color="#e6e6e6" onPress={() => this.props.navigation.navigate('Home')}>
               <Image style={styles.signin} source={require('./assets/button.png')}/>
             </TouchableOpacity>    
-        </ImageBackground>
+        {/* </ImageBackground> */}
       </View>
     );
   }
@@ -63,7 +63,7 @@ class HomeScreen extends React.Component {
     };
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.navigation.setParams({ toggleOpen: this.toggleOpen});
   }
 
@@ -82,21 +82,21 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.animatedBox}>
         <Image style={styles.info} source={require('./assets/link.jpg')}/>
-        <Text style={styles.username}>MyNamesZelda</Text>
+        <Text style={styles.username}>MyNamesCory</Text>
         <Text style={styles.menu} onPress={() => {
           if (this.state.open){
             this.toggleOpen();
           } 
-          this.props.navigation.navigate('Support')
+          this.props.navigation.navigate('Search')
           }
         }>
-          Support
+          Search
         </Text>
         <Text style={styles.menu} onPress={() => {
           if (this.state.open){
             this.toggleOpen();
           } 
-          this.props.navigation.navigate('Gamelist')
+          this.props.navigation.navigate('List')
           }
         }>
            Library 
@@ -130,7 +130,7 @@ class HomeScreen extends React.Component {
   }
 }
 
-class SupportScreen extends React.Component {
+class SearchScreen extends React.Component {
 
   static navigationOptions = ({ navigation}) => {
     return {
@@ -146,7 +146,7 @@ class SupportScreen extends React.Component {
     };
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.navigation.setParams({ toggleOpen: this.toggleOpen});
   }
 
@@ -179,7 +179,7 @@ class SupportScreen extends React.Component {
           if (this.state.open){
             this.toggleOpen();
           } 
-          this.props.navigation.navigate('Gamelist')
+          this.props.navigation.navigate('List')
           }
         }>
           Library
@@ -224,13 +224,13 @@ class ListScreen extends React.Component {
     };
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.navigation.setParams({ toggleOpen: this.toggleOpen});
   }
 
-  componentDidMount() {
-    this.fetchAllGames();
-  }
+  // componentDidMount() {
+  //   this.fetchAllGames();
+  // }
 
   constructor(props) {
     super(props);
@@ -244,24 +244,24 @@ class ListScreen extends React.Component {
     this.setState({ open: !this.state.open });
   };
 
-  fetchAllGames = async () => {
-    const steamResponse = await fetch("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?&key=E4DF01887A0F46A34C852888E2D5D946&steamid=76561198121597846&include_appinfo=true&format=json");
-    const json = await steamResponse.json();
+  // fetchAllGames = async () => {
+  //   const steamResponse = await fetch("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?&key=E4DF01887A0F46A34C852888E2D5D946&steamid=76561198121597846&include_appinfo=true&format=json");
+  //   const json = await steamResponse.json();
 
-    let data = JSON.parse(JSON.stringify(json));
-    let gameList = data.response.games;
-    this.setState({ games : gameList });
-  }
+  //   let data = JSON.parse(JSON.stringify(json));
+  //   let gameList = data.response.games;
+  //   this.setState({ games : gameList });
+  // }
 
-  keyExtractor = (item, index) => {
-    var key = item.appid.toString();
-    return key;
-  }
+  // keyExtractor = (item, index) => {
+  //   var key = item.appid.toString();
+  //   return key;
+  // }
 
-  renderItem = ({item}) => {
-  var render = <Item title={item.name} />
-    return render;
-  }
+  // renderItem = ({item}) => {
+  // var render = <Item title={item.name} />
+  //   return render;
+  // }
 
   drawerContent = () => {
     return (
@@ -281,10 +281,10 @@ class ListScreen extends React.Component {
           if (this.state.open){
             this.toggleOpen();
           } 
-          this.props.navigation.navigate('Support')
+          this.props.navigation.navigate('Search')
           }
         }>
-          Support 
+        Search 
         </Text>
       </View>
     );
@@ -320,8 +320,8 @@ const RootStack = createStackNavigator (
   {
     Login: LoginScreen,
     Home: HomeScreen,
-    Support: SupportScreen,
-    Gamelist: ListScreen,
+    Search: SearchScreen,
+    List: ListScreen,
   },
   {
     initialRouteName: 'Login',
