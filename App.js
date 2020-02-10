@@ -4,6 +4,9 @@ import {createAppContainer, SafeAreaView} from 'react-navigation';
 import {createStackNavigator} from  'react-navigation-stack'
 import { ImageBackground } from 'react-native'
 import MenuDrawer from 'react-native-side-drawer'
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Fumi } from 'react-native-textinput-effects';
+
 //import Home from './src/screens/Home';
 import AddItem from './src/screens/AddItem';
 import ListItem from './src/screens/ListItem';
@@ -29,22 +32,36 @@ class Header extends React.Component {
 }
 
 class LoginScreen extends React.Component {
-
   static navigationOptions = {
     headerShown: false,
+  }
+
+  constructor(){
+    super();
+    this.state ={
+      fontLoaded: false
+    }
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Sriracha-Regular': require('./assets/fonts/Sriracha-Regular.ttf')
+    });
+
+    this.setState({ fontLoaded:true })
   }
 
   render() {
     return (
       <View>
-        {/* <ImageBackground source={require('./assets/BG.png')} style={{height: "100%", width: "100%"}} imageStyle= {{opacity:0.35}}> */}
-            {/* <Image style={styles.logo} source={require('./assets/gamelib.png')}/> */}
-            <TextInput style={styles.textbox} placeholder = {"    Username"}/>
-            <TextInput style={styles.textbox2} placeholder = {"    Password"}/>
-            <TouchableOpacity color="#e6e6e6" onPress={() => this.props.navigation.navigate('Home')}>
-              <Image style={styles.signin} source={require('./assets/button.png')}/>
-            </TouchableOpacity>    
-        {/* </ImageBackground> */}
+        <View>
+          <Text>WhatChaGot</Text>
+        </View>
+          <fumiInput> </fumiInput>
+          <fumiInput2> </fumiInput2>
+        <View>
+
+        </View>
       </View>
     );
   }
@@ -217,7 +234,7 @@ class SearchScreen extends React.Component {
         <Text>
           Cory
         </Text>
-        </View>
+      </View>
     );
   }
 }
@@ -354,6 +371,30 @@ export default class App extends React.Component {
     );
   }
 }
+
+const fumiInput = (
+  <Fumi
+    label={'User Name'}
+    iconClass={FontAwesomeIcon}
+    iconName={'user-secret'}
+    iconColor={'#1893cc'}
+    iconSize={20}
+    iconWidth={40}
+    inputPadding={16}
+  />
+);
+
+const fumiInput2 = (
+  <Fumi
+    label={'Password'}
+    iconClass={FontAwesomeIcon}
+    iconName={'unlock-alt'}
+    iconColor={'#1893cc'}
+    iconSize={20}
+    iconWidth={40}
+    inputPadding={16}
+  />
+);
 
 const styles = StyleSheet.create({
 
