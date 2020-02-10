@@ -4,6 +4,9 @@ import {createAppContainer, SafeAreaView} from 'react-navigation';
 import {createStackNavigator} from  'react-navigation-stack'
 import { ImageBackground } from 'react-native'
 import MenuDrawer from 'react-native-side-drawer'
+//import Home from './src/screens/Home';
+import AddItem from './src/screens/AddItem';
+import ListItem from './src/screens/ListItem';
 
 function Item({title}) {
   return (
@@ -120,8 +123,15 @@ class HomeScreen extends React.Component {
           </TouchableOpacity>    
         </MenuDrawer>
 
-        <View style={styles.libraryContainer}> 
-          
+        <View> 
+          <Text>Home Screen</Text>
+          <Button title="Add an Item"
+          onPress={() => this.props.navigation.navigate('AddItem')}
+          />
+          <Button title="List of Items"
+          color="green"
+          onPress={() => this.props.navigation.navigate('ListItem')}
+          />
         </View>
 
         
@@ -325,7 +335,10 @@ const RootStack = createStackNavigator (
     Login: LoginScreen,
     Home: HomeScreen,
     Search: SearchScreen,
-    List: ListScreen,
+    //List: ListScreen,
+    //Home, 
+    AddItem, 
+    ListItem
   },
   {
     initialRouteName: 'Login',
