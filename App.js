@@ -400,13 +400,19 @@ class SearchScreen extends React.Component {
   };
 
   render () {
-<<<<<<< HEAD
+
     ingredients = ['apple']
     searchByIngredient(ingredients);
-=======
+
     const { search } = this.state;
 
->>>>>>> master
+
+
+    const { search } = this.state;
+
+    ingredients = ['apple']
+    searchByIngredient(ingredients);
+
     return (
       <View>
         <MenuDrawer 
@@ -421,12 +427,7 @@ class SearchScreen extends React.Component {
            </Text>
           </TouchableOpacity>    
         </MenuDrawer>
-<<<<<<< HEAD
-        <Text>
-          
-          Cory
-        </Text>
-=======
+
 
         <SearchBar
           inputStyle={{backgroundColor: 'white'}}
@@ -437,7 +438,6 @@ class SearchScreen extends React.Component {
           value={search}
         />
 
->>>>>>> master
       </View>
     );
   }
