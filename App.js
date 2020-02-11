@@ -19,6 +19,31 @@ function Item({title}) {
   );
 }
 
+function searchByIngredient (arrIngredients) {  //Function for creating the api call to spoonacular and fetching the call
+  {/* API key: 6229cd708177474780e6c39e57b69361 */}
+    let apiCall
+    let apiHead = 'https://api.spoonacular.com/recipes/findByIngredients?ingredients='
+    let apiList
+    let apiFoot = '&number=8&ranking=2&apiKey='
+    let apiKey = '6229cd708177474780e6c39e57b69361'
+
+    if (arrIngredients.length > 1) {
+      apiList = arrIngredients.join(",+")
+    } else {
+      apiList = arrIngredients[0]
+    }
+
+    apiCall = apiHead + apiList + apiFoot + apiKey
+
+    fetch(apiCall)
+    .then((response) => {
+      return response.json();
+    })
+    .then((myJson) => {
+      console.log(myJson);
+    });
+}
+
 class Header extends React.Component {
   render () {
     return (
@@ -375,7 +400,11 @@ class SearchScreen extends React.Component {
   };
 
   render () {
+
     const { search } = this.state;
+
+    ingredients = ['apple']
+    searchByIngredient(ingredients);
 
     return (
       <View>
@@ -392,6 +421,7 @@ class SearchScreen extends React.Component {
           </TouchableOpacity>    
         </MenuDrawer>
 
+
         <SearchBar
           inputStyle={{backgroundColor: 'white'}}
           containerStyle={{backgroundColor: 'white', borderWidth: 0.3, borderRadius: 10, margin:10}}
@@ -400,6 +430,11 @@ class SearchScreen extends React.Component {
           onChangeText={this.updateSearch}
           value={search}
         />
+
+        <Text>
+          
+          Cory
+        </Text>
 
       </View>
     );
