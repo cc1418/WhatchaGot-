@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground} from 'react-native';
 import {createAppContainer, SafeAreaView} from 'react-navigation';
 import {createStackNavigator} from  'react-navigation-stack'
-import { ImageBackground } from 'react-native'
 import MenuDrawer from 'react-native-side-drawer'
+import {Button, Input, SearchBar } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+
+//import Home from './src/screens/Home';
+import AddItem from './src/screens/AddItem';
+import ListItem from './src/screens/ListItem';
 
 function Item({title}) {
   return (
@@ -50,8 +56,9 @@ class Header extends React.Component {
   }
 }
 
-class LoginScreen extends React.Component {
 
+class LoginScreen extends React.Component {
+  
   static navigationOptions = {
     headerShown: false,
   }
@@ -59,14 +66,178 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <View>
-        {/* <ImageBackground source={require('./assets/BG.png')} style={{height: "100%", width: "100%"}} imageStyle= {{opacity:0.35}}> */}
-            {/* <Image style={styles.logo} source={require('./assets/gamelib.png')}/> */}
-            <TextInput style={styles.textbox} placeholder = {"    Username"}/>
-            <TextInput style={styles.textbox2} placeholder = {"    Password"}/>
-            <TouchableOpacity color="#e6e6e6" onPress={() => this.props.navigation.navigate('Home')}>
-              <Image style={styles.signin} source={require('./assets/button.png')}/>
-            </TouchableOpacity>    
-        {/* </ImageBackground> */}
+        <ImageBackground source={require('./assets/412bg2.jpg')} style={{height: "100%", width: "100%"}}>
+        <View style={styles.container}>
+          <View>
+            <Text style={{fontStyle: 'italic', fontWeight: 'bold', fontSize: 31, marginLeft: 67, marginTop: 100}}>Welcome</Text>
+            <Text style={{fontStyle: 'italic', fontWeight: 'bold', fontSize: 28, marginLeft: 122}}>To</Text>
+            <Text style={{fontStyle: 'italic', fontWeight: 'bold', fontSize: 45}}>WhatChaGot</Text>
+          </View>
+
+          <View>
+            <Input
+              inputContainerStyle = {{
+                width: "75%"
+              }}
+              containerStyle = {{
+                marginTop: 40
+              }}
+              inputStyle = {{
+                marginLeft: 8
+              }}
+              placeholder=' Email@address.com'
+              leftIcon={
+                <Icon
+                name='envelope'
+                size={20}
+                color='black'
+              />
+              }
+            />
+            <Input
+              inputContainerStyle = {{
+                width: "75%",
+              }}
+              containerStyle = {{
+                marginTop: 20
+              }}
+              inputStyle = {{
+                marginLeft: 8
+              }}
+              placeholder=' Password'
+              secureTextEntry={true}
+              leftIcon={
+                <Icon
+                  name='lock'
+                  size={24}
+                  color='black'
+                />
+              }
+            />
+            <Button
+              buttonStyle = {{
+                backgroundColor: "#454647",
+                width: "45%",
+                alignSelf:'center',
+                marginTop: 30
+              }}
+              titleStyle = {{
+                fontSize: 19,
+              }}
+              title="Sign In"
+              onPress={() => this.props.navigation.navigate('Home')}
+            />
+            <Text style={{marginTop: 15, marginBottom: 3, fontSize: 12, color: "#454647", textAlign: 'center'}}>
+              Don't have an account yet?
+            </Text>
+            <Button
+              buttonStyle = {{
+                //backgroundColor: "#454647",
+                width: "30%",
+                alignSelf:'center',
+                //fontFamily='Comic Sans MS'
+              }}
+              titleStyle = {{
+                fontSize: 14,
+              }}
+              type="outline"
+              title="Sign Up"
+              onPress={() => this.props.navigation.navigate('SignUp')}
+            />
+          </View>
+        </View>
+        </ImageBackground> 
+      </View>
+    );
+  }
+}
+
+class SignUpScreen extends React.Component {
+  
+  static navigationOptions = {
+    headerShown: false,
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View>
+          <Input
+            inputContainerStyle = {{
+              width: "85%"
+            }}
+            inputStyle = {{
+              marginLeft: 8
+            }}
+            label = "Email Address"
+            placeholder=' Email@address.com'
+            leftIcon={
+              <Icon
+              name='envelope'
+              size={20}
+              color='black'
+            />
+            }
+          />
+          <Input
+            inputContainerStyle = {{
+              width: "85%",
+            }}
+            containerStyle = {{
+              marginTop: 20
+            }}
+            inputStyle = {{
+              marginLeft: 8
+            }}
+            label = 'Password'
+            placeholder=' Password'
+            secureTextEntry={true}
+            leftIcon={
+              <Icon
+                name='lock'
+                size={24}
+                color='black'
+              />
+            }
+          />
+
+          <Input
+            inputContainerStyle = {{
+              width: "85%",
+            }}
+            containerStyle = {{
+              marginTop: 20
+            }}
+            inputStyle = {{
+              marginLeft: 8
+            }}
+            label = 'Re-type Password'
+            placeholder=' Type your password again'
+            secureTextEntry={true}
+            leftIcon={
+              <Icon
+                name='lock'
+                size={24}
+                color='black'
+              />
+            }
+          />
+
+          <Button
+            buttonStyle = {{
+              backgroundColor: "#454647",
+              width: "45%",
+              alignSelf:'center',
+              //fontFamily='Comic Sans MS'
+              marginTop: 30
+            }}
+            titleStyle = {{
+              fontSize: 16,
+            }}
+            title="Sign Up"
+            onPress={() => this.props.navigation.navigate('Home')}
+          />
+        </View> 
       </View>
     );
   }
@@ -145,8 +316,15 @@ class HomeScreen extends React.Component {
           </TouchableOpacity>    
         </MenuDrawer>
 
-        <View style={styles.libraryContainer}> 
-          
+        <View> 
+          <Text>Home Screen</Text>
+          <Button title="Add an Item"
+          onPress={() => this.props.navigation.navigate('AddItem')}
+          />
+          <Button title="List of Items"
+          color="green"
+          onPress={() => this.props.navigation.navigate('ListItem')}
+          />
         </View>
 
         
@@ -190,7 +368,7 @@ class SearchScreen extends React.Component {
     return (
       <View style={styles.animatedBox}>
         <Image style={styles.info} source={require('./assets/link.jpg')}/>
-        <Text style={styles.username}>MyNamesZelda</Text>
+        <Text style={styles.username}>MyNamesCory</Text>
         <Text style={styles.menu} onPress={() => {
           if (this.state.open){
             this.toggleOpen();
@@ -213,11 +391,24 @@ class SearchScreen extends React.Component {
     );
   };
 
+  state = {
+    search: '',
+  };
+
+  updateSearch = search => {
+    this.setState({ search });
+  };
+
   render () {
+<<<<<<< HEAD
     ingredients = ['apple']
     searchByIngredient(ingredients);
+=======
+    const { search } = this.state;
+
+>>>>>>> master
     return (
-      <View style={styles.container} sytle={{backgroundColor: "#cce6ff"}}>
+      <View>
         <MenuDrawer 
           open={this.state.open} 
           drawerContent={this.drawerContent()}
@@ -227,14 +418,26 @@ class SearchScreen extends React.Component {
           opacity={0.4}>  
           <TouchableOpacity onPress={this.toggleOpen} style={styles.body}>
             <Text>
-
            </Text>
           </TouchableOpacity>    
         </MenuDrawer>
+<<<<<<< HEAD
         <Text>
           
           Cory
         </Text>
+=======
+
+        <SearchBar
+          inputStyle={{backgroundColor: 'white'}}
+          containerStyle={{backgroundColor: 'white', borderWidth: 0.3, borderRadius: 10, margin:10}}
+          inputContainerStyle={{backgroundColor: 'white'}}
+          placeholder="Search for recipes"
+          onChangeText={this.updateSearch}
+          value={search}
+        />
+
+>>>>>>> master
       </View>
     );
   }
@@ -299,7 +502,7 @@ class ListScreen extends React.Component {
     return (
       <View style={styles.animatedBox}>
         <Image style={styles.info} source={require('./assets/link.jpg')}/>
-        <Text style={styles.username}>MyNamesZelda</Text>
+        <Text style={styles.username}>MyNamesCory</Text>
         <Text style={styles.menu} onPress={() => {
           if (this.state.open){
             this.toggleOpen();
@@ -351,9 +554,13 @@ class ListScreen extends React.Component {
 const RootStack = createStackNavigator (
   {
     Login: LoginScreen,
+    SignUp: SignUpScreen,
     Home: HomeScreen,
     Search: SearchScreen,
     List: ListScreen,
+    //Home, 
+    AddItem, 
+    ListItem
   },
   {
     initialRouteName: 'Login',
@@ -392,10 +599,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
 
-  backgroundImage: {
-    height: '100%',
-    width: '100%',
-    opacity: .2,
+  enterTitle: {
+    fontSize: 20,
+    margin: 80
   },
   container: {
     flex: 1,
@@ -430,10 +636,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.8,
     borderColor: '#000000',
     paddingBottom: 8,
-    width: '65%',
+    width: 220,
     height: 42,
     marginTop: 50,
-    marginLeft: 85,
     marginBottom: 1
   },
   textbox2: {
@@ -444,10 +649,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.8,
     borderColor: '#000000',
     paddingBottom: 8,
-    width: '65%',
+    width: 220,
     height: 42,
-    marginLeft: 85,
-    marginBottom: 20,
+    marginBottom: 30,
   },
 
   loginbtn:{
@@ -479,7 +683,7 @@ const styles = StyleSheet.create({
   },
 
   signin: {
-    marginLeft: 180,
+    marginLeft: 175,
     borderRadius: 10,
     width: 115,
     height: 42
@@ -510,14 +714,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: -5,
-    zIndex: 0
-  },
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: "#fff",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   marginTop: -5,
+  //   zIndex: 0
+  // },
   animatedBox: {
     flex: 1,
     backgroundColor: "#d9d9d9",
