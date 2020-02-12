@@ -19,30 +19,7 @@ function Item({title}) {
   );
 }
 
-function searchByIngredient (arrIngredients) {  //Function for creating the api call to spoonacular and fetching the call
-  {/* API key: 6229cd708177474780e6c39e57b69361 */}
-    let apiCall
-    let apiHead = 'https://api.spoonacular.com/recipes/findByIngredients?ingredients='
-    let apiList
-    let apiFoot = '&number=8&ranking=2&apiKey='
-    let apiKey = '6229cd708177474780e6c39e57b69361'
 
-    if (arrIngredients.length > 1) {
-      apiList = arrIngredients.join(",+")
-    } else {
-      apiList = arrIngredients[0]
-    }
-
-    apiCall = apiHead + apiList + apiFoot + apiKey
-
-    fetch(apiCall)
-    .then((response) => {
-      return response.json();
-    })
-    .then((myJson) => {
-      console.log(myJson);
-    });
-}
 
 class Header extends React.Component {
   render () {
@@ -335,6 +312,8 @@ class HomeScreen extends React.Component {
 
 class SearchScreen extends React.Component {
 
+  
+
   static navigationOptions = ({ navigation}) => {
     return {
       headerLeft: () => (
@@ -356,7 +335,9 @@ class SearchScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      value: '',               //initialize state to hold user search entry
+      ingredients: ['cinnamon', 'bacon', 'egg'],         //initialize empty array in state to hold user input
     };
   }
 
@@ -391,20 +372,61 @@ class SearchScreen extends React.Component {
     );
   };
 
-  state = {
-    search: '',
+  searchByIngredient () {  //Function for creating the api call to spoonacular and fetching the call
+    {/* API key: 6229cd708177474780e6c39e57b69361 */}
+    
+    let apiCall
+    let apiHead = 'https://api.spoonacular.com/recipes/findByIngredients?ingredients='
+    let apiList
+    let apiFoot = '&number=8&ranking=2&apiKey='
+    let apiKey = '6229cd708177474780e6c39e57b69361'
+
+    if (this.state.ingredients.length > 1) {
+      apiList = this.state.ingredients.join(",+")
+    } else {
+      apiList = this.state.ingredients[0]
+    }
+
+    apiCall = apiHead + apiList + apiFoot + apiKey
+
+    alert(apiCall)    //Debugging: Check created api string
+
+    fetch(apiCall)
+    .then((response) => {
+      return response.json();
+    })
+    .then((myJson) => {
+      // alert(myJson);
+      console.log(myJson);
+    });
+      
   };
 
+  state = {
+
+  }
+
   updateSearch = search => {
-    this.setState({ search });
+    this.setState({ value: search });  //Set state.value to search term
+  }
+
+  updateList() {
+    if (this.state.value === '') {     //don't update list if no search term is entered
+      return
+    }
+    this.setState(state => {  //push search term to state.ingredients array
+      const ingredients = state.ingredients.concat(state.value);
+
+      return {
+        ingredients,
+        value: '',
+      };
+    });
   };
 
   render () {
 
-    ingredients = ['apple']
-    searchByIngredient(ingredients);
-
-    const { search } = this.state;
+    const { search } = this.state.value;
 
     return (
       <View>
@@ -429,6 +451,48 @@ class SearchScreen extends React.Component {
           placeholder="Search for recipes"
           onChangeText={this.updateSearch}
           value={search}
+        />
+
+        <Button       //Button for adding search term to search list
+              buttonStyle = {{
+                backgroundColor: "#454647",
+                width: "45%",
+                alignSelf:'center',
+                marginTop: 30
+              }}
+              titleStyle = {{
+                fontSize: 19,
+              }}
+              title="Add Item"
+              onPress={() => this.updateList() }
+        />
+
+        <Button       //Debugging tool, check to make sure list was updated
+              buttonStyle = {{
+                backgroundColor: "#454647",
+                width: "45%",
+                alignSelf:'center',
+                marginTop: 30
+              }}
+              titleStyle = {{
+                fontSize: 19,
+              }}
+              title="Check Array"
+              onPress={() => alert(this.state.ingredients) }
+        />
+
+        <Button       //Call searchByIngredient function
+              buttonStyle = {{
+                backgroundColor: "#454647",
+                width: "45%",
+                alignSelf:'center',
+                marginTop: 30
+              }}
+              titleStyle = {{
+                fontSize: 19,
+              }}
+              title="Check Array"
+              onPress={() => this.searchByIngredient() }
         />
 
       </View>
