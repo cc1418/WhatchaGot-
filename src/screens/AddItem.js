@@ -12,7 +12,7 @@ import { db } from '../config';
 
 let addItem = item => {
   db.ref('/items').push({
-    ingredients: item
+    ingredients: items
   });
 };
 
@@ -59,15 +59,15 @@ export default class AddItem extends Component {
     return (
       <View style={styles.main}>
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient1Change} value={this.state.TextInput}/>
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient1Change} value={this.state.TextInput} />
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient2Change} value={this.state.TextInput}/>
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient2Change} value={this.state.TextInput} />
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient3Change} value={this.state.TextInput}/>
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient3Change} value={this.state.TextInput} />
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient4Change} value={this.state.TextInput}/>
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient4Change} value={this.state.TextInput} />
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient5Change} value={this.state.TextInput}/>
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient5Change} value={this.state.TextInput} />
         <TouchableHighlight
           style={styles.button}
           underlayColor="white"
