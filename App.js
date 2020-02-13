@@ -121,7 +121,7 @@ class LoginScreen extends React.Component {
               }}
               type="outline"
               title="Sign Up"
-              onPress={() => this.props.navigation.navigate('SignUp1')}
+              onPress={() => this.props.navigation.navigate('SignUp')}
             />
           </View>
         </View>
@@ -139,6 +139,8 @@ class SignUpScreen extends React.Component {
 
   render() {
     return (
+      <View>
+      <ImageBackground source={require('./assets/412bg2.jpg')} style={{height: "100%", width: "100%"}}>
       <View style={styles.container}>
         <View>
           <Input
@@ -217,6 +219,8 @@ class SignUpScreen extends React.Component {
             onPress={() => this.props.navigation.navigate('Home')}
           />
         </View> 
+      </View>
+      </ImageBackground>
       </View>
     );
   }
@@ -407,24 +411,11 @@ class SearchScreen extends React.Component {
      .then((response) => response.json())
      .then((responseJson) => {
        this.setState({data: responseJson})
-       alert(responseJson[0].title + ', ' + responseJson[1].title)
+       //alert(responseJson[0].title + ', ' + responseJson[1].title)  //Debugging: make sure recipes come through
     });
 
     //this.state.data = recipeJson;     //Practice json document for working with Json without making API call
     //alert(this.state.data[0].title )
-
-    // + ', ' + this.state.data[1].title
-
-
-    // return(
-    //   <View>
-    //     <Text>
-    //       {recipeJson[0].title}
-    //       {recipeJson[1].title}
-    //     </Text>
-    //   </View>
-
-    // );
 
   };
 
