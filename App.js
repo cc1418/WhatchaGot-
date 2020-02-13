@@ -311,7 +311,7 @@ class HomeScreen extends React.Component {
   }
 }
 
-import * as recipeJson from './Data.json';    //Practice json document for working with Json without making API call
+//import * as recipeJson from './Data.json';    //Practice json document for working with Json without making API call
 
 class SearchScreen extends React.Component {
 
@@ -341,7 +341,7 @@ class SearchScreen extends React.Component {
       open: false,
       isLoading: false,
       value: '',               //initialize state to hold user search entry
-      ingredients: ['cinnamon', 'bacon', 'eggs'],         //initialize empty array in state to hold user input
+      ingredients: [],         //initialize empty array in state to hold user input
       data: [],
       recipeTitles: '',
     };
@@ -385,7 +385,7 @@ class SearchScreen extends React.Component {
     let apiCall
     let apiHead = 'https://api.spoonacular.com/recipes/findByIngredients?ingredients='
     let apiList
-    let apiFoot = '&number=1&ranking=2&apiKey='
+    let apiFoot = '&number=2&ranking=2&apiKey='
     let apiKey = 'b22b05749d464305b95df9c21d75c666'
 
     if (this.state.ingredients.length > 1) {
@@ -398,27 +398,28 @@ class SearchScreen extends React.Component {
 
     // alert(apiCall)    //Debugging: Check created api string
 
-    // fetch(apiCall)
-    // .then((response) => response.json())
-    // .then((responseJson) => {
-    //   this.setState({data: responseJson})
-    //   alert(data[0].title);
-    // });
+     fetch(apiCall)
+     .then((response) => response.json())
+     .then((responseJson) => {
+       this.setState({data: responseJson})
+       alert(responseJson[0].title + ', ' + responseJson[1].title)
+    });
 
-    this.state.data = recipeJson;     //Practice json document for working with Json without making API call
-    alert(this.state.data[0].title + ', ' + this.state.data[1].title)
+    //this.state.data = recipeJson;     //Practice json document for working with Json without making API call
+    //alert(this.state.data[0].title )
+
+    // + ', ' + this.state.data[1].title
 
 
+    // return(
+    //   <View>
+    //     <Text>
+    //       {recipeJson[0].title}
+    //       {recipeJson[1].title}
+    //     </Text>
+    //   </View>
 
-    return(
-      <View>
-        <Text>
-          {recipeJson[0].title}
-          {recipeJson[1].title}
-        </Text>
-      </View>
-
-    );
+    // );
 
   };
 
