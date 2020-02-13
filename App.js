@@ -10,7 +10,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //import Home from './src/screens/Home';
 import AddItem from './src/screens/AddItem';
 import ListItem from './src/screens/ListItem';
-import SearchData from './src/screens/SearchData';
+// import SearchData from './src/screens/SearchData';
+import SignUp1 from './src/screens/SignUp1';
 
 function Item({title}) {
   return (
@@ -120,7 +121,7 @@ class LoginScreen extends React.Component {
               }}
               type="outline"
               title="Sign Up"
-              onPress={() => this.props.navigation.navigate('SignUp')}
+              onPress={() => this.props.navigation.navigate('SignUp1')}
             />
           </View>
         </View>
@@ -302,6 +303,10 @@ class HomeScreen extends React.Component {
           <Button title="List of Items"
           color="green"
           onPress={() => this.props.navigation.navigate('ListItem')}
+          />
+          <Button title="SignUp"
+          color="green"
+          onPress={() => this.props.navigation.navigate('SignUp1')}
           />
         </View>
 
