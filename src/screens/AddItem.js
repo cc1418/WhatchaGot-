@@ -12,22 +12,46 @@ import { db } from '../config';
 
 let addItem = item => {
   db.ref('/items').push({
-    name: item
+    ingredients: item
   });
 };
 
 export default class AddItem extends Component {
   state = {
-    name: ''
+    ingredient1: '',
+    ingredient2: '',
+    ingredient3: '',
+    ingredient4: '',
+    ingredient5: ''
   };
 
-  handleChange = e => {
+  handleIngredient1Change = e => {
     this.setState({
-      name: e.nativeEvent.text
+      ingredient1: e.nativeEvent.text
+    });
+  };
+  handleIngredient2Change = e => {
+    this.setState({
+      ingredient2: e.nativeEvent.text
+    });
+  };
+  handleIngredient3Change = e => {
+    this.setState({
+      ingredient3: e.nativeEvent.text
+    });
+  };
+  handleIngredient4Change = e => {
+    this.setState({
+      ingredient4: e.nativeEvent.text
+    });
+  };
+  handleIngredient5Change = e => {
+    this.setState({
+      ingredient5: e.nativeEvent.text
     });
   };
   handleSubmit = () => {
-    addItem(this.state.name);
+    addItem(this.state);
     Alert.alert('Item saved successfully');
   };
 
@@ -35,7 +59,15 @@ export default class AddItem extends Component {
     return (
       <View style={styles.main}>
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleChange} />
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient1Change} value={this.state.TextInput}/>
+        <Text style={styles.title}>Add Item</Text>
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient2Change} value={this.state.TextInput}/>
+        <Text style={styles.title}>Add Item</Text>
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient3Change} value={this.state.TextInput}/>
+        <Text style={styles.title}>Add Item</Text>
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient4Change} value={this.state.TextInput}/>
+        <Text style={styles.title}>Add Item</Text>
+        <TextInput style={styles.itemInput} onChange={this.handleIngredient5Change} value={this.state.TextInput}/>
         <TouchableHighlight
           style={styles.button}
           underlayColor="white"
