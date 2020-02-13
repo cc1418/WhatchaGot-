@@ -10,7 +10,7 @@ import {
 
 import { db } from '../config';
 
-let addItem = item => {
+let addItem = items => {
   db.ref('/items').push({
     ingredients: items
   });
