@@ -410,13 +410,6 @@ class SearchScreen extends React.Component {
 
     const { search } = this.state;
 
-
-
-    const { search } = this.state;
-
-    ingredients = ['apple']
-    searchByIngredient(ingredients);
-
     return (
       <View>
         <MenuDrawer 
