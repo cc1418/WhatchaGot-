@@ -316,6 +316,8 @@ class HomeScreen extends React.Component {
   }
 }
 
+import * as recipeJson from './Data.json';    //Practice json document for working with Json without making API call
+
 class SearchScreen extends React.Component {
 
   
@@ -346,6 +348,7 @@ class SearchScreen extends React.Component {
       value: '',               //initialize state to hold user search entry
       ingredients: ['cinnamon', 'bacon', 'eggs'],         //initialize empty array in state to hold user input
       data: [],
+      recipeTitles: '',
     };
   }
 
@@ -400,13 +403,28 @@ class SearchScreen extends React.Component {
 
     // alert(apiCall)    //Debugging: Check created api string
 
-    fetch(apiCall)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({data: responseJson})
-      alert(data[0].title);
-    });
-      
+    // fetch(apiCall)
+    // .then((response) => response.json())
+    // .then((responseJson) => {
+    //   this.setState({data: responseJson})
+    //   alert(data[0].title);
+    // });
+
+    this.state.data = recipeJson;     //Practice json document for working with Json without making API call
+    alert(this.state.data[0].title + ', ' + this.state.data[1].title)
+
+
+
+    return(
+      <View>
+        <Text>
+          {recipeJson[0].title}
+          {recipeJson[1].title}
+        </Text>
+      </View>
+
+    );
+
   };
 
   state = {
@@ -432,12 +450,26 @@ class SearchScreen extends React.Component {
     // this.SearchBar.Text = '';
   };
 
+  
   // componentDidMount(){
   //   this.searchByIngredient();
   // }
 
   renderItem = ({item, index}) => {
-    let { Pharmacy, ReadyForPickups } = item;
+    let {title} = item;
+
+    return (
+      <View>
+        <Text>
+          {title}
+        </Text>
+      </View>
+    );   
+  
+  }
+
+  keyExtractor = (item, index) => {
+    return index.toString();
   }
 
   render () {
@@ -511,9 +543,14 @@ class SearchScreen extends React.Component {
               onPress={() => this.searchByIngredient() }
         />
 
-        {/* <SearchData data = {this.state.data}/> */}
+        <FlatList
+          data={this.state.data}
+          keyExtractor={this.keyExtractor}
+          renderItem={this.renderItem}
+        />
 
       </View>
+      
     );
   }
 }
