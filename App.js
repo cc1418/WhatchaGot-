@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //import Home from './src/screens/Home';
 import AddItem from './src/screens/AddItem';
 import ListItem from './src/screens/ListItem';
+import SearchData from './src/screens/SearchData';
 
 function Item({title}) {
   return (
@@ -336,8 +337,10 @@ class SearchScreen extends React.Component {
     super(props);
     this.state = {
       open: false,
+      isLoading: false,
       value: '',               //initialize state to hold user search entry
-      ingredients: ['cinnamon', 'bacon', 'egg'],         //initialize empty array in state to hold user input
+      ingredients: ['cinnamon', 'bacon', 'eggs'],         //initialize empty array in state to hold user input
+      data: [],
     };
   }
 
@@ -373,13 +376,14 @@ class SearchScreen extends React.Component {
   };
 
   searchByIngredient () {  //Function for creating the api call to spoonacular and fetching the call
-    {/* API key: 6229cd708177474780e6c39e57b69361 */}
+    {/* Michael API key: 6229cd708177474780e6c39e57b69361 */}
+    // Cory API key: b22b05749d464305b95df9c21d75c666
     
     let apiCall
     let apiHead = 'https://api.spoonacular.com/recipes/findByIngredients?ingredients='
     let apiList
-    let apiFoot = '&number=8&ranking=2&apiKey='
-    let apiKey = '6229cd708177474780e6c39e57b69361'
+    let apiFoot = '&number=1&ranking=2&apiKey='
+    let apiKey = 'b22b05749d464305b95df9c21d75c666'
 
     if (this.state.ingredients.length > 1) {
       apiList = this.state.ingredients.join(",+")
@@ -389,15 +393,13 @@ class SearchScreen extends React.Component {
 
     apiCall = apiHead + apiList + apiFoot + apiKey
 
-    alert(apiCall)    //Debugging: Check created api string
+    // alert(apiCall)    //Debugging: Check created api string
 
     fetch(apiCall)
-    .then((response) => {
-      return response.json();
-    })
-    .then((myJson) => {
-      // alert(myJson);
-      console.log(myJson);
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({data: responseJson})
+      alert(data[0].title);
     });
       
   };
@@ -422,7 +424,16 @@ class SearchScreen extends React.Component {
         value: '',
       };
     });
+    // this.SearchBar.Text = '';
   };
+
+  // componentDidMount(){
+  //   this.searchByIngredient();
+  // }
+
+  renderItem = ({item, index}) => {
+    let { Pharmacy, ReadyForPickups } = item;
+  }
 
   render () {
 
@@ -491,9 +502,11 @@ class SearchScreen extends React.Component {
               titleStyle = {{
                 fontSize: 19,
               }}
-              title="Check Array"
+              title="Search"
               onPress={() => this.searchByIngredient() }
         />
+
+        {/* <SearchData data = {this.state.data}/> */}
 
       </View>
     );
