@@ -24,7 +24,7 @@ export default class AddItem extends Component {
     db.ref('/items').push(this.state);
     Alert.alert('Item saved successfully');
   };
-  
+
   render() {
     return (
       <View style={styles.main}>
