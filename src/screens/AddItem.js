@@ -18,56 +18,31 @@ let addItem = items => {
 
 export default class AddItem extends Component {
   state = {
-    ingredient1: '',
-    ingredient2: '',
-    ingredient3: '',
-    ingredient4: '',
-    ingredient5: ''
+    ingredient: ''
   };
 
-  handleIngredient1Change = e => {
+  handleIngredientChange = e => {
     this.setState({
-      ingredient1: e.nativeEvent.text
+      ingredient: e.nativeEvent.text
     });
-  };
-  handleIngredient2Change = e => {
-    this.setState({
-      ingredient2: e.nativeEvent.text
-    });
-  };
-  handleIngredient3Change = e => {
-    this.setState({
-      ingredient3: e.nativeEvent.text
-    });
-  };
-  handleIngredient4Change = e => {
-    this.setState({
-      ingredient4: e.nativeEvent.text
-    });
-  };
-  handleIngredient5Change = e => {
-    this.setState({
-      ingredient5: e.nativeEvent.text
-    });
-  };
   handleSubmit = () => {
     addItem(this.state);
     Alert.alert('Item saved successfully');
   };
-
+  }
   render() {
     return (
       <View style={styles.main}>
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient1Change} value={this.state.TextInput} />
+        <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient2Change} value={this.state.TextInput} />
+        <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient3Change} value={this.state.TextInput} />
+        <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient4Change} value={this.state.TextInput} />
+        <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
         <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredient5Change} value={this.state.TextInput} />
+        <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
         <TouchableHighlight
           style={styles.button}
           underlayColor="white"
