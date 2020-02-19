@@ -10,7 +10,7 @@ import { db } from '../config';
 
 let addUser = user => {
     db.ref('/users').push({
-        users: item
+        password: user
     })
 }
 export default class SignUp1 extends Component {
@@ -54,6 +54,8 @@ export default class SignUp1 extends Component {
                 name='envelope'
                 size={20}
                 color='black'
+                onChange={this.handleEmailChange}
+                value={this.state.Input}
               />
               }
             />
@@ -77,6 +79,8 @@ export default class SignUp1 extends Component {
                   color='black'
                 />
               }
+              onChange={this.handlePasswordChange}
+                value={this.state.Input}
             />
   
             <Input
@@ -113,7 +117,8 @@ export default class SignUp1 extends Component {
                 fontSize: 16,
               }}
               title="Sign Up"
-              onPress={() => this.props.navigation.navigate('Home')}
+              onPress={this.handleSubmit}
+              //onPress={() => this.props.navigation.navigate('Home')}
             />
           </View> 
         </View>

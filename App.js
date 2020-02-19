@@ -10,8 +10,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //import Home from './src/screens/Home';
 import AddItem from './src/screens/AddItem';
 import ListItem from './src/screens/ListItem';
-// import SearchData from './src/screens/SearchData';
 import SignUp1 from './src/screens/SignUp1';
+// import SearchData from './src/screens/SearchData';
 
 function Item({title}) {
   return (
@@ -308,8 +308,7 @@ class HomeScreen extends React.Component {
           color="green"
           onPress={() => this.props.navigation.navigate('ListItem')}
           />
-          <Button title="SignUp"
-          color="green"
+          <Button title="SignUp1"
           onPress={() => this.props.navigation.navigate('SignUp1')}
           />
         </View>
@@ -664,7 +663,8 @@ const RootStack = createStackNavigator (
     List: ListScreen,
     //Home, 
     AddItem, 
-    ListItem
+    ListItem, 
+    SignUp1
   },
   {
     initialRouteName: 'Login',

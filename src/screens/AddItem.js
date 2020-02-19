@@ -10,12 +10,6 @@ import {
 
 import { db } from '../config';
 
-let addItem = items => {
-  db.ref('/items').push({
-    ingredients: items
-  });
-};
-
 export default class AddItem extends Component {
   state = {
     ingredient: ''
@@ -25,22 +19,15 @@ export default class AddItem extends Component {
     this.setState({
       ingredient: e.nativeEvent.text
     });
+  }
   handleSubmit = () => {
-    addItem(this.state);
+    db.ref('/items').push(this.state);
     Alert.alert('Item saved successfully');
   };
-  }
+  
   render() {
     return (
       <View style={styles.main}>
-        <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
-        <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
-        <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
-        <Text style={styles.title}>Add Item</Text>
-        <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
         <Text style={styles.title}>Add Item</Text>
         <TextInput style={styles.itemInput} onChange={this.handleIngredientChange} value={this.state.TextInput} />
         <TouchableHighlight
