@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'\
-import db from '../config'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native'
+import { db } from '../config'
 
 class Signup extends React.Component {
     state = {
@@ -10,6 +10,9 @@ class Signup extends React.Component {
     }
     handleSignUp = () => {
       const { email, password } = this.state
+      db.ref('/user')
+      .push(this.state);
+      Alert.alert('User Created Successfully!');
     }
 
     render() {
@@ -35,7 +38,7 @@ class Signup extends React.Component {
                     placeholder='Password'
                     secureTextEntry={true}
                 />
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
                     <Text style={styles.buttonText}>Signup</Text>
                 </TouchableOpacity>
             </View>
