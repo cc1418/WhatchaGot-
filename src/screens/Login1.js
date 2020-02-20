@@ -1,26 +1,16 @@
 import React from 'react'
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native'\
-import db from '../config'
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, Button } from 'react-native'
+import { createSwitchNavigator } from 'react-navigation'
 
-class Signup extends React.Component {
+class Login extends React.Component {
     state = {
-        name: '',
         email: '',
         password: ''
-    }
-    handleSignUp = () => {
-      const { email, password } = this.state
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <TextInput
-                    style={styles.inputBox}
-                    value={this.state.name}
-                    onChangeText={name => this.setState({ name })}
-                    placeholder='Full Name'
-                />
                 <TextInput
                     style={styles.inputBox}
                     value={this.state.email}
@@ -36,8 +26,12 @@ class Signup extends React.Component {
                     secureTextEntry={true}
                 />
                 <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Signup</Text>
+                    <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
+                <Button
+                    title="Don't have an account yet? Sign up"
+                    onPress={() => this.props.navigation.navigate('Signup1')}
+                />
             </View>
         )
     }
@@ -64,8 +58,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         paddingVertical: 5,
         alignItems: 'center',
-        backgroundColor: '#FFA611',
-        borderColor: '#FFA611',
+        backgroundColor: '#F6820D',
+        borderColor: '#F6820D',
         borderWidth: 1,
         borderRadius: 5,
         width: 200
@@ -80,4 +74,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Signup
+export default Login

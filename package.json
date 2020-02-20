@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-firebase/auth": "^0.2.10",
     "@react-native-community/masked-view": "^0.1.6",
     "expo": "^36.0.2",
     "expo-cli": "^3.11.9",
