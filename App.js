@@ -51,7 +51,7 @@ class LoginScreen extends React.Component {
           <View>
             <Text style={{fontStyle: 'italic', fontWeight: 'bold', fontSize: 31, marginLeft: 67, marginTop: 100}}>Welcome</Text>
             <Text style={{fontStyle: 'italic', fontWeight: 'bold', fontSize: 28, marginLeft: 122}}>To</Text>
-            <Text style={{fontStyle: 'italic', fontWeight: 'bold', fontSize: 45}}>WhatChaGot</Text>
+            <Text style={{fontStyle: 'italic', fontWeight: 'bold', fontSize: 45}}>WhatchaGot</Text>
           </View>
 
           <View>
