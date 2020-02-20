@@ -349,7 +349,7 @@ class SearchScreen extends React.Component {
       open: false,
       isLoading: false,
       value: '',               //initialize state to hold user search entry
-      ingredients: [],         //initialize empty array in state to hold user input
+      ingredients: ["Eggs", "Vanilla", "Flour", "Sugar"],         //initialize empty array in state to hold user input
       data: [],
       recipeTitles: '',
     };
@@ -393,7 +393,7 @@ class SearchScreen extends React.Component {
     let apiCall
     let apiHead = 'https://api.spoonacular.com/recipes/findByIngredients?ingredients='
     let apiList
-    let apiFoot = '&number=2&ranking=2&apiKey='
+    let apiFoot = '&number=1&ranking=2&apiKey='
     let apiKey = 'b22b05749d464305b95df9c21d75c666'
 
     if (this.state.ingredients.length > 1) {
@@ -447,12 +447,12 @@ class SearchScreen extends React.Component {
   // }
 
   renderItem = ({item, index}) => {
-    let {title} = item;
 
     return (
       <View>
         <Text>
-          {title}
+          Name: {item.name}
+
         </Text>
       </View>
     );   
@@ -490,6 +490,7 @@ class SearchScreen extends React.Component {
           placeholder="Search for recipes"
           onChangeText={this.updateSearch}
           value={search}
+          
         />
 
         <Button       //Button for adding search term to search list
