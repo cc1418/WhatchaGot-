@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AddItem from './src/screens/AddItem';
 import ListItem from './src/screens/ListItem';
 import SignUp1 from './src/screens/SignUp1';
+import Login1 from './src/screens/Login1';
 // import SearchData from './src/screens/SearchData';
 
 function Item({title}) {
@@ -310,6 +311,9 @@ class HomeScreen extends React.Component {
           />
           <Button title="SignUp1"
           onPress={() => this.props.navigation.navigate('SignUp1')}
+          />
+          <Button title="Login1"
+          onPress={() => this.props.navigation.navigate('Login1')}
           />
         </View>
 
@@ -664,7 +668,8 @@ const RootStack = createStackNavigator (
     //Home, 
     AddItem, 
     ListItem, 
-    SignUp1
+    SignUp1, 
+    Login1
   },
   {
     initialRouteName: 'Login',
