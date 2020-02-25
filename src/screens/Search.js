@@ -6,70 +6,71 @@ import MenuDrawer from 'react-native-side-drawer'
 import {Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+//import { Nav } from '../navigation/UniversalNavigator';
 import styles from '../../components/Style';
 
 class SearchScreen extends React.Component {
 
-    static navigationOptions = ({ navigation}) => {
-      return {
-        headerLeft: () => (
-          <View>
-            <TouchableOpacity
-              style={styles.customBtnBG}
-              onPress={navigation.getParam('toggleOpen')}  >
-              <Text style={styles.customBtnText}>☰</Text>
-            </TouchableOpacity>
-          </View>
-        ),
-      };
-    };
+    // static navigationOptions = ({ navigation}) => {
+    //   return {
+    //     headerLeft: () => (
+    //       <View>
+    //         <TouchableOpacity
+    //           style={styles.customBtnBG}
+    //           onPress={navigation.getParam('toggleOpen')}  >
+    //           <Text style={styles.customBtnText}>☰</Text>
+    //         </TouchableOpacity>
+    //       </View>
+    //     ),
+    //   };
+    // };
   
-    UNSAFE_componentWillMount() {
-      this.props.navigation.setParams({ toggleOpen: this.toggleOpen});
-    }
+    // UNSAFE_componentWillMount() {
+    //   this.props.navigation.setParams({ toggleOpen: this.toggleOpen});
+    // }
   
-    constructor(props) {
-      super(props);
-      this.state = {
-        open: false,
-        isLoading: false,
-        value: '',               //initialize state to hold user search entry
-        ingredients: ["Eggs", "Vanilla", "Flour", "Sugar"],         //initialize empty array in state to hold user input
-        data: [],
-        recipeTitles: '',
-      };
-    }
+    // constructor(props) {
+    //   super(props);
+    //   this.state = {
+    //     open: false,
+    //     isLoading: false,
+    //     value: '',               //initialize state to hold user search entry
+    //     ingredients: ["Eggs", "Vanilla", "Flour", "Sugar"],         //initialize empty array in state to hold user input
+    //     data: [],
+    //     recipeTitles: '',
+    //   };
+    // }
   
-    toggleOpen = () => {
-      this.setState({ open: !this.state.open });
-    };
+    // toggleOpen = () => {
+    //   this.setState({ open: !this.state.open });
+    // };
   
-    drawerContent = () => {
-      return (
-        <View style={styles.animatedBox}>
-          <Image style={styles.info} source={require('../../assets/link.jpg')}/>
-          <Text style={styles.username}>MyNamesCory</Text>
-          <Text style={styles.menu} onPress={() => {
-            if (this.state.open){
-              this.toggleOpen();
-            } 
-            this.props.navigation.navigate('Home')
-            }
-          }>
-            Home
-          </Text>
-          <Text style={styles.menu} onPress={() => {
-            if (this.state.open){
-              this.toggleOpen();
-            } 
-            this.props.navigation.navigate('List')
-            }
-          }>
-            Library
-          </Text>
-        </View>
-      );
-    };
+    // drawerContent = () => {
+    //   return (
+    //     <View style={styles.animatedBox}>
+    //       <Image style={styles.info} source={require('../../assets/link.jpg')}/>
+    //       <Text style={styles.username}>MyNamesCory</Text>
+    //       <Text style={styles.menu} onPress={() => {
+    //         if (this.state.open){
+    //           this.toggleOpen();
+    //         } 
+    //         this.props.navigation.navigate('Home')
+    //         }
+    //       }>
+    //         Home
+    //       </Text>
+    //       <Text style={styles.menu} onPress={() => {
+    //         if (this.state.open){
+    //           this.toggleOpen();
+    //         } 
+    //         this.props.navigation.navigate('List')
+    //         }
+    //       }>
+    //         Library
+    //       </Text>
+    //     </View>
+    //   );
+    // };
   
     searchByIngredient () {  //Function for creating the api call to spoonacular and fetching the call
       {/* Michael API key: 6229cd708177474780e6c39e57b69361 */}
@@ -150,19 +151,6 @@ class SearchScreen extends React.Component {
   
       return (
         <View>
-          <MenuDrawer 
-            open={this.state.open} 
-            drawerContent={this.drawerContent()}
-            drawerPercentage={60}
-            animationTime={200}
-            overlay={true}
-            opacity={0.4}>  
-            <TouchableOpacity onPress={this.toggleOpen} style={styles.body}>
-              <Text>
-             </Text>
-            </TouchableOpacity>    
-          </MenuDrawer>
-  
   
           <SearchBar
             ref={search => this.search = search}

@@ -4,9 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 
-import HomeScreen from '../screens/Home';
-import SearchScreen from '../screens/Search';
-import ListScreen from '../screens/Diet';
+import styles from '../../components/Style';
 
 const Tab = createBottomTabNavigator();
 
@@ -62,7 +60,7 @@ function MyTabs() {
   );
 }
 
-export default function App() {
+export default function Nav() {
   return (
     <NavigationContainer>
       <MyTabs />

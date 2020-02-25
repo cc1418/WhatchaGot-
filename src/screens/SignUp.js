@@ -10,9 +10,9 @@ import styles from '../../components/Style';
 
 class SignUpScreen extends React.Component {
   
-    static navigationOptions = {
-      headerShown: false,
-    }
+    // static navigationOptions = {
+    //   headerShown: false,
+    // }
   
     render() {
       return (
