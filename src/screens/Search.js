@@ -17,7 +17,7 @@ class SearchScreen extends React.Component {
         open: false,
         isLoading: false,
         value: '',               //initialize state to hold user search entry
-        ingredients: ["Eggs", "Vanilla", "Flour", "Sugar"],         //initialize empty array in state to hold user input
+        ingredients: [{id:0, val:'Bananas'},],         //initialize empty array in state to hold user input
         data: [],
         recipeTitles: '',
       };
