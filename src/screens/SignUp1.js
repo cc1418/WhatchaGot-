@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native'
-import { db } from '../config'
+import * as firebase from 'firebase'
 
 class Signup extends React.Component {
     state = {
@@ -9,10 +9,16 @@ class Signup extends React.Component {
         password: ''
     }
     handleSignUp = () => {
-      const { email, password } = this.state
-      db.ref('/user')
-      .push(this.state);
-      Alert.alert('User Created Successfully!');
+    const {name, email, password} = this.state
+        firebase.auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => this.props.navigation.navigate('Profile'));
+        firebase.database().ref('/users').push({
+            name: name, 
+            email: email
+        })
+        .catch(error => console.log(error));
+        Alert.alert('User Created Successfully!');
     }
 
     render() {

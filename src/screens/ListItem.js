@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ItemComponent from '../../components/itemComponent';
 
-import { db } from '../config';
-
-let itemsRef = db.ref('/items');
+import * as firebase from 'firebase'
 
 export default class ListItem extends Component {
   state = {
@@ -12,7 +10,8 @@ export default class ListItem extends Component {
   };
 
   componentDidMount() {
-    itemsRef.on('value', snapshot => {
+    firebase.database().ref('/items')
+    .on('value', snapshot => {
       let data = snapshot.val();
       let items = Object.values(data);
       this.setState({ items });
