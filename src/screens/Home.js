@@ -24,12 +24,6 @@ class HomeScreen extends React.Component {
           color="green"
           onPress={() => this.props.navigation.navigate('ListItem')}
           />
-          <Button title="SignUp1"
-          onPress={() => this.props.navigation.navigate('SignUp1')}
-          />
-          <Button title="Login1"
-          onPress={() => this.props.navigation.navigate('Login1')}
-          />
         </View>
 
       </View>
