@@ -128,12 +128,7 @@ class SearchScreen extends React.Component {
       this.search.clear();
       // this.SearchBar.Text = '';
     };
-  
-    
-    // componentDidMount(){
-    //   this.searchByIngredient();
-    // }
-  
+
     renderItem = ({item, index}) => {
   
       return (
