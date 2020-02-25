@@ -25,13 +25,17 @@ class SignUpScreen extends React.Component {
       const {name, email, password} = this.state
       firebase.auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('Login'));
-      firebase.database().ref('/users').push({
-        name: name, 
-        email: email
-      })
-      .catch(error => console.log(error));
-      Alert.alert('User Created Successfully. Please Login.')
+      .then((data) => {
+        firebase.database().ref('/users/' + data.user.uid).set({
+          name: name, 
+          email: email
+        }).then(() => {
+          this.props.navigation.navigate('Login');
+          Alert.alert('User Created Successfully. Please Login.')
+        }).catch(error => console.log(error));
+        
+    
+      });
     }
   
     render() {
