@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground, Alert} from 'react-native';
 import {createAppContainer, SafeAreaView} from 'react-navigation';
 import {createStackNavigator} from  'react-navigation-stack'
 import MenuDrawer from 'react-native-side-drawer'
 import {Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import * as firebase from 'firebase'
 
 import styles from '../../components/Style';
 
@@ -13,6 +14,25 @@ class SignUpScreen extends React.Component {
     // static navigationOptions = {
     //   headerShown: false,
     // }
+
+    state = {
+      name: '',
+      email: '',
+      password: ''
+    }
+
+    handleSignUp = () => {
+      const {name, email, password} = this.state
+      firebase.auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => this.props.navigation.navigate('Login'));
+      firebase.database().ref('/users').push({
+        name: name, 
+        email: email
+      })
+      .catch(error => console.log(error));
+      Alert.alert('User Created Successfully. Please Login.')
+    }
   
     render() {
       return (
@@ -20,6 +40,28 @@ class SignUpScreen extends React.Component {
         <ImageBackground source={require('../../assets/412bg2.jpg')} style={{height: "100%", width: "100%"}}>
         <View style={styles.container}>
           <View>
+          <Input
+              inputContainerStyle = {{
+                width: "85%",
+              }}
+              containerStyle = {{
+                marginTop: 20
+              }}
+              inputStyle = {{
+                marginLeft: 8
+              }}
+              label = 'Name'
+              placeholder='John Smith'
+              leftIcon={
+                <Icon
+                  name='lock'
+                  size={24}
+                  color='black'
+                />
+              }
+              value={this.state.name}
+              onChangeText={name => this.setState({name})}
+            />
             <Input
               inputContainerStyle = {{
                 width: "85%"
@@ -36,6 +78,9 @@ class SignUpScreen extends React.Component {
                 color='black'
               />
               }
+              autoCapitalize='none'
+              value={this.state.email}
+              onChangeText={email => this.setState({email})}
             />
             <Input
               inputContainerStyle = {{
@@ -57,30 +102,10 @@ class SignUpScreen extends React.Component {
                   color='black'
                 />
               }
+              value={this.state.password}
+              onChangeText={password => this.setState({password})}
             />
-  
-            <Input
-              inputContainerStyle = {{
-                width: "85%",
-              }}
-              containerStyle = {{
-                marginTop: 20
-              }}
-              inputStyle = {{
-                marginLeft: 8
-              }}
-              label = 'Re-type Password'
-              placeholder=' Type your password again'
-              secureTextEntry={true}
-              leftIcon={
-                <Icon
-                  name='lock'
-                  size={24}
-                  color='black'
-                />
-              }
-            />
-  
+ 
             <Button
               buttonStyle = {{
                 backgroundColor: "#454647",
@@ -93,7 +118,7 @@ class SignUpScreen extends React.Component {
                 fontSize: 16,
               }}
               title="Sign Up"
-              onPress={() => this.props.navigation.navigate('Home')}
+              onPress={this.handleSignUp}
             />
           </View> 
         </View>
