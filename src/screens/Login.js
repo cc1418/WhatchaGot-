@@ -11,10 +11,6 @@ import styles from '../../components/Style';
 
 class LoginScreen extends React.Component {
 
-  // static navigationOptions = {
-  //   headerShown: false,
-  // }
-
   state = {
     email: '',
     password: ''
@@ -96,7 +92,8 @@ class LoginScreen extends React.Component {
                   fontSize: 19,
                 }}
                 title="Sign In"
-                onPress={this.handleLogin}
+                onPress={() => this.props.navigation.navigate('Home')}
+                //onPress={this.handleLogin}
               />
               <Text style={{ marginTop: 15, marginBottom: 3, fontSize: 12, color: "#454647", textAlign: 'center' }}>
                 Don't have an account yet?

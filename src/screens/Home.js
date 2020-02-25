@@ -6,7 +6,6 @@ import MenuDrawer from 'react-native-side-drawer'
 import {Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-//import { Nav } from '../navigation/UniversalNavigator';
 import styles from '../../components/Style';
 
 class HomeScreen extends React.Component {

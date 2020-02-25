@@ -10,10 +10,6 @@ import * as firebase from 'firebase'
 import styles from '../../components/Style';
 
 class SignUpScreen extends React.Component {
-  
-    // static navigationOptions = {
-    //   headerShown: false,
-    // }
 
     state = {
       name: '',
