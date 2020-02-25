@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //import { Nav } from '../navigation/UniversalNavigator';
 import styles from '../../components/Style';
 
-class ListScreen extends React.Component {
+class DietScreen extends React.Component {
 
     // static navigationOptions = ({ navigation}) => {
     //   return {
@@ -81,4 +81,4 @@ class ListScreen extends React.Component {
       } 
     }
 
-    export default ListScreen;
+    export default DietScreen;
