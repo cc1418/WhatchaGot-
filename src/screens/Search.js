@@ -10,67 +10,18 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../../components/Style';
 
 class SearchScreen extends React.Component {
-
-    // static navigationOptions = ({ navigation}) => {
-    //   return {
-    //     headerLeft: () => (
-    //       <View>
-    //         <TouchableOpacity
-    //           style={styles.customBtnBG}
-    //           onPress={navigation.getParam('toggleOpen')}  >
-    //           <Text style={styles.customBtnText}>☰</Text>
-    //         </TouchableOpacity>
-    //       </View>
-    //     ),
-    //   };
-    // };
   
-    // UNSAFE_componentWillMount() {
-    //   this.props.navigation.setParams({ toggleOpen: this.toggleOpen});
-    // }
-  
-    // constructor(props) {
-    //   super(props);
-    //   this.state = {
-    //     open: false,
-    //     isLoading: false,
-    //     value: '',               //initialize state to hold user search entry
-    //     ingredients: ["Eggs", "Vanilla", "Flour", "Sugar"],         //initialize empty array in state to hold user input
-    //     data: [],
-    //     recipeTitles: '',
-    //   };
-    // }
-  
-    // toggleOpen = () => {
-    //   this.setState({ open: !this.state.open });
-    // };
-  
-    // drawerContent = () => {
-    //   return (
-    //     <View style={styles.animatedBox}>
-    //       <Image style={styles.info} source={require('../../assets/link.jpg')}/>
-    //       <Text style={styles.username}>MyNamesCory</Text>
-    //       <Text style={styles.menu} onPress={() => {
-    //         if (this.state.open){
-    //           this.toggleOpen();
-    //         } 
-    //         this.props.navigation.navigate('Home')
-    //         }
-    //       }>
-    //         Home
-    //       </Text>
-    //       <Text style={styles.menu} onPress={() => {
-    //         if (this.state.open){
-    //           this.toggleOpen();
-    //         } 
-    //         this.props.navigation.navigate('List')
-    //         }
-    //       }>
-    //         Library
-    //       </Text>
-    //     </View>
-    //   );
-    // };
+    constructor(props) {
+      super(props);
+      this.state = {
+        open: false,
+        isLoading: false,
+        value: '',               //initialize state to hold user search entry
+        ingredients: [{id:0, val:'Bananas'},],         //initialize empty array in state to hold user input
+        data: [],
+        recipeTitles: '',
+      };
+    }
   
     searchByIngredient () {  //Function for creating the api call to spoonacular and fetching the call
       {/* Michael API key: 6229cd708177474780e6c39e57b69361 */}
