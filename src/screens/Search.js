@@ -34,7 +34,7 @@ class SearchScreen extends React.Component {
         open: false,
         isLoading: false,
         value: '',               //initialize state to hold user search entry
-        ingredients: ["Eggs", "Vanilla", "Flour", "Sugar"],         //initialize empty array in state to hold user input
+        ingredients: [{id:0, value:"Eggs"},],         //initialize empty array in state to hold user input
         data: [],
         recipeTitles: '',
       };
@@ -95,7 +95,7 @@ class SearchScreen extends React.Component {
        .then((response) => response.json())
        .then((responseJson) => {
          this.setState({data: responseJson})
-         //alert(responseJson[0].title + ', ' + responseJson[1].title)  //Debugging: make sure recipes come through
+         alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
   
       //this.state.data = recipeJson;     //Practice json document for working with Json without making API call
@@ -116,6 +116,8 @@ class SearchScreen extends React.Component {
         return
       }
       this.setState(state => {  //push search term to state.ingredients array
+        
+        const newItem = j;
         const ingredients = state.ingredients.concat(state.value);
   
         return {
@@ -137,7 +139,7 @@ class SearchScreen extends React.Component {
       return (
         <View>
           <Text>
-            Name: {item.name}
+            Name: {item.title}
   
           </Text>
         </View>
@@ -152,6 +154,12 @@ class SearchScreen extends React.Component {
     render () {
   
       const { search } = this.state.value;
+
+      let list = this.state.ingredients.map((item, key) =>
+        <Text>
+          {item.id}, {item.value}
+        </Text>
+      );
   
       return (
         <View>
@@ -179,6 +187,10 @@ class SearchScreen extends React.Component {
             value={search}
             
           />
+
+          <Text>
+            {list}
+          </Text>
   
           <Button       //Button for adding search term to search list
                 buttonStyle = {{
