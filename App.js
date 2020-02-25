@@ -5,13 +5,14 @@ import {createStackNavigator} from  'react-navigation-stack'
 import MenuDrawer from 'react-native-side-drawer'
 import {Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import './src/config.js'
 
 //import Home from './src/screens/Home';
 import AddItem from './src/screens/AddItem';
 import ListItem from './src/screens/ListItem';
 import SignUp1 from './src/screens/SignUp1';
 import Login1 from './src/screens/Login1';
+import Profile from './src/screens/Profile';
 // import SearchData from './src/screens/SearchData';
 
 function Item({title}) {
@@ -672,7 +673,8 @@ const RootStack = createStackNavigator (
     AddItem, 
     ListItem, 
     SignUp1, 
-    Login1
+    Login1, 
+    Profile
   },
   {
     initialRouteName: 'Login',

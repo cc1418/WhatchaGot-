@@ -1,11 +1,21 @@
 import React from 'react'
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, Button } from 'react-native'
-import { createSwitchNavigator } from 'react-navigation'
+import * as firebase from 'firebase'
+
 
 class Login extends React.Component {
     state = {
         email: '',
         password: ''
+    }
+
+    handleLogin = () => {
+        const { email, password } = this.state
+
+        firebase.auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(() => this.props.navigation.navigate('Profile'))
+            .catch(error => console.log(error));
     }
 
     render() {
@@ -25,7 +35,7 @@ class Login extends React.Component {
                     placeholder='Password'
                     secureTextEntry={true}
                 />
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 <Button

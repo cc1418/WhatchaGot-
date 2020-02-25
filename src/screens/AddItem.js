@@ -8,7 +8,7 @@ import {
   Alert
 } from 'react-native';
 
-import { db } from '../config';
+import * as firebase from 'firebase'
 
 export default class AddItem extends Component {
   state = {
@@ -21,7 +21,7 @@ export default class AddItem extends Component {
     });
   }
   handleSubmit = () => {
-    db.ref('/items').push(this.state);
+    firebase.database().ref('/items').push(this.state);
     Alert.alert('Item saved successfully');
   };
 
