@@ -17,7 +17,7 @@ class SearchScreen extends React.Component {
         open: false,
         isLoading: false,
         value: '',               //initialize state to hold user search entry
-        ingredients: [{id:0, val:'Bananas'},],         //initialize empty array in state to hold user input
+        ingredients: [{id:0, name:'Bananas'}, {id:1, name:'Apples'}, {id:2, name:'Oranges'}],         //initialize empty array in state to hold user input
         data: [],
         recipeTitles: '',
       };
@@ -55,22 +55,28 @@ class SearchScreen extends React.Component {
   
     };
   
-    state = {
-  
-    }
-  
     updateSearch = search => {
       this.setState({ value: search });  //Set state.value to search term
     }
   
     updateList() {
-      if (this.state.value === '') {     //don't update list if no search term is entered
-        return
+      if (this.state.value === '') {     //don't update list if no search term is entered 
+      return
       }
       this.setState(state => {  //push search term to state.ingredients array
         
-        const newItem = j;
-        const ingredients = state.ingredients.concat(state.value);
+        let newId
+
+        if (this.state.ingredients === '') {
+          newId = 0;
+        } else {
+          let lastId = this.state.ingredients[(this.state.ingredients.length - 1)].id
+          newId = lastId + 1
+        }
+
+        const obj = {id:newId, name:this.state.value}
+
+        const ingredients = state.ingredients.concat(obj);
   
         return {
           ingredients,
@@ -81,7 +87,18 @@ class SearchScreen extends React.Component {
       // this.SearchBar.Text = '';
     };
 
-    renderItem = ({item, index}) => {
+    renderIngredients = ({item, index}) => {
+  
+      return (
+        <View>
+          <Text index = {item.id}>
+            {item.id}: {item.name}
+          </Text>
+        </View>
+      );   
+    }
+
+    renderRecipes = ({item, index}) => {
   
       return (
         <View>
@@ -91,22 +108,43 @@ class SearchScreen extends React.Component {
           </Text>
         </View>
       );   
-    
     }
   
     keyExtractor = (item, index) => {
       return index.toString();
     }
+
+    // ListWithRemoveItem() {
+    //   const [list, setList] = this.state.ingredients;
+    
+    //   setList(list.filter(item => item.id !== id));
+    
+    //   return (
+    //     <ul>
+    //       {list.map(item => (
+    //         <li key={item.id}>
+    //           <label>{item.name}</label>
+    //           <button type="button" onClick={() => handleClick(item.id)}>
+    //             Remove
+    //           </button>
+    //         </li>
+    //       ))}
+    //     </ul>
+    //   );
+    // };
   
     render () {
   
       const { search } = this.state.value;
 
       let list = this.state.ingredients.map((item, key) =>
-        <Text>
-          {item.id}, {item.value}
-        </Text>
-      );
+        <View> {
+          <Text>
+            {item.name}
+          </Text>
+        }
+        </View>
+      )
   
       return (
         <View>
@@ -122,9 +160,11 @@ class SearchScreen extends React.Component {
             
           />
 
-          <Text>
-            {list}
-          </Text>
+          <FlatList
+            data={this.state.ingredients}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderIngredients}
+          />
   
           <Button       //Button for adding search term to search list
                 buttonStyle = {{
@@ -171,7 +211,7 @@ class SearchScreen extends React.Component {
           <FlatList
             data={this.state.data}
             keyExtractor={this.keyExtractor}
-            renderItem={this.renderItem}
+            renderItem={this.renderRecipes}
           />
   
         </View>
