@@ -11,10 +11,11 @@ export default class Profile extends React.Component {
 
     componentDidMount() {
         var userId = firebase.auth().currentUser.uid;
-        return firebase.database().ref('/users/' + userId).once('value').then(function (snapshot) {
-            this.state.email = (snapshot.val() && snapshot.val().email) || 'Anonymous';
-            this.state.name = (snapshot.val() && snapshot.val().name) || 'Anonymous';
-            
+        console.log(userId)
+        firebase.database().ref('users/' + userId).once('value').then(snapshot => {
+            console.log("snapshot", snapshot.val())
+            this.setState({ email: snapshot.val().email });
+            this.setState({ name: snapshot.val().name })
         })
     }
 
@@ -29,11 +30,8 @@ export default class Profile extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                (
-                {this.state.email.map} {this.state.name.map}
-            ) : (
-                    <Text>No Items</Text>
-                )}
+                <Text>Name: {this.state.name}</Text>
+                <Text>Email:{this.state.email}</Text>
             </View>
         )
     }

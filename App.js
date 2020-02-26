@@ -6,7 +6,9 @@ import MenuDrawer from 'react-native-side-drawer'
 import {Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 
 import './src/config.js'
@@ -16,96 +18,72 @@ import LoginScreen from './src/screens/Login';
 import SignUpScreen from './src/screens/SignUp';
 import HomeScreen from './src/screens/Home';
 import SearchScreen from './src/screens/Search';
-import ListScreen from './src/screens/Diet';
+import DietScreen from './src/screens/Diet';
 import Profile from './src/screens/Profile'
 
 import AddItem from './src/screens/AddItem';
 import ListItem from './src/screens/ListItem';
-import SignUp1 from './src/screens/SignUp1';
-import Login1 from './src/screens/Login1';
+// import SignUp1 from './src/screens/SignUp1';
+// import Login1 from './src/screens/Login1';
 
-const Tab = createBottomTabNavigator();
 
-function MyTabs() {
-  return (
-    <Tab.Navigator
-      initialRouteName="Login"
-      tabBarOptions={{
-        activeTintColor: '#e91e63',
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{
-          tabBarLabel: 'Search',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="magnify" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Diet"
-        component={ListScreen}
-        options={{
-          tabBarLabel: 'Diet',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="food-apple" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-circle" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{
-          tabBarVisible: false,
-          tabBarLabel: 'Login',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="SignUp"
-        component={SignUpScreen}
-        options={{
-          tabBarVisible: false,
-          tabBarLabel: 'SignUp',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
+const AppNavigator = createBottomTabNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="home" color={color} size={26} />
+        ),
+      }
+    },
+    Search: {
+      screen: SearchScreen,
+      navigationOptions: {
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="magnify" color={color} size={26} />
+        ),
+      }
+    },
+    Diet: {
+      screen: DietScreen,
+      navigationOptions: {
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="food-apple" color={color} size={25} />
+        ),
+      }
+    },
+    Profile: {
+      screen: Profile,
+      navigationOptions: {
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="account-circle" color={color} size={26} />
+        ),
+      }
+    },
+  },  
+);
+
+const ScreenNavigator = createStackNavigator(
+  {
+    tabs: AppNavigator,
+    Login: LoginScreen,
+    SignUp: SignUpScreen,
+    AddItem: AddItem,
+    ListItem: ListItem,
+  },
+  {
+    initialRouteName: 'Login',
+    headerMode: 'none',
+  },
+)
+
+const AppContainer = createAppContainer(ScreenNavigator);
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <AppContainer />
+    );
+  }
 }
-
-export default function Nav() {
-  return (
-    <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
-  );
-}
-
-

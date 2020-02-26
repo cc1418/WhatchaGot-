@@ -6,7 +6,6 @@ import MenuDrawer from 'react-native-side-drawer'
 import {Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-//import { Nav } from '../navigation/UniversalNavigator';
 import styles from '../../components/Style';
 
 class SearchScreen extends React.Component {
@@ -152,12 +151,11 @@ class SearchScreen extends React.Component {
           <SearchBar
             ref={search => this.search = search}
             inputStyle={{backgroundColor: 'white'}}
-            containerStyle={{backgroundColor: 'white', borderWidth: 0.3, borderRadius: 10, margin:10}}
+            containerStyle={{backgroundColor: 'white', borderWidth: 0.3, borderRadius: 10, margin:10, marginTop: 45}}
             inputContainerStyle={{backgroundColor: 'white'}}
             placeholder="Enter an Ingredient"
             onChangeText={this.updateSearch}
             value={search}
-            
           />
 
           <FlatList
