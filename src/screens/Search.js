@@ -86,15 +86,29 @@ class SearchScreen extends React.Component {
       // this.SearchBar.Text = '';
     };
 
+    deleteFromList = (itemId) => {
+      let updatedList = this.state.ingredients
+      let num = updatedList.filter(updatedList => updatedList.id !== itemId)
+      this.state.ingredients = num
+      this.setState({ 
+        refresh: !this.state.refresh
+      })
+
+    };
+
     renderIngredients = ({item, index}) => {
   
       return (
         <View>
+          <TouchableOpacity
+                     key = {item.id}
+                     onPress = {() => this.deleteFromList(item.id)}>
           <Text index = {item.id}>
             {item.id}: {item.name}
           </Text>
+          </TouchableOpacity>
         </View>
-      );   
+      );
     }
 
     renderRecipes = ({item, index}) => {
@@ -105,6 +119,7 @@ class SearchScreen extends React.Component {
             Name: {item.title}
   
           </Text>
+        
         </View>
       );   
     }
@@ -160,6 +175,7 @@ class SearchScreen extends React.Component {
 
           <FlatList
             data={this.state.ingredients}
+            extraData={this.state.refresh}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderIngredients}
           />
