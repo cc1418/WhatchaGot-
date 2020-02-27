@@ -19,14 +19,6 @@ export default class Profile extends React.Component {
         })
     }
 
-    //     firebase.database().ref('/users')
-    //     .on('value', snapshot => {
-    //         let data = snapshot.val();
-    //         let user = Object.values(data);
-    //         this.setState({ user });
-    //     })
-    // }
-
     render() {
         return (
             <View style={styles.container}>
