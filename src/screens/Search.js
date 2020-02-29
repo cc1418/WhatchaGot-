@@ -5,6 +5,7 @@ import {createStackNavigator} from  'react-navigation-stack'
 import MenuDrawer from 'react-native-side-drawer'
 import {Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import * as firebase from 'firebase'
 
 import styles from '../../components/Style';
 
@@ -32,10 +33,17 @@ class SearchScreen extends React.Component {
       let apiFoot = '&number=1&ranking=2&apiKey='
       let apiKey = 'b22b05749d464305b95df9c21d75c666'
   
-      if (this.state.ingredients.length > 1) {
-        apiList = this.state.ingredients.join(",+")
+      if (this.state.ingredients.length === 0){
+        alert('enter some ingredients first')
+        return
+      } else if(this.state.ingredients.length > 1) {
+        let newArray = []
+        this.state.ingredients.map((item) => {
+          newArray.push(item.name);
+        });
+        apiList = newArray.join(",+")
       } else {
-        apiList = this.state.ingredients[0]
+        apiList = this.state.ingredients[0].name
       }
   
       apiCall = apiHead + apiList + apiFoot + apiKey
@@ -46,7 +54,7 @@ class SearchScreen extends React.Component {
        .then((response) => response.json())
        .then((responseJson) => {
          this.setState({data: responseJson})
-         alert(responseJson[0].title)  //Debugging: make sure recipes come through
+         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
   
       //this.state.data = recipeJson;     //Practice json document for working with Json without making API call
@@ -96,6 +104,12 @@ class SearchScreen extends React.Component {
 
     };
 
+    addToDB = newItem => {
+      firebase.database().ref('/items').push({
+        ingredient : newItem         
+      });
+    }
+
     renderIngredients = ({item, index}) => {
   
       return (
@@ -103,8 +117,8 @@ class SearchScreen extends React.Component {
           <TouchableOpacity
                      key = {item.id}
                      onPress = {() => this.deleteFromList(item.id)}>
-          <Text index = {item.id}>
-            {item.id}: {item.name}
+          <Text index = {item.id} style = {{fontSize: 20}}>
+            {item.name}
           </Text>
           </TouchableOpacity>
         </View>
@@ -127,25 +141,6 @@ class SearchScreen extends React.Component {
     keyExtractor = (item, index) => {
       return index.toString();
     }
-
-    // ListWithRemoveItem() {
-    //   const [list, setList] = this.state.ingredients;
-    
-    //   setList(list.filter(item => item.id !== id));
-    
-    //   return (
-    //     <ul>
-    //       {list.map(item => (
-    //         <li key={item.id}>
-    //           <label>{item.name}</label>
-    //           <button type="button" onClick={() => handleClick(item.id)}>
-    //             Remove
-    //           </button>
-    //         </li>
-    //       ))}
-    //     </ul>
-    //   );
-    // };
   
     render () {
   
@@ -194,7 +189,7 @@ class SearchScreen extends React.Component {
                 onPress={() => this.updateList() }
           />
   
-          <Button       //Debugging tool, check to make sure list was updated
+          {/* <Button       //Debugging tool, check to make sure list was updated
                 buttonStyle = {{
                   backgroundColor: "#454647",
                   width: "45%",
@@ -206,6 +201,20 @@ class SearchScreen extends React.Component {
                 }}
                 title="Check Array"
                 onPress={() => alert(this.state.ingredients) }
+          /> */}
+
+          <Button       //Button for adding value in search abr to ingredients table in DB
+                buttonStyle = {{
+                  backgroundColor: "#454647",
+                  width: "45%",
+                  alignSelf:'center',
+                  marginTop: 30
+                }}
+                titleStyle = {{
+                  fontSize: 19,
+                }}
+                title="Send to DB"
+                onPress={() => this.addToDB(this.state.value) }
           />
   
           <Button       //Call searchByIngredient function
