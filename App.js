@@ -1,18 +1,12 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground} from 'react-native';
+import { YellowBox } from 'react-native';
 import {createAppContainer, SafeAreaView} from 'react-navigation';
 import {createStackNavigator} from  'react-navigation-stack'
-import MenuDrawer from 'react-native-side-drawer'
-import {Button, Input, SearchBar } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { NavigationContainer } from '@react-navigation/native';
-
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
+import _ from 'lodash'
 
 import './src/config.js'
-import styles from './components/Style';
 
 import LoginScreen from './src/screens/Login';
 import SignUpScreen from './src/screens/SignUp';
@@ -20,12 +14,16 @@ import HomeScreen from './src/screens/Home';
 import SearchScreen from './src/screens/Search';
 import DietScreen from './src/screens/Diet';
 import Profile from './src/screens/Profile'
-
 import AddItem from './src/screens/AddItem';
-import ListItem from './src/screens/ListItem';
-// import SignUp1 from './src/screens/SignUp1';
-// import Login1 from './src/screens/Login1';
+import ListItem from './src/screens/ListItem';  
 
+YellowBox.ignoreWarnings(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = message => {
+  if (message.indexOf('Setting a timer') <= -1) {
+    _console.warn(message);
+  }
+};
 
 const AppNavigator = createBottomTabNavigator(
   {

@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../../components/Style';
 
 class DietScreen extends React.Component {
-
   
     render () {
           return (

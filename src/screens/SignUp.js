@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground, Alert} from 'react-native';
-import {createAppContainer, SafeAreaView} from 'react-navigation';
-import {createStackNavigator} from  'react-navigation-stack'
-import MenuDrawer from 'react-native-side-drawer'
 import {Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase'
