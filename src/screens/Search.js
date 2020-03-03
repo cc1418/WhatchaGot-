@@ -197,7 +197,7 @@ class SearchScreen extends React.Component {
                   fontSize: 19,
                 }}
                 title="Check Array"
-                onPress={() => alert(this.state.ingredients) }
+                onPress={() => alert(this.state.ingrealertdients) }
           /> */}
 
           <Button       //Button for adding value in search abr to ingredients table in DB
