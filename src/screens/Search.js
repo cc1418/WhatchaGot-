@@ -20,13 +20,12 @@ class SearchScreen extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   var userId = firebase.auth().currentUser.uid; //Creates variable related to logged in user; Firebase knows who's logged in
-  //   firebase.database().ref('items/' + userId).on('value').then(snapshot => { //ref('table/' + userId).on('value') refers to the specific user's area of the table, and constantly looks at whatever 'value' is specified in the following enclosure
-  //     this.setState({ email: snapshot.val().email }); //.email is the 'value' and snapshot.val() is taking a snapshot of that value
-  //     this.setState({ name: snapshot.val().name })
-  //   })
-  // }
+  componentDidMount() {
+    var userId = firebase.auth().currentUser.uid; //Creates variable related to logged in user; Firebase knows who's logged in
+    firebase.database().ref('items/' + userId).on('value', snapshot => { //ref('table/' + userId).on('value') refers to the specific user's area of the table, and constantly looks at whatever 'value' is specified in the following enclosure
+      //this.setState({ email: snapshot.val().email }); //.email is the 'value' and snapshot.val() is taking a snapshot of that value
+    })
+  }
 
   searchByIngredient() {  //Function for creating the api call to spoonacular and fetching the call
     {/* Michael API key: 6229cd708177474780e6c39e57b69361 */ }
@@ -127,9 +126,19 @@ class SearchScreen extends React.Component {
 
   };
 
-  addToDB = newItem => {
-    firebase.database().ref('/items').push({
-      ingredient: newItem
+  addFridgeToDB() {
+    let userId = firebase.auth().currentUser.uid;
+    let $fridgeState = this.state.ingredients
+    let $fridgePush = []
+    $fridgeState.map((item) => {
+      $fridgePush.push(item.name);
+    });
+
+    let newItem = this.state.value
+
+    alert($fridgePush)
+    firebase.database().ref().child('/items/' + userId + '/fridge').set({
+      shelf: $fridgePush
     });
   }
 
@@ -223,7 +232,7 @@ class SearchScreen extends React.Component {
                   fontSize: 19,
                 }}
                 title="Check Array"
-                onPress={() => alert(this.state.ingrealertdients) }
+                onPress={() => alert(this.state.ingredients) }
           /> */}
 
         <Button       //Button for adding value in search abr to ingredients table in DB
@@ -236,8 +245,8 @@ class SearchScreen extends React.Component {
           titleStyle={{
             fontSize: 19,
           }}
-          title="Send to DB"
-          onPress={() => this.addToDB(this.state.value)}
+          title="Store List in Fridge"
+          onPress={() => this.addFridgeToDB()}
         />
 
         <Button       //Call searchByIngredient function
