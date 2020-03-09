@@ -20,6 +20,14 @@ class SearchScreen extends React.Component {
     };
   }
 
+  // componentDidMount() {
+  //   var userId = firebase.auth().currentUser.uid; //Creates variable related to logged in user; Firebase knows who's logged in
+  //   firebase.database().ref('items/' + userId).on('value').then(snapshot => { //ref('table/' + userId).on('value') refers to the specific user's area of the table, and constantly looks at whatever 'value' is specified in the following enclosure
+  //     this.setState({ email: snapshot.val().email }); //.email is the 'value' and snapshot.val() is taking a snapshot of that value
+  //     this.setState({ name: snapshot.val().name })
+  //   })
+  // }
+
   searchByIngredient() {  //Function for creating the api call to spoonacular and fetching the call
     {/* Michael API key: 6229cd708177474780e6c39e57b69361 */ }
     // Cory API key: b22b05749d464305b95df9c21d75c666
@@ -87,11 +95,11 @@ class SearchScreen extends React.Component {
 
       let newId
 
-      if (this.state.ingredients === '') {
-        newId = 0;
-      } else {
+      if (this.state.ingredients.length >= 1) {
         let lastId = this.state.ingredients[(this.state.ingredients.length - 1)].id
         newId = lastId + 1
+      } else {
+        newId = 0;
       }
 
       const obj = { id: newId, name: this.state.value }
@@ -114,6 +122,8 @@ class SearchScreen extends React.Component {
     this.setState({
       refresh: !this.state.refresh
     })
+
+    alert(JSON.stringify(this.state.ingredients));
 
   };
 
