@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import * as firebase from 'firebase'
 
 export default class Profile extends React.Component {
@@ -24,6 +24,7 @@ export default class Profile extends React.Component {
             <View style={styles.container}>
                 <Text>Name: {this.state.name}</Text>
                 <Text>Email:{this.state.email}</Text>
+                <Button onPress={() => this.props.navigation.navigate('UpdateProfile')} title='Update Information'/>
             </View>
         )
     }
