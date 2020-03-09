@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground } from 'react-native';
-import { Button, Input, SearchBar } from 'react-native-elements';
+import { Button, Input, SearchBar, Card} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase'
 
@@ -146,14 +146,27 @@ class SearchScreen extends React.Component {
 
     return (
       <View>
-        <TouchableOpacity
-          key={item.id}
-          onPress={() => this.deleteFromList(item.id)}>
-          <Text index={item.id} style={{ fontSize: 20 }}>
+        <Card 
+        styles = {{
+          borderRadius: 1
+        }}
+        containerStyle = {{
+          width: 95,
+          height: 45,
+          marginLeft: 0,
+          marginTop: 3,
+          borderColor: "#ff944d"
+        }}>
+          <TouchableOpacity
+            key={item.id}
+            onPress={() => this.deleteFromList(item.id)}>
+          <Text index={item.id} style={{ fontSize: 13, marginTop: -5, alignSelf: "center"}}>
             {item.name}
           </Text>
-        </TouchableOpacity>
+          </TouchableOpacity> 
+        </Card>
       </View>
+
     );
   }
 
@@ -193,19 +206,32 @@ class SearchScreen extends React.Component {
         <SearchBar
           ref={search => this.search = search}
           inputStyle={{ backgroundColor: 'white' }}
-          containerStyle={{ backgroundColor: 'white', borderWidth: 0.3, borderRadius: 10, margin: 10, marginTop: 45 }}
+          containerStyle={{ 
+            backgroundColor: 'white', 
+            borderWidth: 0.3, 
+            borderRadius: 20, 
+            margin: 16, 
+            marginTop: 50, 
+            borderColor: "#ffffff00",
+          }}
+          lightTheme
           inputContainerStyle={{ backgroundColor: 'white' }}
           placeholder="Enter an Ingredient"
           onChangeText={this.updateSearch}
           value={search}
         />
-
-        <FlatList
-          data={this.state.ingredients}
-          extraData={this.state.refresh}
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderIngredients}
-        />
+        <View style = {{paddingLeft:10}}> 
+          <FlatList
+            contentContainerStyle={{alignSelf: 'flex-start'}}
+            numColumns={4}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            data={this.state.ingredients}
+            extraData={this.state.refresh}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderIngredients}
+          />
+        </View>
 
         <Button       //Button for adding search term to search list
           buttonStyle={{

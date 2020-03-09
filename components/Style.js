@@ -31,6 +31,20 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+
+    homeContainer:{
+      flex: 1,
+    },
+
+    backgroundVideo: {
+      //height: height,
+      position: "absolute",
+      top: 0,
+      left: 0,
+      //alignItems: "stretch",
+      bottom: 0,
+      right: 0
+    },
   
     libraryContainer: {
       flex: 1,

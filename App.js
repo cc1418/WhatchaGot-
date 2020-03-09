@@ -31,7 +31,7 @@ const AppNavigator = createBottomTabNavigator(
       screen: HomeScreen,
       navigationOptions: {
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="home" color={"#ffffff"} size={27} />
+          <MaterialCommunityIcons name="home" color={"#ffffff"} size={35} />
         ),
       }
     },
@@ -39,7 +39,7 @@ const AppNavigator = createBottomTabNavigator(
       screen: SearchScreen,
       navigationOptions: {
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="magnify" color={"#ffffff"} size={27} />
+          <MaterialCommunityIcons name="magnify" color={"#ffffff"} size={35} />
         ),
       }
     },
@@ -47,7 +47,7 @@ const AppNavigator = createBottomTabNavigator(
       screen: DietScreen,
       navigationOptions: {
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="food-apple" color={"#ffffff"} size={26} />
+          <MaterialCommunityIcons name="food-apple" color={"#ffffff"} size={34} />
         ),
       }
     },
@@ -55,7 +55,7 @@ const AppNavigator = createBottomTabNavigator(
       screen: Profile,
       navigationOptions: {
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="account-circle" color={"#ffffff"} size={27} />
+          <MaterialCommunityIcons name="account-circle" color={"#ffffff"} size={34} />
         ),
       }
     },
@@ -63,13 +63,14 @@ const AppNavigator = createBottomTabNavigator(
   {
     tabBarOptions:{
       style:{
-        backgroundColor:'#ff8533',
+        backgroundColor:'#ff944d',
         height: 55,
       },
       labelStyle:{
-        fontSize: 13,
+        fontSize: 10,
       },
       activeTintColor: '#ffffff',
+      activeBackgroundColor: '#ff8533',
       inactiveTintColor: '#ffffff',
     }
   }  

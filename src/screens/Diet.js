@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground} from 'react-native';
-import {createAppContainer, SafeAreaView} from 'react-navigation';
-import {createStackNavigator} from  'react-navigation-stack'
-import MenuDrawer from 'react-native-side-drawer'
-import {Button, Input, SearchBar } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
+import Video from 'react-native';
 
 import styles from '../../components/Style';
 
@@ -13,7 +10,17 @@ class DietScreen extends React.Component {
     render () {
           return (
           <View style={styles.container}>
-
+            {/* <Video
+              source={require('../../assets/cuttingsteak.mp4')}
+              ref={(ref) => {
+                this.player = ref
+              }}
+              style={styles.backgroundVideo}
+              muted={true}
+              repeat={true}
+              resizeMode="cover"
+              rate={1.0}
+            />  */}
           </View>
         );
       } 
