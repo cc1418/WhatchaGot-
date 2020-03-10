@@ -1,8 +1,8 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import * as firebase from 'firebase'
 import { Input } from 'react-native-elements'
-import { Button, Avatar} from 'react-native-elements';
+import { Button, Avatar } from 'react-native-elements';
 
 import styles from '../../components/Style';
 
@@ -11,112 +11,172 @@ export default class Profile extends React.Component {
     constructor() {
         super();
         this.state = {
-          fontLoaded: false
+            fontLoaded: false
         };
-      }
-    
+    }
+
     async componentDidMount() {
         await Font.loadAsync({
-          'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
-          'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
-          'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
-          'open-sans': require('../../assets/fonts/OpenSans-Regular.ttf'),
+            'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
+            'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
+            'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
+            'open-sans': require('../../assets/fonts/OpenSans-Regular.ttf'),
         });
-    
-       this.setState({ fontLoaded: true });
+
+        this.setState({ fontLoaded: true });
     }
 
     state = {
         name: [],
-        email: []
+        email: [],
+        newPassword: '',
+        currentPassword: '',
+        newEmail: '',
+        newName: '', 
     }
 
     componentDidMount() {
         var userId = firebase.auth().currentUser.uid;
         console.log(userId)
-        // firebase.database().ref('users/' + userId).once('value').then(snapshot => {
-        //     console.log("snapshot", snapshot.val())
-        //     this.setState({ email: snapshot.val().email });
-        //     this.setState({ name: snapshot.val().name })
-        // })
         firebase.database().ref('users/' + userId).on('value', snapshot => {
             this.setState({ email: snapshot.val().email });
             this.setState({ name: snapshot.val().name });
         })
     }
 
-    updateName = name => {
-        var userId = firebase.auth().currentUser.uid;
-        firebase.database().ref('users/' + userId).update({
-            name: name
-        })
-    }
-
-    updateEmail = email => {
-        var userId = firebase.auth().currentUser.uid;
-        firebase.database().ref('users/' + userId).update({
-            email: email
-        })
-        firebase.auth().updateCurrentUser({
-            email: email
-        })
-    }
-
     signOut = () => {
         firebase.auth().signOut()
-        .then(this.props.navigation.navigate('Login'))
+            .then(this.props.navigation.navigate('Login'))
     }
 
+    reauthenticate = (currentPassword) => {
+        var user = firebase.auth().currentUser;
+        var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+        return user.reauthenticateWithCredential(cred);
+    }
+
+    onChangePasswordPress = () => {
+
+        this.reauthenticate(this.state.currentPassword).then(() => {
+            var user = firebase.auth().currentUser;
+            user.updatePassword(this.state.newPassword).then(() => {
+                Alert.alert('Password was Changed!')
+            }).catch((error) => {
+                Alert.alert(error.message)
+            })
+        }).catch((error) => {
+            Alert.alert(error.message);
+        })
+    }
+
+    onChangeEmailPress = () => {
+        this.reauthenticate(this.state.currentPassword).then(() => {
+            var user = firebase.auth().currentUser;
+            user.updateEmail(this.state.newEmail).then(() => {
+                Alert.alert('Email was Changed!')
+            }).catch((error) => {
+                Alert.alert(error.message)
+            })
+        }).catch((error) => {
+            Alert.alert(error.message);
+        }).then(() => {
+            var userId = firebase.auth().currentUser.uid;
+            firebase.database().ref('users/' + userId).update({
+                email: this.state.newEmail
+            })
+        })
+    }
+
+    onChangeNamePress = () => {
+        this.reauthenticate(this.state.currentPassword).then(() => {
+            var userId = firebase.auth().currentUser.uid;
+            firebase.database().ref('users/' + userId).update({
+                name: this.state.newName
+            }).then(() => {
+                Alert.alert('Name was Changed!');
+            })
+        })
+    }
+
+
+
     render() {
-        
+
         return (
-            // <View style={styles.container}>
-            //     <Text>Name: {this.state.name}</Text>
-            //     <Text>Email:{this.state.email}</Text>
-            //     <Input
-            //         value={this.state.name}
-            //         onChangeText={this.updateName} />
-            //     <Input
-            //         value={this.state.email}
-            //         onChangeText={this.updateEmail} />
-            //     <Button title='Signout'
-            //     onPress={this.signOut}/>
-            // </View>
-            <View style = {{ flex: 1, backgroundColor: "#fff" }}>
+            <View style={{ flex: 1, backgroundColor: "#fff" }}>
                 <View style={styles.profileContainer}>
                     <Avatar
-                        size = "large"
+                        size="large"
                         rounded
                         showEditButton
-                        icon={{name: 'user', type: 'font-awesome'}}
+                        icon={{ name: 'user', type: 'font-awesome' }}
                         activeOpacity={0.7}
                     />
                     <Text>{this.state.name}</Text>
-                    {/* <Text>{this.state.email}</Text> */}
-                    {/* <Button onPress={() => this.props.navigation.navigate('UpdateProfile')} title='Update Information'/> */}
+                    <Text>{this.state.email}</Text>
+
                     <Input
-                    //placeholder = {this.state.name}
-                    Value={this.state.name}
-                    onChangeText={this.updateName} />
+                        placeholder='Current Password'
+                        autoCapitalize='none'
+                        value={this.state.currentPassword}
+                        secureTextEntry={true}
+                        onChangeText={(text) => { this.setState({ currentPassword: text }) }}
+                    />
+
+                    <Input
+                        placeholder={this.state.name}
+                        value={this.state.newName}
+                        onChangeText={(text) => { this.setState({ newName: text}) }}
+                    />
+
+                    <Button
+                        title='Change Name'
+                        onPress={this.onChangeNamePress}
+                    />
+
+                    <Input
+                        autoCapitalize='none'
+                        value={this.state.newEmail}
+                        placeholder={this.state.email}
+                        onChangeText={(text) => { this.setState({ newEmail: text }) }}
+                    />
+
+                    <Button
+                        title='Change Email'
+                        onPress={this.onChangeEmailPress}
+                    />
+
+                    <Input
+                        placeholder='New Password'
+                        autoCapitalize='none'
+                        value={this.state.newPassword}
+                        secureTextEntry={true}
+                        onChangeText={(text) => { this.setState({ newPassword: text }) }}
+                    />
+
+                    <Button
+                        title='Change Password'
+                        onPress={this.onChangePasswordPress}
+                    />
                 </View>
                 <View>
-                    <Text style = {{marginTop: 40, fontWeight: 'bold', fontSize: 18}}>RECENTLY VIEWED</Text>
+                    <Text style={{ marginTop: 40, fontWeight: 'bold', fontSize: 18 }}>RECENTLY VIEWED</Text>
                 </View>
-                
-                <Button 
+
+                <Button
                     buttonStyle={{
                         width: "45%",
                         alignSelf: 'center',
                         marginTop: 30,
                         backgroundColor: "#ff944d",
-                    
-                      }}
-                      titleStyle={{
+
+                    }}
+                    titleStyle={{
                         fontSize: 19,
-                      }}
+                    }}
                     title='Sign Out'
                     onPress={this.signOut}
-                    />
+                />
             </View>
         )
     }
