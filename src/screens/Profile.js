@@ -1,6 +1,9 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text } from 'react-native'
 import * as firebase from 'firebase'
+import { Button, Avatar} from 'react-native-elements';
+
+import styles from '../../components/Style';
 
 export default class Profile extends React.Component {
 
@@ -21,21 +24,33 @@ export default class Profile extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Name: {this.state.name}</Text>
-                <Text>Email:{this.state.email}</Text>
-                <Button onPress={() => this.props.navigation.navigate('UpdateProfile')} title='Update Information'/>
+            <View style = {{ flex: 1, backgroundColor: "#fff" }}>
+                <View style={styles.profileContainer}>
+                    <Avatar
+                        size = "large"
+                        rounded
+                        showEditButton
+                        icon={{name: 'user', type: 'font-awesome'}}
+                        activeOpacity={0.7}
+                    />
+                    <Text>{this.state.name}</Text>
+                    <Text>{this.state.email}</Text>
+                    {/* <Button onPress={() => this.props.navigation.navigate('UpdateProfile')} title='Update Information'/> */}
+                </View>
+                <Button 
+                    buttonStyle={{
+                        width: "45%",
+                        alignSelf: 'center',
+                        marginTop: 30,
+                        backgroundColor: "#ff944d",
+                    
+                      }}
+                      titleStyle={{
+                        fontSize: 19,
+                      }}
+                    title='Sign Out'/>
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-})
 

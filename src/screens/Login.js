@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground, Alert } from 'react-native';
+import { StyleSheet, Text, View,ImageBackground } from 'react-native';
 import { Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase'
-//import Video from 'react-native-video';
+import * as Font from 'expo-font';
+
 
 import styles from '../../components/Style';
 
 class LoginScreen extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      fontLoaded: false
+    };
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'open-sans-bold': require('../../assets/fonts/Montserrat-Black.ttf'),
+    });
+
+    this.setState({ fontLoaded: true });
+  }
+
   state = {
     email: '',
-    password: ''
+    password: '',
   }
 
   handleLogin = () => {
@@ -24,23 +40,15 @@ class LoginScreen extends React.Component {
   }
 
   render() {
+    if (!this.state.fontLoaded) {
+      return (<View>{/*some loader*/}</View>);
+    }
     return (
       <View>
         <ImageBackground source={require('../../assets/412bg2.jpg')} style={{ width: '100%', height: '100%' }}>
           <View style={styles.container}>
-            {/* <Video
-              source={require('../../assets/cuttingsteak.mp4')}
-              ref={(ref) => {
-                this.player = ref
-              }}
-              style={styles.backgroundVideo}
-              muted={true}
-              repeat={true}
-              resizeMode="cover"
-              rate={1.0}
-            /> */}
             <View>
-              <Text style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: 31, marginLeft: 67, marginTop: 50 }}>Welcome</Text>
+              <Text style={{ fontFamily: 'Montserrat-Black', fontWeight: 'bold', fontSize: 31, marginLeft: 67, marginTop: 50 }}>Welcome</Text>
               <Text style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: 28, marginLeft: 122 }}>To</Text>
               <Text style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: 45 }}>WhatchaGot</Text>
             </View>

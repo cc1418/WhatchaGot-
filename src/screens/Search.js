@@ -258,10 +258,10 @@ class SearchScreen extends React.Component {
 
         <Button       //Button for adding search term to search list
           buttonStyle={{
-            backgroundColor: "#454647",
             width: "45%",
             alignSelf: 'center',
-            marginTop: 30
+            marginTop: 30,
+            backgroundColor: "#ff944d"
           }}
           titleStyle={{
             fontSize: 19,
@@ -286,10 +286,10 @@ class SearchScreen extends React.Component {
 
         <Button       //Button for adding value in search abr to ingredients table in DB
           buttonStyle={{
-            backgroundColor: "#454647",
             width: "45%",
             alignSelf: 'center',
-            marginTop: 30
+            marginTop: 30,
+            backgroundColor: "#ff944d"
           }}
           titleStyle={{
             fontSize: 19,
@@ -300,10 +300,10 @@ class SearchScreen extends React.Component {
 
         <Button       //Call searchByIngredient function
           buttonStyle={{
-            backgroundColor: "#454647",
             width: "45%",
             alignSelf: 'center',
-            marginTop: 30
+            marginTop: 30,
+            backgroundColor: "#ff944d"
           }}
           titleStyle={{
             fontSize: 19,
