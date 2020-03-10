@@ -26,7 +26,7 @@ class HomeScreen extends React.Component {
       <View style={styles.homeContainer}>
 
         <View> 
-          <Text style={{ fontFamily: "Montserrat-Black", fontSize: 35, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
+          <Text style={{ fontFamily: "", fontSize: 35, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
           <Text style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: 35, marginLeft: 15 }}>{this.state.name} !</Text>
         </View>
 
