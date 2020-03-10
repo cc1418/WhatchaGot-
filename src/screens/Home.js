@@ -34,11 +34,10 @@ class HomeScreen extends React.Component {
   componentDidMount() {
     var userId = firebase.auth().currentUser.uid;
     console.log(userId)
-    firebase.database().ref('users/' + userId).once('value').then(snapshot => {
-        console.log("snapshot", snapshot.val())
-        this.setState({ email: snapshot.val().email });
-        this.setState({ name: snapshot.val().name })
-    })
+    firebase.database().ref('users/' + userId).on('value', snapshot => {
+      this.setState({ email: snapshot.val().email });
+      this.setState({ name: snapshot.val().name });
+  })
 }
 
   render () {
