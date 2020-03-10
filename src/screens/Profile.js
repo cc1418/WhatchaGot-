@@ -7,6 +7,24 @@ import styles from '../../components/Style';
 
 export default class Profile extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {
+          fontLoaded: false
+        };
+      }
+    
+    async componentDidMount() {
+        await Font.loadAsync({
+          'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
+          'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
+          'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
+          'open-sans': require('../../assets/fonts/OpenSans-Regular.ttf'),
+        });
+    
+       this.setState({ fontLoaded: true });
+    }
+
     state = {
         name: [],
         email: []
@@ -23,6 +41,7 @@ export default class Profile extends React.Component {
     }
 
     render() {
+        
         return (
             <View style = {{ flex: 1, backgroundColor: "#fff" }}>
                 <View style={styles.profileContainer}>
@@ -34,7 +53,7 @@ export default class Profile extends React.Component {
                         activeOpacity={0.7}
                     />
                     <Text>{this.state.name}</Text>
-                    <Text>{this.state.email}</Text>
+                    {/* <Text>{this.state.email}</Text> */}
                     {/* <Button onPress={() => this.props.navigation.navigate('UpdateProfile')} title='Update Information'/> */}
                 </View>
                 <Button 

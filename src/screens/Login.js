@@ -19,7 +19,9 @@ class LoginScreen extends React.Component {
 
   async componentDidMount() {
     await Font.loadAsync({
-      'open-sans-bold': require('../../assets/fonts/Montserrat-Black.ttf'),
+      'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
+      'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
+      'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
     });
 
     this.setState({ fontLoaded: true });
@@ -48,9 +50,9 @@ class LoginScreen extends React.Component {
         <ImageBackground source={require('../../assets/412bg2.jpg')} style={{ width: '100%', height: '100%' }}>
           <View style={styles.container}>
             <View>
-              <Text style={{ fontFamily: 'Montserrat-Black', fontWeight: 'bold', fontSize: 31, marginLeft: 67, marginTop: 50 }}>Welcome</Text>
-              <Text style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: 28, marginLeft: 122 }}>To</Text>
-              <Text style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: 45 }}>WhatchaGot</Text>
+              <Text style={{ fontFamily: 'Raleway-semibold-i', fontSize: 31, marginLeft: 75, marginTop: 53 }}>Welcome</Text>
+              <Text style={{ fontFamily: 'Raleway-semibold-i', fontSize: 28, marginLeft: 130 }}>To</Text>
+              <Text style={{ fontFamily: 'Raleway-semibold-i', fontSize: 45 }}>WhatchaGot</Text>
             </View>
 
             <View>
