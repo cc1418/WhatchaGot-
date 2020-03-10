@@ -81,7 +81,7 @@ export default class Profile extends React.Component {
             //         onChangeText={this.updateEmail} />
             //     <Button title='Signout'
             //     onPress={this.signOut}/>
-            // </View>s
+            // </View>
             <View style = {{ flex: 1, backgroundColor: "#fff" }}>
                 <View style={styles.profileContainer}>
                     <Avatar
@@ -91,13 +91,18 @@ export default class Profile extends React.Component {
                         icon={{name: 'user', type: 'font-awesome'}}
                         activeOpacity={0.7}
                     />
-                    <Text style = {{marginTop:8, fontWeight: 'bold', fontSize: 18}}>{this.state.name}</Text>
+                    <Text>{this.state.name}</Text>
                     {/* <Text>{this.state.email}</Text> */}
                     {/* <Button onPress={() => this.props.navigation.navigate('UpdateProfile')} title='Update Information'/> */}
+                    <Input
+                    placeholder = {this.state.name}
+                    Value={this.state.name}
+                    onChangeText={this.updateName} />
                 </View>
                 <View>
-                    <Text style = {{marginTop:8, fontWeight: 'bold', fontSize: 18}}>RECENTLY VIEWED</Text>
+                    <Text style = {{marginTop: 40, fontWeight: 'bold', fontSize: 18}}>RECENTLY VIEWED</Text>
                 </View>
+                
                 <Button 
                     buttonStyle={{
                         width: "45%",
@@ -109,7 +114,9 @@ export default class Profile extends React.Component {
                       titleStyle={{
                         fontSize: 19,
                       }}
-                    title='Sign Out'/>
+                    title='Sign Out'
+                    onPress={this.signOut}
+                    />
             </View>
         )
     }
