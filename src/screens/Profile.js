@@ -52,9 +52,12 @@ export default class Profile extends React.Component {
                         icon={{name: 'user', type: 'font-awesome'}}
                         activeOpacity={0.7}
                     />
-                    <Text>{this.state.name}</Text>
+                    <Text style = {{marginTop:8, fontWeight: 'bold', fontSize: 18}}>{this.state.name}</Text>
                     {/* <Text>{this.state.email}</Text> */}
                     {/* <Button onPress={() => this.props.navigation.navigate('UpdateProfile')} title='Update Information'/> */}
+                </View>
+                <View>
+                    <Text style = {{marginTop:8, fontWeight: 'bold', fontSize: 18}}>RECENTLY VIEWED</Text>
                 </View>
                 <Button 
                     buttonStyle={{

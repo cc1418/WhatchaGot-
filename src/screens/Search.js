@@ -174,8 +174,8 @@ class SearchScreen extends React.Component {
           borderRadius: 1
         }}
         containerStyle = {{
-          width: '30%',
-          height: 45,
+          width: 90,
+          height: 55,
           marginLeft: 0,
           marginTop: 3,
           borderColor: "#ff944d"
@@ -199,7 +199,7 @@ class SearchScreen extends React.Component {
       <View>
         <Text>
           Name: {item.title}
-
+          
         </Text>
 
       </View>
