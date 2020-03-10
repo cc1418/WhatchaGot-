@@ -26,7 +26,6 @@ class SignUpScreen extends React.Component {
           this.props.navigation.navigate('Login');
           Alert.alert('User Created Successfully. Please Login.')
         }).catch(error => console.log(error));
-        
     
       });
     }
