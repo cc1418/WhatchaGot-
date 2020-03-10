@@ -1,9 +1,30 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text } from 'react-native'
 import * as firebase from 'firebase'
 import { Input } from 'react-native-elements'
+import { Button, Avatar} from 'react-native-elements';
+
+import styles from '../../components/Style';
 
 export default class Profile extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+          fontLoaded: false
+        };
+      }
+    
+    async componentDidMount() {
+        await Font.loadAsync({
+          'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
+          'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
+          'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
+          'open-sans': require('../../assets/fonts/OpenSans-Regular.ttf'),
+        });
+    
+       this.setState({ fontLoaded: true });
+    }
 
     state = {
         name: [],
@@ -47,6 +68,7 @@ export default class Profile extends React.Component {
     }
 
     render() {
+        
         return (
             <View style={styles.container}>
                 <Text>Name: {this.state.name}</Text>
@@ -59,17 +81,33 @@ export default class Profile extends React.Component {
                     onChangeText={this.updateEmail} />
                 <Button title='Signout'
                 onPress={this.signOut}/>
+            <View style = {{ flex: 1, backgroundColor: "#fff" }}>
+                <View style={styles.profileContainer}>
+                    <Avatar
+                        size = "large"
+                        rounded
+                        showEditButton
+                        icon={{name: 'user', type: 'font-awesome'}}
+                        activeOpacity={0.7}
+                    />
+                    <Text>{this.state.name}</Text>
+                    {/* <Text>{this.state.email}</Text> */}
+                    {/* <Button onPress={() => this.props.navigation.navigate('UpdateProfile')} title='Update Information'/> */}
+                </View>
+                <Button 
+                    buttonStyle={{
+                        width: "45%",
+                        alignSelf: 'center',
+                        marginTop: 30,
+                        backgroundColor: "#ff944d",
+                    
+                      }}
+                      titleStyle={{
+                        fontSize: 19,
+                      }}
+                    title='Sign Out'/>
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-})
 

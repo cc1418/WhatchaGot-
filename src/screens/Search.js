@@ -20,10 +20,6 @@ class SearchScreen extends React.Component {
     };
   }
 
-  state = {
-    fridge: []
-  }
-
   componentDidMount() { //Loads the users existing 
     let userId = firebase.auth().currentUser.uid; //Creates variable related to logged in user; Firebase knows who's logged in
     let fridge
@@ -59,7 +55,7 @@ class SearchScreen extends React.Component {
     let apiHead = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
     let apiFunction = 'findByIngredients?'
     let apiList
-    let apiFoot = 'number=5&ranking=2&ingredients='
+    let apiFoot = 'number=10&ranking=2&ingredients='
     let apiKey = 'f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6'
 
     if (this.state.ingredients.length === 0) {
@@ -145,7 +141,7 @@ class SearchScreen extends React.Component {
       refresh: !this.state.refresh
     })
 
-    alert(JSON.stringify(this.state.ingredients));
+    //alert(JSON.stringify(this.state.ingredients));
 
   };
 
@@ -174,7 +170,7 @@ class SearchScreen extends React.Component {
           borderRadius: 1
         }}
         containerStyle = {{
-          width: 95,
+          width: '30%',
           height: 45,
           marginLeft: 0,
           marginTop: 3,
@@ -199,6 +195,7 @@ class SearchScreen extends React.Component {
       <View>
         <Text>
           Name: {item.title}
+          Id: {item.id}
 
         </Text>
 
@@ -258,10 +255,10 @@ class SearchScreen extends React.Component {
 
         <Button       //Button for adding search term to search list
           buttonStyle={{
-            backgroundColor: "#454647",
             width: "45%",
             alignSelf: 'center',
-            marginTop: 30
+            marginTop: 30,
+            backgroundColor: "#ff944d"
           }}
           titleStyle={{
             fontSize: 19,
@@ -286,10 +283,10 @@ class SearchScreen extends React.Component {
 
         <Button       //Button for adding value in search abr to ingredients table in DB
           buttonStyle={{
-            backgroundColor: "#454647",
             width: "45%",
             alignSelf: 'center',
-            marginTop: 30
+            marginTop: 30,
+            backgroundColor: "#ff944d"
           }}
           titleStyle={{
             fontSize: 19,
@@ -300,10 +297,10 @@ class SearchScreen extends React.Component {
 
         <Button       //Call searchByIngredient function
           buttonStyle={{
-            backgroundColor: "#454647",
             width: "45%",
             alignSelf: 'center',
-            marginTop: 30
+            marginTop: 30,
+            backgroundColor: "#ff944d"
           }}
           titleStyle={{
             fontSize: 19,

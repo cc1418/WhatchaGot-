@@ -36,14 +36,11 @@ const styles = StyleSheet.create({
       flex: 1,
     },
 
-    backgroundVideo: {
-      //height: height,
-      position: "absolute",
-      top: 0,
-      left: 0,
-      //alignItems: "stretch",
-      bottom: 0,
-      right: 0
+    profileContainer:{
+      //flex: 1,
+      marginTop: 30,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   
     libraryContainer: {
