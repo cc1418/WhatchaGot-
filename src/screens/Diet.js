@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground} from 'react-native';
 
-import Video from 'react-native-video';
+//import Video from 'react-native-video';
 
 import styles from '../../components/Style';
 
