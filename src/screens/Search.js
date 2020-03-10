@@ -170,7 +170,7 @@ class SearchScreen extends React.Component {
           borderRadius: 1
         }}
         containerStyle = {{
-          width: '30%',
+          width: '90%',
           height: 45,
           marginLeft: 0,
           marginTop: 3,
@@ -180,7 +180,7 @@ class SearchScreen extends React.Component {
             key={item.id}
             onPress={() => this.deleteFromList(item.id)}>
           <Text index={item.id} style={{ fontSize: 13, marginTop: -5, alignSelf: "center"}}>
-            {item.name}
+            {item.name} 
           </Text>
           </TouchableOpacity> 
         </Card>
