@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, A
 import { Button, Input, SearchBar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase'
-import Video from 'react-native';
+import Video from 'react-native-video';
 
 import styles from '../../components/Style';
 
