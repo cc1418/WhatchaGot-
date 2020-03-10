@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground, SnapshotViewIOS } from 'react-native';
-import { Button, Input, SearchBar, Card} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, SnapshotViewIOS, SafeAreaView, ScrollView } from 'react-native';
+import { Button, Input, SearchBar, Card, Icon} from 'react-native-elements';
 import * as firebase from 'firebase'
 
 import styles from '../../components/Style';
@@ -17,6 +16,7 @@ class SearchScreen extends React.Component {
       ingredients: [],         //initialize empty array in state to hold user input
       data: [],
       recipeTitles: '',
+      //enableScrollViewScroll: true,
     };
   }
 
@@ -55,7 +55,7 @@ class SearchScreen extends React.Component {
     let apiHead = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
     let apiFunction = 'findByIngredients?'
     let apiList
-    let apiFoot = 'number=10&ranking=2&ingredients='
+    let apiFoot = 'number=8&ranking=2&ingredients='
     let apiKey = 'f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6'
 
     if (this.state.ingredients.length === 0) {
@@ -193,15 +193,37 @@ class SearchScreen extends React.Component {
 
     return (
       <View>
-        <Text>
-          Name: {item.title}
-          Id: {item.id}
+        <Card 
+        styles = {{
+          borderRadius: 5
+        }}
+        containerStyle = {{
+          width: 200,
+          height: 275,
+          marginLeft: 0,
+          marginTop: 3,
+          borderColor: "#ff944d"
+        }}
+        image={{uri: item.image}}
+        >
 
+        <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center"}}>
+          {item.title}
         </Text>
 
+        <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2}}>      
+            Likes: {item.likes}
+        </Text>
+
+        <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2}}>      
+            Missed Ingredients: {item.missedIngredientCount}
+        </Text>
+
+        </Card>
       </View>
     );
   }
+
 
   keyExtractor = (item, index) => {
     return index.toString();
@@ -221,8 +243,14 @@ class SearchScreen extends React.Component {
     )
 
     return (
+      <View 
+      onStartShouldSetResponderCapture={() => {
+        this.setState({ enableScrollViewScroll: true });
+      }}>
+      <ScrollView 
+      scrollEnabled={this.state.enableScrollViewScroll}
+      >
       <View>
-
         <SearchBar
           ref={search => this.search = search}
           inputStyle={{ backgroundColor: 'white' }}
@@ -240,7 +268,7 @@ class SearchScreen extends React.Component {
           onChangeText={this.updateSearch}
           value={search}
         />
-        <View style = {{paddingLeft:10}}> 
+        <View style = {{paddingLeft:10, flexDirection: "row"}}> 
           <FlatList
             contentContainerStyle={{alignSelf: 'flex-start'}}
             numColumns={4}
@@ -266,20 +294,6 @@ class SearchScreen extends React.Component {
           title="Add Item"
           onPress={() => this.updateList()}
         />
-
-        {/* <Button       //Debugging tool, check to make sure list was updated
-                buttonStyle = {{
-                  backgroundColor: "#454647",
-                  width: "45%",
-                  alignSelf:'center',
-                  marginTop: 30
-                }}
-                titleStyle = {{
-                  fontSize: 19,
-                }}
-                title="Check Array"
-                onPress={() => alert(this.state.ingredients) }
-          /> */}
 
         <Button       //Button for adding value in search abr to ingredients table in DB
           buttonStyle={{
@@ -309,16 +323,53 @@ class SearchScreen extends React.Component {
           onPress={() => this.searchByIngredient()}
         />
 
-        <FlatList
-          data={this.state.data}
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderRecipes}
-        />
+        <View
+          style = {{marginTop: 15, marginLeft:4, alignSelf:'center'}}
+          onStartShouldSetResponderCapture={() => {
+            this.setState({ enableScrollViewScroll: true });
+            // if (this.state.enableScrollViewScroll === false) {
+            //   this.setState({ enableScrollViewScroll: true });
+            // }
+        }}>
+          <FlatList
+            contentContainerStyle={{alignSelf: 'flex-start'}}
+            numColumns={2}
+            data={this.state.data}
+            scrollEnabled
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderRecipes}
+          />
+        </View>
+        
+      </View>
 
+      </ScrollView>
       </View>
 
     );
   }
+
+  // renderFlatList(color: string) {
+  //   return (
+  //     <View
+  //       onStartShouldSetResponderCapture={() => {
+  //         this.setState({ enableScrollViewScroll: false });
+  //         if (this._myScroll.contentOffset === 0
+  //           && this.state.enableScrollViewScroll === false) {
+  //           this.setState({ enableScrollViewScroll: true });
+  //         }
+  //       }}>
+  //       <FlatList
+  //         contentContainerStyle={{alignSelf: 'flex-start'}}
+  //         backgroundColor={color}
+  //         numColumns={2}
+  //         data={this.state.data}
+  //         keyExtractor={this.keyExtractor}
+  //         renderItem={this.renderRecipes}
+  //       />
+  //     </View>
+  //   );
+  // }
 }
 
 export default SearchScreen;

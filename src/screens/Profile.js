@@ -95,7 +95,7 @@ export default class Profile extends React.Component {
                     {/* <Text>{this.state.email}</Text> */}
                     {/* <Button onPress={() => this.props.navigation.navigate('UpdateProfile')} title='Update Information'/> */}
                     <Input
-                    placeholder = {this.state.name}
+                    //placeholder = {this.state.name}
                     Value={this.state.name}
                     onChangeText={this.updateName} />
                 </View>
