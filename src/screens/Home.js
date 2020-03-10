@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, A
 import {Button, Input, SearchBar } from 'react-native-elements';
 import * as firebase from 'firebase'
 import styles from '../../components/Style';
-import Video from 'react-native-video';
+//import Video from 'react-native-video';
 
 class HomeScreen extends React.Component {
 

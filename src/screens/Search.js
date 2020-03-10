@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground, SnapshotViewIOS } from 'react-native';
 import { Button, Input, SearchBar, Card} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase'
@@ -14,16 +14,39 @@ class SearchScreen extends React.Component {
       open: false,
       isLoading: false,
       value: '',               //initialize state to hold user search entry
-      ingredients: [{ id: 0, name: 'sugar' }, { id: 1, name: 'flour' }, { id: 2, name: 'eggs' }],         //initialize empty array in state to hold user input
+      ingredients: [],         //initialize empty array in state to hold user input
       data: [],
       recipeTitles: '',
     };
   }
 
-  componentDidMount() {
-    var userId = firebase.auth().currentUser.uid; //Creates variable related to logged in user; Firebase knows who's logged in
-    firebase.database().ref('items/' + userId).on('value', snapshot => { //ref('table/' + userId).on('value') refers to the specific user's area of the table, and constantly looks at whatever 'value' is specified in the following enclosure
-      //this.setState({ email: snapshot.val().email }); //.email is the 'value' and snapshot.val() is taking a snapshot of that value
+  state = {
+    fridge: []
+  }
+
+  componentDidMount() { //Loads the users existing 
+    let userId = firebase.auth().currentUser.uid; //Creates variable related to logged in user; Firebase knows who's logged in
+    let fridge
+    let newId = 0
+    let obj
+    let newFridge = []
+    firebase.database().ref('items/' + userId + '/fridge/shelf/').once('value')
+    .then(snapshot => {
+      console.log("snapshot", snapshot.val())
+      fridge = snapshot.val()
+      
+      fridge.map((element) => {
+        obj = {id:newId, name:element};
+        newFridge.push(obj);
+        newId++;
+      });
+      this.state.ingredients = newFridge
+      //alert(JSON.stringify(newFridge))
+      this.setState({
+        refresh: !this.state.refresh
+      })
+    }).catch(function(error){
+      return
     })
   }
 
@@ -128,17 +151,17 @@ class SearchScreen extends React.Component {
 
   addFridgeToDB() {
     let userId = firebase.auth().currentUser.uid;
-    let $fridgeState = this.state.ingredients
-    let $fridgePush = []
-    $fridgeState.map((item) => {
-      $fridgePush.push(item.name);
+    let fridgeState = this.state.ingredients
+    let fridgePush = []
+    fridgeState.map((item) => {
+      fridgePush.push(item.name);
     });
 
     let newItem = this.state.value
 
-    alert($fridgePush)
+    alert(fridgePush)
     firebase.database().ref().child('/items/' + userId + '/fridge').set({
-      shelf: $fridgePush
+      shelf: fridgePush
     });
   }
 
