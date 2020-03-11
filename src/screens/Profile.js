@@ -1,8 +1,8 @@
 import React from 'react'
-import { View, Text, Alert, TouchableWithoutFeedbackBase } from 'react-native'
+import { View, Text, Alert, TouchableWithoutFeedbackBase, Modal, CameraRoll, ScrollView } from 'react-native'
 import * as firebase from 'firebase'
 import { Input } from 'react-native-elements'
-import { Button, Avatar } from 'react-native-elements';
+import { Button, Avatar } from 'react-native-elements'
 
 import styles from '../../components/Style';
 
@@ -33,6 +33,8 @@ export default class Profile extends React.Component {
         currentPassword: '',
         newEmail: '',
         newName: '',
+        modalVisible: false,
+        photos: [],
     }
 
     componentDidMount() {
@@ -116,6 +118,14 @@ export default class Profile extends React.Component {
         })
     }
 
+    getPhotos = () => {
+        CameraRoll.getPhotos({
+            first: 20,
+            assetType: 'Photos'
+        })
+            .then(r => this.setState({ photos: r.edges }))
+    }
+
     render() {
 
         return (
@@ -128,6 +138,27 @@ export default class Profile extends React.Component {
                         icon={{ name: 'user', type: 'font-awesome' }}
                         activeOpacity={0.7}
                     />
+
+                    <Button
+                        title='Load Photos'
+                        onPress={() => { this.getPhotos }}
+                    />
+
+                    <ScrollView>
+                        {this.state.photos.map((p, i) => {
+                            return (
+                                <Image
+                                    key={i}
+                                    style={{
+                                        width: 300, 
+                                        height: 100,
+                                    }}
+                                    source={{ uri: p.node.image.uri }}
+                                />
+                            )
+                        })}
+                    </ScrollView>
+                    
                     <Text>{this.state.name}</Text>
                     <Text>{this.state.email}</Text>
 
