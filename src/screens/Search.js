@@ -198,7 +198,7 @@ class SearchScreen extends React.Component {
           borderRadius: 5
         }}
         containerStyle = {{
-          width: 200,
+          width: 180,
           height: 275,
           marginLeft: 0,
           marginTop: 3,
