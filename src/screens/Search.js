@@ -193,33 +193,38 @@ class SearchScreen extends React.Component {
 
     return (
       <View>
-        <Card 
-        styles = {{
-          borderRadius: 5
-        }}
-        containerStyle = {{
-          width: 200,
-          height: 275,
-          marginLeft: 0,
-          marginTop: 3,
-          borderColor: "#ff944d"
-        }}
-        image={{uri: item.image}}
-        >
+        <TouchableOpacity onPress={() => alert(item.id)}>
+        <Card
+          styles = {{
+            borderRadius: 5
+          }}
+          containerStyle = {{
+            width: 150,
+            height: 275,
+            marginLeft: 0,
+            marginTop: 3,
+            borderColor: "#ff944d"
+          }}
+          image={{uri: item.image}}
+          >
+          
+          
+          <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center"}}>
+            {item.title}
+          </Text>
 
-        <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center"}}>
-          {item.title}
-        </Text>
+          <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2}}>      
+              Likes: {item.likes}
+          </Text>
 
-        <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2}}>      
-            Likes: {item.likes}
-        </Text>
-
-        <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2}}>      
-            Missed Ingredients: {item.missedIngredientCount}
-        </Text>
+          <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2}}>      
+              Missed Ingredients: {item.missedIngredientCount}
+          </Text>
+         
+          
 
         </Card>
+        </TouchableOpacity>
       </View>
     );
   }
