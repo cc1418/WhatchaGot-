@@ -118,14 +118,6 @@ export default class Profile extends React.Component {
         })
     }
 
-    getPhotos = () => {
-        CameraRoll.getPhotos({
-            first: 20,
-            assetType: 'Photos'
-        })
-            .then(r => this.setState({ photos: r.edges }))
-    }
-
     render() {
 
         return (
@@ -138,27 +130,7 @@ export default class Profile extends React.Component {
                         icon={{ name: 'user', type: 'font-awesome' }}
                         activeOpacity={0.7}
                     />
-
-                    <Button
-                        title='Load Photos'
-                        onPress={() => { this.getPhotos }}
-                    />
-
-                    <ScrollView>
-                        {this.state.photos.map((p, i) => {
-                            return (
-                                <Image
-                                    key={i}
-                                    style={{
-                                        width: 300, 
-                                        height: 100,
-                                    }}
-                                    source={{ uri: p.node.image.uri }}
-                                />
-                            )
-                        })}
-                    </ScrollView>
-                    
+                   
                     <Text>{this.state.name}</Text>
                     <Text>{this.state.email}</Text>
 
