@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, Text, Alert, TouchableWithoutFeedbackBase, Modal, CameraRoll, ScrollView } from 'react-native'
 import * as firebase from 'firebase'
-import { Input } from 'react-native-elements'
-import { Button, Avatar } from 'react-native-elements'
+import { Button, Avatar, Overlay, Input} from 'react-native-elements'
 
 import styles from '../../components/Style';
 
@@ -135,11 +134,14 @@ export default class Profile extends React.Component {
                     <Text>{this.state.email}</Text>
 
                     <Input
+                        containerStyle = {{
+                            width:'80%'
+                        }}
                         placeholder='Current Password'
                         autoCapitalize='none'
                         value={this.state.currentPassword}
                         secureTextEntry={true}
-                        onChangeText={(text) => { this.setState({ currentPassword: text }) }}
+                        sonChangeText={(text) => { this.setState({ currentPassword: text }) }}
                     />
 
                     <Input
@@ -147,10 +149,22 @@ export default class Profile extends React.Component {
                         value={this.state.newName}
                         onChangeText={(text) => { this.setState({ newName: text }) }}
                     />
+                    
+                    {/* <Overlay
+                    //isVisible={this.state.isVisible}
+                    isVisible={this.state.isVisible}
+                    windowBackgroundColor="rgba(255, 255, 255, .5)"
+                    overlayBackgroundColor="red"
+                    width="auto"
+                    height="auto"
+                    onBackdropPress={() => this.setState({ isVisible: false })}
+                    >
+                        <Text>Hello from Overlay!</Text>
+                    </Overlay>; */}
 
                     <Button
                         title='Change Name'
-                        onPress={this.onChangeNamePress}
+                        onPress={this.onChangeNamePress, this.state.isVisible}
                     />
 
                     <Input
