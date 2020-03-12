@@ -171,7 +171,7 @@ class SearchScreen extends React.Component {
         }}
         containerStyle = {{
           width: 90,
-          height: 55,
+          height: 48,
           marginLeft: 0,
           marginTop: 3,
           borderColor: "#ff944d"
@@ -193,14 +193,13 @@ class SearchScreen extends React.Component {
 
     return (
       <View>
-<<<<<<< HEAD
         <TouchableOpacity onPress={() => alert(item.id)}>
         <Card
           styles = {{
             borderRadius: 5
           }}
           containerStyle = {{
-            width: 150,
+            width: 180,
             height: 275,
             marginLeft: 0,
             marginTop: 3,
@@ -213,25 +212,6 @@ class SearchScreen extends React.Component {
           <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center"}}>
             {item.title}
           </Text>
-=======
-        <Card 
-        styles = {{
-          borderRadius: 5
-        }}
-        containerStyle = {{
-          width: 180,
-          height: 275,
-          marginLeft: 0,
-          marginTop: 3,
-          borderColor: "#ff944d"
-        }}
-        image={{uri: item.image}}
-        >
-
-        <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center"}}>
-          {item.title}
-        </Text>
->>>>>>> 889ea25aa935cca633b60233dca3bdd56185ff5e
 
           <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2}}>      
               Likes: {item.likes}
