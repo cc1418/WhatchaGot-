@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, SnapshotViewIOS, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, SnapshotViewIOS, SafeAreaView, ScrollView, Modal } from 'react-native';
 import { Button, Input, SearchBar, Card, Icon} from 'react-native-elements';
 import * as firebase from 'firebase'
 
@@ -15,7 +15,8 @@ class SearchScreen extends React.Component {
       value: '',               //initialize state to hold user search entry
       ingredients: [],         //initialize empty array in state to hold user input
       data: [],
-      recipeTitles: '',
+      recipeInfo: '',
+      modalVisible: false
       //enableScrollViewScroll: true,
     };
   }
@@ -75,13 +76,13 @@ class SearchScreen extends React.Component {
 
     // alert(apiCall)    //Debugging: Check created api string
 
-    fetch()
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // fetch()
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
 
     fetch(apiCall, {
       "method": "GET",
@@ -145,6 +146,16 @@ class SearchScreen extends React.Component {
 
   };
 
+  addRecipeToDB() {
+    let userId = firebase.auth().currentUser.uid;
+    let recipeState = this.state.recipeInfo.id;
+
+    firebase.database().ref().child('/items/' + userId + '/fridge/recipes').push({
+      name: recipeState
+    });
+    alert("Recipe Saved!")
+  }
+
   addFridgeToDB() {
     let userId = firebase.auth().currentUser.uid;
     let fridgeState = this.state.ingredients
@@ -152,8 +163,6 @@ class SearchScreen extends React.Component {
     fridgeState.map((item) => {
       fridgePush.push(item.name);
     });
-
-    let newItem = this.state.value
 
     alert(fridgePush)
     firebase.database().ref().child('/items/' + userId + '/fridge').set({
@@ -189,12 +198,42 @@ class SearchScreen extends React.Component {
     );
   }
 
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
+  openRecipe = (recipeId) => {
+    let apiCall
+    let apiHead1 = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
+    let apiHead2 = '/information'
+
+    apiCall = apiHead1 + recipeId + apiHead2
+
+    //alert(apiCall)
+
+    
+    fetch(apiCall, {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+		"x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
+	}
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //console.log(JSON.stringify(responseJson))
+        this.state.recipeInfo = responseJson
+        this.setModalVisible(!this.state.modalVisible)
+        //alert(responseJson.image)
+      });
+
+  }
+
   renderRecipes = ({ item, index }) => {
 
     return (
       <View>
-<<<<<<< HEAD
-        <TouchableOpacity onPress={() => alert(item.id)}>
+        <TouchableOpacity onPress={() => this.openRecipe(item.id)}>
         <Card
           styles = {{
             borderRadius: 5
@@ -213,25 +252,6 @@ class SearchScreen extends React.Component {
           <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center"}}>
             {item.title}
           </Text>
-=======
-        <Card 
-        styles = {{
-          borderRadius: 5
-        }}
-        containerStyle = {{
-          width: 180,
-          height: 275,
-          marginLeft: 0,
-          marginTop: 3,
-          borderColor: "#ff944d"
-        }}
-        image={{uri: item.image}}
-        >
-
-        <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center"}}>
-          {item.title}
-        </Text>
->>>>>>> 889ea25aa935cca633b60233dca3bdd56185ff5e
 
           <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2}}>      
               Likes: {item.likes}
@@ -258,6 +278,8 @@ class SearchScreen extends React.Component {
 
     const { search } = this.state.value;
 
+    let recipeImage = this.state.recipeInfo.image;
+
     let list = this.state.ingredients.map((item, key) =>
       <View> {
         <Text>
@@ -267,7 +289,12 @@ class SearchScreen extends React.Component {
       </View>
     )
 
+    if (this.state.recipeInfo.instructions === ""){
+      this.state.recipeInfo.instructions = "Instructions could not be fetched, please visit this site for more info: "
+    }
+
     return (
+      
       <View 
       onStartShouldSetResponderCapture={() => {
         this.setState({ enableScrollViewScroll: true });
@@ -348,6 +375,43 @@ class SearchScreen extends React.Component {
           onPress={() => this.searchByIngredient()}
         />
 
+        <View style={{marginTop: 22}}>
+          <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.modalVisible}
+              onRequestClose={() => {
+                Alert.alert('Modal has been closed.');
+              }}>
+            <View style={{marginTop: 22}}>
+              <View>
+                <Image 
+                source={{uri: this.state.recipeInfo.image}}
+                style={{width: '100%', height:200, resizeMode: 'stretch'}}
+                />
+                <Text>{this.state.recipeInfo.title}</Text>
+                <Text>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                <Text>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+                <Text>Instructions: {this.state.recipeInfo.instructions}</Text>
+    
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}>
+                  <Text>Close</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    this.addRecipeToDB();
+                  }}>
+                  <Text>Save Recipe</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </View>
+
         <View
           style = {{marginTop: 15, marginLeft:4, alignSelf:'center'}}
           onStartShouldSetResponderCapture={() => {
@@ -368,8 +432,8 @@ class SearchScreen extends React.Component {
         
       </View>
 
-      </ScrollView>
-      </View>
+    </ScrollView>
+    </View>
 
     );
   }
