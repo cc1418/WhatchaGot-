@@ -180,7 +180,7 @@ class SearchScreen extends React.Component {
         }}
         containerStyle = {{
           width: 90,
-          height: 55,
+          height: 45,
           marginLeft: 0,
           marginTop: 3,
           borderColor: "#ff944d"
@@ -239,7 +239,7 @@ class SearchScreen extends React.Component {
             borderRadius: 5
           }}
           containerStyle = {{
-            width: 150,
+            width: 180,
             height: 275,
             marginLeft: 0,
             marginTop: 3,
@@ -387,7 +387,7 @@ class SearchScreen extends React.Component {
               <View>
                 <Image 
                 source={{uri: this.state.recipeInfo.image}}
-                style={{width: '100%', height:200, resizeMode: 'stretch'}}
+                style={{width: '100%', height: 300, resizeMode: 'stretch'}}
                 />
                 <Text>{this.state.recipeInfo.title}</Text>
                 <Text>Number of Servings: {this.state.recipeInfo.servings}</Text>
@@ -398,14 +398,20 @@ class SearchScreen extends React.Component {
                   onPress={() => {
                     this.setModalVisible(!this.state.modalVisible);
                   }}>
-                  <Text>Close</Text>
+                  <Text style = {{
+                    alignSelf:'center',
+                    fontSize: 40,
+                  }}>CLOSEEEE</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => {
                     this.addRecipeToDB();
                   }}>
-                  <Text>Save Recipe</Text>
+                  <Text style = {{
+                    alignSelf:'center',
+                    fontSize: 40,
+                  }}>Save Recipe</Text>
                 </TouchableOpacity>
               </View>
             </View>
