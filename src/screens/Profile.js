@@ -141,7 +141,7 @@ export default class Profile extends React.Component {
                         autoCapitalize='none'
                         value={this.state.currentPassword}
                         secureTextEntry={true}
-                        sonChangeText={(text) => { this.setState({ currentPassword: text }) }}
+                        onChangeText={(text) => { this.setState({ currentPassword: text }) }}
                     />
 
                     <Input
@@ -164,7 +164,7 @@ export default class Profile extends React.Component {
 
                     <Button
                         title='Change Name'
-                        onPress={this.onChangeNamePress, this.state.isVisible}
+                        onPress={this.onChangeNamePress}
                     />
 
                     <Input
