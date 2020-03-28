@@ -1,9 +1,10 @@
 import React from 'react'
 import { View, Text, Alert, TouchableWithoutFeedbackBase, Modal, CameraRoll, ScrollView } from 'react-native'
 import * as firebase from 'firebase'
-import { Button, Avatar, Overlay, Input} from 'react-native-elements'
+import { Button, Avatar, Overlay, Input } from 'react-native-elements'
 
 import styles from '../../components/Style';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Profile extends React.Component {
 
@@ -122,20 +123,23 @@ export default class Profile extends React.Component {
         return (
             <View style={{ flex: 1, backgroundColor: "#fff" }}>
                 <View style={styles.profileContainer}>
-                    <Avatar
-                        size="large"
-                        rounded
-                        showEditButton
-                        icon={{ name: 'user', type: 'font-awesome' }}
-                        activeOpacity={0.7}
-                    />
-                   
+                    <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Upload')}>
+                        <Avatar
+                            size="large"
+                            rounded
+                            showEditButton
+                            icon={{ name: 'user', type: 'font-awesome' }}
+                            activeOpacity={0.7}
+                            
+                        />
+                        </TouchableOpacity>
                     <Text>{this.state.name}</Text>
                     <Text>{this.state.email}</Text>
 
                     <Input
-                        containerStyle = {{
-                            width:'80%'
+                        containerStyle={{
+                            width: '80%'
                         }}
                         placeholder='Current Password'
                         autoCapitalize='none'
@@ -149,7 +153,7 @@ export default class Profile extends React.Component {
                         value={this.state.newName}
                         onChangeText={(text) => { this.setState({ newName: text }) }}
                     />
-                    
+
                     {/* <Overlay
                     //isVisible={this.state.isVisible}
                     isVisible={this.state.isVisible}
