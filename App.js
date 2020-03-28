@@ -16,6 +16,7 @@ import DietScreen from './src/screens/Diet';
 import Profile from './src/screens/Profile'
 import AddItem from './src/screens/AddItem';
 import ListItem from './src/screens/ListItem';  
+import UploadScreen from './src/screens/Upload';
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
@@ -83,6 +84,7 @@ const ScreenNavigator = createStackNavigator(
     SignUp: SignUpScreen,
     AddItem: AddItem,
     ListItem: ListItem,
+    Upload: UploadScreen,
   },
   {
     initialRouteName: 'Login',
