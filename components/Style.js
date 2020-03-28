@@ -1,4 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 // const imensions = require('Dimensions');
 
