@@ -1,9 +1,8 @@
 import React from 'react'
-import { View, Alert, TouchableWithoutFeedbackBase, CameraRoll, ScrollView } from 'react-native'
+import { View, Alert } from 'react-native'
 import * as firebase from 'firebase'
-import { Button, Avatar, Overlay, Input } from 'react-native-elements'
+import { Button, Avatar, Input, Text } from 'react-native-elements'
 import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from '../../components/Style';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -120,12 +119,22 @@ export default class Profile extends React.Component {
         })
     }
 
+    onProfileChoose = () => {
+        var listRef = firebase.storage().ref('Profile/uid');
+
+        listRef.listAll()
+        .catch(function(error) {
+            Alert.alert(error.message)
+            //Error
+        });
+    }
+
     state = {
         isModalVisible: false,
     };
-     
+
     toggleModal = () => {
-        this.setState({isModalVisible: !this.state.isModalVisible});
+        this.setState({ isModalVisible: !this.state.isModalVisible });
     };
 
     render() {
@@ -135,16 +144,16 @@ export default class Profile extends React.Component {
 
                 <View style={styles.profileContainer}>
                     <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Upload')}>
+                        onPress={() => this.onProfileChoose}>
                         <Avatar
                             size="large"
                             rounded
                             showEditButton
                             icon={{ name: 'user', type: 'font-awesome' }}
                             activeOpacity={0.7}
-                            
+
                         />
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                     <Text>{this.state.name}</Text>
                     <Text>{this.state.email}</Text>
 
@@ -216,8 +225,8 @@ export default class Profile extends React.Component {
                         icon={{ name: 'user', type: 'font-awesome' }}
                         activeOpacity={0.7}
                     />
-                   
-                    <Text style = {{fontSize: 22, fontWeight: 'bold'}} >{this.state.name}</Text>
+
+                    <Text style={{ fontSize: 22, fontWeight: 'bold' }} >{this.state.name}</Text>
                     {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
 
                 </View>
@@ -233,7 +242,7 @@ export default class Profile extends React.Component {
                     titleStyle={{
                         fontSize: 18,
                     }}
-                    title="User Settings" 
+                    title="User Settings"
                     onPress={this.toggleModal} />
                 <Button                                                 // SIGN OUT
                     buttonStyle={{
@@ -250,125 +259,125 @@ export default class Profile extends React.Component {
                     onPress={this.signOut}
                 />
 
-                    <Modal 
-                        isVisible={this.state.isModalVisible}
-                        style = {{
-                            alignSelf: 'center',
-                            width: styles.device.width * 0.8,
-                            height: styles.device.height * 0.9, 
-                        }}
-                        hasBackdrop
-                        backdropColor = "white"
-                        backdropOpacity= {1}
-                        
-                    >
-                        <View style={{flex: 1}}>
-                            
-                            <Input
-                                containerStyle = {{
-                                    
-                                }}
-                                placeholder='Current Password'
-                                autoCapitalize='none'
-                                value={this.state.currentPassword}
-                                secureTextEntry={true}
-                                onChangeText={(text) => { this.setState({ currentPassword: text }) }}
-                            />
+                <Modal
+                    isVisible={this.state.isModalVisible}
+                    style={{
+                        alignSelf: 'center',
+                        width: styles.device.width * 0.8,
+                        height: styles.device.height * 0.9,
+                    }}
+                    hasBackdrop
+                    backdropColor="white"
+                    backdropOpacity={1}
 
-                            <Text style = {{color : "red", fontSize: 14}}>
-                                    *You must enter your current password before proceeding to change other information
+                >
+                    <View style={{ flex: 1 }}>
+
+                        <Input
+                            containerStyle={{
+
+                            }}
+                            placeholder='Current Password'
+                            autoCapitalize='none'
+                            value={this.state.currentPassword}
+                            secureTextEntry={true}
+                            onChangeText={(text) => { this.setState({ currentPassword: text }) }}
+                        />
+
+                        <Text style={{ color: "red", fontSize: 14 }}>
+                            *You must enter your current password before proceeding to change other information
                             </Text>
-                            
-                            
-                            <Input                                               // CHANGE USER NAME
-                                placeholder={this.state.name}
-                                value={this.state.newName}
-                                onChangeText={(text) => { this.setState({ newName: text }) }}
-                                
-                                inputStyle = {{
-                                    width: "80%",
-                                    marginTop: 30
-                                }}
-                            />
-
-                            <Button
-                                title='Change Name'
-                                buttonStyle={{
-                                    width: "80%",
-                                    alignSelf: 'center',
-                                    marginTop: 10,
-                                    marginBottom: 30,
-                                }}
-                                onPress={this.onChangeNamePress}
-                            />
 
 
-                            <Input                                                // CHANGE EMAIL
-                                autoCapitalize='none'
-                                value={this.state.newEmail}
-                                placeholder={this.state.email}
-                                onChangeText={(text) => { this.setState({ newEmail: text }) }}
-                            />
+                        <Input                                               // CHANGE USER NAME
+                            placeholder={this.state.name}
+                            value={this.state.newName}
+                            onChangeText={(text) => { this.setState({ newName: text }) }}
 
-                            <Button
-                                title='Change Email'
-                                onPress={this.onChangeEmailPress}
-                                buttonStyle={{
-                                    width: "80%",
-                                    alignSelf: 'center',
-                                    marginTop: 10,
-                                    marginBottom: 30,
-                                }}
+                            inputStyle={{
+                                width: "80%",
+                                marginTop: 30
+                            }}
+                        />
 
-                            />
+                        <Button
+                            title='Change Name'
+                            buttonStyle={{
+                                width: "80%",
+                                alignSelf: 'center',
+                                marginTop: 10,
+                                marginBottom: 30,
+                            }}
+                            onPress={this.onChangeNamePress}
+                        />
 
-                            <Input                                                // CHANGE PASSWORD
-                                placeholder='New Password'
-                                autoCapitalize='none'
-                                value={this.state.newPassword}
-                                secureTextEntry={true}
-                                onChangeText={(text) => { this.setState({ newPassword: text }) }}
-                            />
 
-                            <Button
-                                title='Change Password'
-                                onPress={this.onChangePasswordPress}
-                                buttonStyle={{
-                                    width: "80%",
-                                    alignSelf: 'center',
-                                    marginTop: 10,
-                                    marginBottom: 20,
-                                }}
-                            />
+                        <Input                                                // CHANGE EMAIL
+                            autoCapitalize='none'
+                            value={this.state.newEmail}
+                            placeholder={this.state.email}
+                            onChangeText={(text) => { this.setState({ newEmail: text }) }}
+                        />
 
-                            <Button                                                // DELETE USER
-                                title='Delete User'
-                                buttonStyle={{
-                                    width: "40%",
-                                    alignSelf: 'center',
-                                    marginTop: 40,
-                                    backgroundColor: "red",
-                                }}
-                                titleStyle={{
-                                    fontSize: 13,
-                                }}
-                                onPress={this.onDeletePress}
-                            />
+                        <Button
+                            title='Change Email'
+                            onPress={this.onChangeEmailPress}
+                            buttonStyle={{
+                                width: "80%",
+                                alignSelf: 'center',
+                                marginTop: 10,
+                                marginBottom: 30,
+                            }}
 
-                            <Button 
-                                title="Close Window" 
-                                buttonStyle={{
-                                    width: "90%",
-                                    alignSelf: 'center',
-                                    marginTop: 40,
-                                }}
-                                titleStyle={{
-                                    fontSize: 19,
-                                }}
-                                onPress={this.toggleModal} />
+                        />
 
-                        </View>
-                    </Modal>
+                        <Input                                                // CHANGE PASSWORD
+                            placeholder='New Password'
+                            autoCapitalize='none'
+                            value={this.state.newPassword}
+                            secureTextEntry={true}
+                            onChangeText={(text) => { this.setState({ newPassword: text }) }}
+                        />
+
+                        <Button
+                            title='Change Password'
+                            onPress={this.onChangePasswordPress}
+                            buttonStyle={{
+                                width: "80%",
+                                alignSelf: 'center',
+                                marginTop: 10,
+                                marginBottom: 20,
+                            }}
+                        />
+
+                        <Button                                                // DELETE USER
+                            title='Delete User'
+                            buttonStyle={{
+                                width: "40%",
+                                alignSelf: 'center',
+                                marginTop: 40,
+                                backgroundColor: "red",
+                            }}
+                            titleStyle={{
+                                fontSize: 13,
+                            }}
+                            onPress={this.onDeletePress}
+                        />
+
+                        <Button
+                            title="Close Window"
+                            buttonStyle={{
+                                width: "90%",
+                                alignSelf: 'center',
+                                marginTop: 40,
+                            }}
+                            titleStyle={{
+                                fontSize: 19,
+                            }}
+                            onPress={this.toggleModal} />
+
+                    </View>
+                </Modal>
             </View>
         )
     }
