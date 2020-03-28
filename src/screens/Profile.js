@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Alert } from 'react-native'
 import * as firebase from 'firebase'
-import { Button, Avatar, Input, Text } from 'react-native-elements'
+import { Button, Avatar, Input, Text, Icon} from 'react-native-elements'
 import Modal from 'react-native-modal';
+//import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import styles from '../../components/Style';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Profile extends React.Component {
 
@@ -140,84 +140,22 @@ export default class Profile extends React.Component {
     render() {
 
         return (
-            <View style={{ flex: 1, backgroundColor: "#fff" }}>
+            <View style={{ flex: 1, backgroundColor: "#fff"}}>
 
                 <View style={styles.profileContainer}>
-                    <TouchableOpacity
-                        onPress={() => this.onProfileChoose}>
-                        <Avatar
-                            size="large"
-                            rounded
-                            showEditButton
-                            icon={{ name: 'user', type: 'font-awesome' }}
-                            activeOpacity={0.7}
-
-                        />
-                    </TouchableOpacity>
-                    <Text>{this.state.name}</Text>
-                    <Text>{this.state.email}</Text>
-
-                    <Input
-                        containerStyle={{
-                            width: '80%'
+                    <Icon
+                        containerStyle = {{
+                            alignSelf:'flex-end',
+                            marginRight: 10,
+                            marginTop: 5,
+                            marginBottom: -40
                         }}
-                        placeholder='Current Password'
-                        autoCapitalize='none'
-                        value={this.state.currentPassword}
-                        secureTextEntry={true}
-                        onChangeText={(text) => { this.setState({ currentPassword: text }) }}
+                        size = {40}
+                        name='settings'
+                        type = 'material'
+                        color='#ff944d'
+                        onPress={this.toggleModal}
                     />
-
-                    <Input
-                        placeholder={this.state.name}
-                        value={this.state.newName}
-                        onChangeText={(text) => { this.setState({ newName: text }) }}
-                    />
-
-                    {/* <Overlay
-                    //isVisible={this.state.isVisible}
-                    isVisible={this.state.isVisible}
-                    windowBackgroundColor="rgba(255, 255, 255, .5)"
-                    overlayBackgroundColor="red"
-                    width="auto"
-                    height="auto"
-                    onBackdropPress={() => this.setState({ isVisible: false })}
-                    >
-                        <Text>Hello from Overlay!</Text>
-                    </Overlay>; */}
-
-                    <Button
-                        title='Change Name'
-                        onPress={this.onChangeNamePress}
-                    />
-
-                    <Input
-                        autoCapitalize='none'
-                        value={this.state.newEmail}
-                        placeholder={this.state.email}
-                        onChangeText={(text) => { this.setState({ newEmail: text }) }}
-                    />
-
-                    <Button
-                        title='Change Email'
-                        onPress={this.onChangeEmailPress}
-                    />
-
-                    <Input
-                        placeholder='New Password'
-                        autoCapitalize='none'
-                        value={this.state.newPassword}
-                        secureTextEntry={true}
-                        onChangeText={(text) => { this.setState({ newPassword: text }) }}
-                    />
-
-                    <Button
-                        title='Change Password'
-                        onPress={this.onChangePasswordPress}
-                    />
-                </View>
-                <View>
-                    <Text style={{ marginTop: 40, fontWeight: 'bold', fontSize: 18 }}>RECENTLY VIEWED</Text>
                     <Avatar
                         size="xlarge"
                         rounded
@@ -225,37 +163,45 @@ export default class Profile extends React.Component {
                         icon={{ name: 'user', type: 'font-awesome' }}
                         activeOpacity={0.7}
                     />
-
-                    <Text style={{ fontSize: 22, fontWeight: 'bold' }} >{this.state.name}</Text>
+                                    
+                    <Text style = {{fontSize: 22, fontWeight: 'bold'}} >{this.state.name}</Text>
                     {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
 
                 </View>
 
-                <Button                                                 // SETTINGS
+                {/* <Button                                                 // SETTINGS
                     buttonStyle={{
                         width: "40%",
                         alignSelf: 'center',
-                        marginTop: 30,
+                        marginTop: 300,
                         backgroundColor: "#ff944d",
 
                     }}
                     titleStyle={{
                         fontSize: 18,
                     }}
-                    title="User Settings"
-                    onPress={this.toggleModal} />
+                    title="User Settings" 
+                    onPress={this.toggleModal} /> */}
                 <Button                                                 // SIGN OUT
                     buttonStyle={{
                         width: "40%",
                         alignSelf: 'center',
-                        marginTop: 30,
+                        marginTop: 410,
                         backgroundColor: "#ff944d",
 
                     }}
                     titleStyle={{
                         fontSize: 18,
                     }}
-                    title='Sign Out'
+                    icon={
+                        <Icon
+                            name="logout-variant"
+                            type = 'material-community'
+                            size = {24}
+                            color='white'
+                        />
+                    }
+                    title=' Sign Out'
                     onPress={this.signOut}
                 />
 

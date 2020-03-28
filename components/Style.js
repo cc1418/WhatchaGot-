@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
     profileContainer:{
       //flex: 1,
-      marginTop: 30,
+      marginTop: 40,
       alignItems: 'center',
       justifyContent: 'center',
     },
