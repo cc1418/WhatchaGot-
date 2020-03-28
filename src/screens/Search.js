@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, SnapshotViewIOS, SafeAreaView, ScrollView, Modal } from 'react-native';
+import {Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions} from 'react-native';
 import { Button, Input, SearchBar, Card, Icon} from 'react-native-elements';
 import * as firebase from 'firebase'
 
@@ -7,6 +7,7 @@ import styles from '../../components/Style';
 
 class SearchScreen extends React.Component {
 
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -179,7 +180,7 @@ class SearchScreen extends React.Component {
           borderRadius: 1
         }}
         containerStyle = {{
-          width: 90,
+          width: (styles.device.width) / 5,
           height: 45,
           marginLeft: 0,
           marginTop: 3,
@@ -239,7 +240,7 @@ class SearchScreen extends React.Component {
             borderRadius: 5
           }}
           containerStyle = {{
-            width: 180,
+            width: (styles.device.width) / 2.5,
             height: 275,
             marginLeft: 0,
             marginTop: 3,
@@ -279,6 +280,8 @@ class SearchScreen extends React.Component {
     const { search } = this.state.value;
 
     let recipeImage = this.state.recipeInfo.image;
+
+    //let deviceWidth = Dimensions.get('window').width;
 
     let list = this.state.ingredients.map((item, key) =>
       <View> {
