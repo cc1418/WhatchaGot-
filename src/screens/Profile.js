@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Alert, TouchableWithoutFeedbackBase, CameraRoll, ScrollView } from 'react-native'
 import * as firebase from 'firebase'
 import { Button, Avatar, Overlay, Input } from 'react-native-elements'
-import { Button, Avatar, Input, Text} from 'react-native-elements'
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
