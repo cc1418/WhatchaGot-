@@ -186,11 +186,15 @@ class SearchScreen extends React.Component {
           marginRight: 4,
           marginTop: 3,
           borderColor: "#ff944d"
-        }}>
+        }}
+        wrapperStyle = {{
+          
+        }}
+        >
           <TouchableOpacity
             key={item.id}
             onPress={() => this.deleteFromList(item.id)}>
-          <Text index={item.id} style={{ fontSize: 13, marginTop: -5, alignSelf: "center"}}>
+          <Text index={item.id} style={{ fontSize: 13, marginTop: -5, marginLeft: -20, marginRight: -20, alignSelf: "center"}}>
             {item.name} 
           </Text>
           </TouchableOpacity> 
@@ -241,7 +245,7 @@ class SearchScreen extends React.Component {
             borderRadius: 5
           }}
           containerStyle = {{
-            width: (styles.device.width) / 2,
+            width: (styles.device.width) / 2.4,
             height: 275,
             marginLeft: 0,
             marginTop: 3,
