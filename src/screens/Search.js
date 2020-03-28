@@ -177,12 +177,13 @@ class SearchScreen extends React.Component {
       <View>
         <Card 
         styles = {{
-          borderRadius: 1
+          borderRadius: 1,
         }}
         containerStyle = {{
-          width: (styles.device.width) / 5,
+          width: (styles.device.width) / 4.5,
           height: 45,
           marginLeft: 0,
+          marginRight: 4,
           marginTop: 3,
           borderColor: "#ff944d"
         }}>
@@ -240,7 +241,7 @@ class SearchScreen extends React.Component {
             borderRadius: 5
           }}
           containerStyle = {{
-            width: (styles.device.width) / 2.5,
+            width: (styles.device.width) / 2,
             height: 275,
             marginLeft: 0,
             marginTop: 3,
