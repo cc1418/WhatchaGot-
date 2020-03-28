@@ -151,7 +151,7 @@ class SearchScreen extends React.Component {
     let recipeState = this.state.recipeInfo.id;
 
     firebase.database().ref().child('/items/' + userId + '/fridge/recipes').push({
-      name: recipeState
+      ID: recipeState
     });
     alert("Recipe Saved!")
   }
