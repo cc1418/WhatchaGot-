@@ -1,6 +1,15 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
+
+// const imensions = require('Dimensions');
+
+// const window = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+
+    device: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height
+    },
 
     apiContainer: {
       flex: 1,

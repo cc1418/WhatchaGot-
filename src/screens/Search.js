@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, SnapshotViewIOS, SafeAreaView, ScrollView, Modal } from 'react-native';
+import {Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions} from 'react-native';
 import { Button, Input, SearchBar, Card, Icon} from 'react-native-elements';
 import * as firebase from 'firebase'
 
@@ -7,6 +7,7 @@ import styles from '../../components/Style';
 
 class SearchScreen extends React.Component {
 
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -179,8 +180,8 @@ class SearchScreen extends React.Component {
           borderRadius: 1
         }}
         containerStyle = {{
-          width: 90,
-          height: 55,
+          width: (styles.device.width) / 5,
+          height: 45,
           marginLeft: 0,
           marginTop: 3,
           borderColor: "#ff944d"
@@ -239,7 +240,7 @@ class SearchScreen extends React.Component {
             borderRadius: 5
           }}
           containerStyle = {{
-            width: 150,
+            width: (styles.device.width) / 2.5,
             height: 275,
             marginLeft: 0,
             marginTop: 3,
@@ -279,6 +280,8 @@ class SearchScreen extends React.Component {
     const { search } = this.state.value;
 
     let recipeImage = this.state.recipeInfo.image;
+
+    //let deviceWidth = Dimensions.get('window').width;
 
     let list = this.state.ingredients.map((item, key) =>
       <View> {
@@ -387,7 +390,7 @@ class SearchScreen extends React.Component {
               <View>
                 <Image 
                 source={{uri: this.state.recipeInfo.image}}
-                style={{width: '100%', height:200, resizeMode: 'stretch'}}
+                style={{width: '100%', height: 300, resizeMode: 'stretch'}}
                 />
                 <Text>{this.state.recipeInfo.title}</Text>
                 <Text>Number of Servings: {this.state.recipeInfo.servings}</Text>
@@ -398,14 +401,20 @@ class SearchScreen extends React.Component {
                   onPress={() => {
                     this.setModalVisible(!this.state.modalVisible);
                   }}>
-                  <Text>Close</Text>
+                  <Text style = {{
+                    alignSelf:'center',
+                    fontSize: 40,
+                  }}>CLOSEEEE</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => {
                     this.addRecipeToDB();
                   }}>
-                  <Text>Save Recipe</Text>
+                  <Text style = {{
+                    alignSelf:'center',
+                    fontSize: 40,
+                  }}>Save Recipe</Text>
                 </TouchableOpacity>
               </View>
             </View>
