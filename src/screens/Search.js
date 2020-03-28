@@ -174,7 +174,7 @@ class SearchScreen extends React.Component {
   renderIngredients = ({ item, index }) => {
 
     return (
-      <View>
+      <View style = {{marginLeft: 5}}>
         <Card 
         styles = {{
           borderRadius: 1,
