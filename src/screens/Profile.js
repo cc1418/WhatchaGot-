@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, Alert, TouchableWithoutFeedbackBase, CameraRoll, ScrollView } from 'react-native'
+import { View, Alert } from 'react-native'
 import * as firebase from 'firebase'
-import { Button, Avatar, Input, Text} from 'react-native-elements'
+import { Button, Avatar, Input, Text, Icon} from 'react-native-elements'
 import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/FontAwesome';
+//import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import styles from '../../components/Style';
 
@@ -130,9 +130,22 @@ export default class Profile extends React.Component {
     render() {
 
         return (
-            <View style={{ flex: 1, backgroundColor: "#fff" }}>
+            <View style={{ flex: 1, backgroundColor: "#fff"}}>
 
                 <View style={styles.profileContainer}>
+                    <Icon
+                        containerStyle = {{
+                            alignSelf:'flex-end',
+                            marginRight: 10,
+                            marginTop: 5,
+                            marginBottom: -40
+                        }}
+                        size = {40}
+                        name='settings'
+                        type = 'material'
+                        color='#ff944d'
+                        onPress={this.toggleModal}
+                    />
                     <Avatar
                         size="xlarge"
                         rounded
@@ -140,17 +153,17 @@ export default class Profile extends React.Component {
                         icon={{ name: 'user', type: 'font-awesome' }}
                         activeOpacity={0.7}
                     />
-                   
+                                    
                     <Text style = {{fontSize: 22, fontWeight: 'bold'}} >{this.state.name}</Text>
                     {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
 
                 </View>
 
-                <Button                                                 // SETTINGS
+                {/* <Button                                                 // SETTINGS
                     buttonStyle={{
                         width: "40%",
                         alignSelf: 'center',
-                        marginTop: 30,
+                        marginTop: 300,
                         backgroundColor: "#ff944d",
 
                     }}
@@ -158,19 +171,27 @@ export default class Profile extends React.Component {
                         fontSize: 18,
                     }}
                     title="User Settings" 
-                    onPress={this.toggleModal} />
+                    onPress={this.toggleModal} /> */}
                 <Button                                                 // SIGN OUT
                     buttonStyle={{
                         width: "40%",
                         alignSelf: 'center',
-                        marginTop: 30,
+                        marginTop: 410,
                         backgroundColor: "#ff944d",
 
                     }}
                     titleStyle={{
                         fontSize: 18,
                     }}
-                    title='Sign Out'
+                    icon={
+                        <Icon
+                            name="logout-variant"
+                            type = 'material-community'
+                            size = {24}
+                            color='white'
+                        />
+                    }
+                    title=' Sign Out'
                     onPress={this.signOut}
                 />
 
