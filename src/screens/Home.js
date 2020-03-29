@@ -40,7 +40,7 @@ class HomeScreen extends React.Component {
     //   this.setState({ name: snapshot.val().name });
     // })
 
-    firebase.database().ref('users/' + userId).on('value', snapshot => {
+    firebase.database().ref('users/' + userId).on('child_changed', snapshot => {
       this.setState({ email: snapshot.val().email });
       this.setState({ name: snapshot.val().name });
     })
@@ -87,50 +87,40 @@ class HomeScreen extends React.Component {
         //console.log(this.state.recipeList)
         //console.log("goodbye")
       })
-
       .catch(err => {
         this.setState({recipeList: []})
       });
 
   }
 
-  debug() {
-    console.log(JSON.stringify(this.state.recipeList))
-  }
+  // debug() {
+  //   console.log(JSON.stringify(this.state.recipeList))
+  // }
 
   renderRecipes = ({ item, index }) => {
 
     return (
       <View>
         {/* <TouchableOpacity onPress={() => this.openRecipe(item.id)}> */}
-        <Card
-          styles={{
-            borderRadius: 5
-          }}
-          containerStyle={{
-            width: (styles.device.width) / 2.4,
-            height: 275,
-            marginLeft: 0,
-            marginTop: 3,
-            borderColor: "#ff944d"
-          }}
-          image={{ uri: item.image }}
-        >
+          <Card
+            styles={{
+              borderRadius: 5
+            }}
+            containerStyle={{
+              width: (styles.device.width) / 2.4,
+              height: 240,
+              marginLeft: 0,
+              marginTop: 3,
+              borderColor: "#ff944d"
+            }}
+            image={{ uri: item.image }}
+          >
 
+            <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
+              {item.title}
+            </Text>
 
-          <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
-            {item.title}
-          </Text>
-
-          {/* <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2 }}>
-            Likes: {item.likes}
-          </Text>
-
-          <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2 }}>
-            Missed Ingredients: {item.missedIngredientCount}
-          </Text> */}
-
-        </Card>
+          </Card>
         {/* </TouchableOpacity> */}
       </View>
     );
@@ -153,10 +143,10 @@ class HomeScreen extends React.Component {
         <View style={styles.homeContainer}>
           <View>
             <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
-            <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15 }}>{this.state.name} !</Text>
+            <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15, marginBottom: 30}}>{this.state.name} !</Text>
           </View>
 
-          <Button
+          {/* <Button
             buttonStyle={{
               width: "45%",
               alignSelf: 'center',
@@ -168,14 +158,14 @@ class HomeScreen extends React.Component {
             }}
             title="Console Log Recipes"
             onPress={() => this.debug()}
-          />
+          /> */}
 
           <View
             style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
             onStartShouldSetResponderCapture={() => {
               this.setState({ enableScrollViewScroll: true });
-
             }}>
+            <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 20, marginLeft: 0, marginTop: 10, marginBottom: 10}}>Stored Recipes: </Text>
             <FlatList
               contentContainerStyle={{ alignSelf: 'flex-start' }}
               numColumns={2}
