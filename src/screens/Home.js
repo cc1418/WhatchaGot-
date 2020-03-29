@@ -82,7 +82,7 @@ class HomeScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         //console.log(responseJson)
-        this.setState({recipeList : responseJson})
+        //this.setState({recipeList : responseJson})
         console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         //console.log(this.state.recipeList)
         //console.log("goodbye")
