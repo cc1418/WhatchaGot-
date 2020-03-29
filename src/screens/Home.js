@@ -12,8 +12,8 @@ class HomeScreen extends React.Component {
     super();
     this.state = {
       fontLoaded: false,
-      name: [],
-      email: [],
+      name: "",
+      email: "",
       recipeList: [],
       recipeId: []
     };
@@ -31,7 +31,7 @@ class HomeScreen extends React.Component {
 
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     var userId = firebase.auth().currentUser.uid;
 
     // console.log(userId)
@@ -47,13 +47,14 @@ class HomeScreen extends React.Component {
 
     firebase.database().ref('items/' + userId + '/fridge/recipes/').on('child_added', snapshot => {
       //console.log("snapshot", snapshot.val())
-      recipeJson = snapshot.val();
+      let recipeJson = snapshot.val();
       console.log("==================================================================================================");
-      console.log(Object.values(recipeJson))
+      console.log(Object.values(recipeJson)[0])
 
       //let numRecipes = (Object.keys(recipeJson).length)
       //console.log(Object.values(recipeJson))
-      this.state.recipeId.push(Object.values(recipeJson))
+      this.state.recipeId.push(Object.values(recipeJson)[0])
+      console.log(this.state.recipeId)
 
       // while (i < numRecipes) {
       //   let freshId = Object.values(recipeJson)[i].ID
@@ -66,8 +67,8 @@ class HomeScreen extends React.Component {
       //alert(apiCall)
 
     })
-  
     let apiId = this.state.recipeId.join(",")
+    console.log(apiId)
     let apiCall = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId
     console.log(apiCall)
 
@@ -88,7 +89,7 @@ class HomeScreen extends React.Component {
       })
 
       .catch(err => {
-        //console.log(err);
+        this.setState({recipeList: []})
       });
 
   }

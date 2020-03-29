@@ -95,7 +95,7 @@ class SearchScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ data: responseJson })
-        console.log(this.state.data)
+        //console.log(this.state.data)
         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
 
