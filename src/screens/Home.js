@@ -10,7 +10,11 @@ class HomeScreen extends React.Component {
   constructor() {
     super();
     this.state = {
-      fontLoaded: false
+      fontLoaded: false,
+      name: [],
+      email: [],
+      recipeList: [],
+      recipeId: []
     };
   }
 
@@ -26,12 +30,6 @@ class HomeScreen extends React.Component {
 
   }
 
-  state = {
-    name: [],
-    email: [],
-    recipeList: []
-  }
-
   componentDidMount() {
     var userId = firebase.auth().currentUser.uid;
 
@@ -41,61 +39,56 @@ class HomeScreen extends React.Component {
     //   this.setState({ name: snapshot.val().name });
     // })
 
-    firebase.database().ref('users/' + userId).on('child_changed', snapshot => {
+    firebase.database().ref('users/' + userId).on('value', snapshot => {
       this.setState({ email: snapshot.val().email });
       this.setState({ name: snapshot.val().name });
     })
 
-    firebase.database().ref('items/' + userId + '/fridge/recipes/').once('value')
-      .then(snapshot => {
-        //console.log("snapshot", snapshot.val())
-        recipeJson = snapshot.val();
+    firebase.database().ref('items/' + userId + '/fridge/recipes/').on('child_added', snapshot => {
+      //console.log("snapshot", snapshot.val())
+      recipeJson = snapshot.val();
+      console.log("==================================================================================================");
+      console.log(Object.values(recipeJson))
 
-        let numRecipes = (Object.keys(recipeJson).length)
-        //console.log(Object.values(recipeJson))
-        let i = 0
-        let recipeId = []
+      //let numRecipes = (Object.keys(recipeJson).length)
+      //console.log(Object.values(recipeJson))
+      this.state.recipeId.push(Object.values(recipeJson))
 
-        while (i < numRecipes) {
-          let freshId = Object.values(recipeJson)[i].ID
-          console.log(Object.values(recipeJson)[i].ID)
-          recipeId.push(freshId)
-          i++
-        }
+      // while (i < numRecipes) {
+      //   let freshId = Object.values(recipeJson)[i].ID
+      //   console.log(Object.values(recipeJson)[i].ID)
+      //   recipeId.push(freshId)
+      //   i++
+      // } 
 
-        
+      //alert(recipeId)
+      //alert(apiCall)
 
-        let apiId = recipeId.join(",")
-        let apiCall = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId
-        
-        alert(recipeId)
-        alert(apiCall)
+    })
+  
+    let apiId = this.state.recipeId.join(",")
+    let apiCall = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId
+    console.log(apiCall)
 
-
-        fetch(apiCall, {
-          "method": "GET",
-          "headers": {
-            "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-            "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
-          }
-        })
-          .then((response) => response.json())
-          .then((responseJson) => {
-            //console.log(responseJson)
-            this.setState({recipeList : responseJson})
-            console.log("==================================================================================================");
-            //console.log(this.state.recipeList)
-            //console.log("goodbye")
-          })
-
-          .catch(err => {
-            //console.log(err);
-          });
-
+    fetch(apiCall, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //console.log(responseJson)
+        this.setState({recipeList : responseJson})
+        console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        //console.log(this.state.recipeList)
+        //console.log("goodbye")
       })
+
       .catch(err => {
-
-      })
+        //console.log(err);
+      });
 
   }
 
@@ -108,36 +101,34 @@ class HomeScreen extends React.Component {
     return (
       <View>
         {/* <TouchableOpacity onPress={() => this.openRecipe(item.id)}> */}
-          <Card
-            styles={{
-              borderRadius: 5
-            }}
-            containerStyle={{
-              width: (styles.device.width) / 2.4,
-              height: 275,
-              marginLeft: 0,
-              marginTop: 3,
-              borderColor: "#ff944d"
-            }}
-            image={{ uri: item.image }}
-          >
+        <Card
+          styles={{
+            borderRadius: 5
+          }}
+          containerStyle={{
+            width: (styles.device.width) / 2.4,
+            height: 275,
+            marginLeft: 0,
+            marginTop: 3,
+            borderColor: "#ff944d"
+          }}
+          image={{ uri: item.image }}
+        >
 
 
-            <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
-              {item.title}
-            </Text>
+          <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
+            {item.title}
+          </Text>
 
-            <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2 }}>
-              Likes: {item.likes}
-            </Text>
+          {/* <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2 }}>
+            Likes: {item.likes}
+          </Text>
 
-            <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2 }}>
-              Missed Ingredients: {item.missedIngredientCount}
-            </Text>
+          <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2 }}>
+            Missed Ingredients: {item.missedIngredientCount}
+          </Text> */}
 
-
-
-          </Card>
+        </Card>
         {/* </TouchableOpacity> */}
       </View>
     );
