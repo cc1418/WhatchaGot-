@@ -257,6 +257,7 @@ export default class Profile extends React.Component {
                                 alignSelf: 'center',
                                 marginTop: 10,
                                 marginBottom: 30,
+                                backgroundColor: "#ff944d",
                             }}
                             onPress={this.onChangeNamePress}
                         />
@@ -277,6 +278,7 @@ export default class Profile extends React.Component {
                                 alignSelf: 'center',
                                 marginTop: 10,
                                 marginBottom: 30,
+                                backgroundColor: "#ff944d",
                             }}
 
                         />
@@ -297,6 +299,7 @@ export default class Profile extends React.Component {
                                 alignSelf: 'center',
                                 marginTop: 10,
                                 marginBottom: 20,
+                                backgroundColor: "#ff944d",
                             }}
                         />
 
@@ -320,6 +323,7 @@ export default class Profile extends React.Component {
                                 width: "90%",
                                 alignSelf: 'center',
                                 marginTop: 40,
+                                backgroundColor: "#ff944d",
                             }}
                             titleStyle={{
                                 fontSize: 19,
