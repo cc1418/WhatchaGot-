@@ -107,7 +107,7 @@ class HomeScreen extends React.Component {
               borderRadius: 5
             }}
             containerStyle={{
-              width: (styles.device.width) / 2.4,
+              width: (styles.device.width) / 2.3,
               height: 240,
               marginLeft: 0,
               marginTop: 3,
@@ -157,11 +157,11 @@ class HomeScreen extends React.Component {
               fontSize: 19,
             }}
             title="Console Log Recipes"
-            onPress={() => this.debug()}
+            onPress={() => this.debug()}  
           /> */}
 
           <View
-            style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
+            style={{ marginTop: 15, marginLeft: 15 }}
             onStartShouldSetResponderCapture={() => {
               this.setState({ enableScrollViewScroll: true });
             }}>
