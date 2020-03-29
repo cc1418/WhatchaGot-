@@ -6,6 +6,7 @@ import Modal from 'react-native-modal';
 //import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import styles from '../../components/Style';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Profile extends React.Component {
 
@@ -156,13 +157,16 @@ export default class Profile extends React.Component {
                         color='#ff944d'
                         onPress={this.toggleModal}
                     />
+                    <TouchableOpacity>
                     <Avatar
                         size="xlarge"
                         rounded
                         showEditButton
                         icon={{ name: 'user', type: 'font-awesome' }}
                         activeOpacity={0.7}
+                        onPress={() => this.props.navigation.navigate('Upload')}
                     />
+                    </TouchableOpacity>
                                     
                     <Text style = {{fontSize: 22, fontWeight: 'bold'}} >{this.state.name}</Text>
                     {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
