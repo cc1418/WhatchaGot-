@@ -431,9 +431,6 @@ class SearchScreen extends React.Component {
               style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
               onStartShouldSetResponderCapture={() => {
                 this.setState({ enableScrollViewScroll: true });
-                // if (this.state.enableScrollViewScroll === false) {
-                //   this.setState({ enableScrollViewScroll: true });
-                // }
               }}>
               <FlatList
                 contentContainerStyle={{ alignSelf: 'flex-start' }}
@@ -453,27 +450,6 @@ class SearchScreen extends React.Component {
     );
   }
 
-  // renderFlatList(color: string) {
-  //   return (
-  //     <View
-  //       onStartShouldSetResponderCapture={() => {
-  //         this.setState({ enableScrollViewScroll: false });
-  //         if (this._myScroll.contentOffset === 0
-  //           && this.state.enableScrollViewScroll === false) {
-  //           this.setState({ enableScrollViewScroll: true });
-  //         }
-  //       }}>
-  //       <FlatList
-  //         contentContainerStyle={{alignSelf: 'flex-start'}}
-  //         backgroundColor={color}
-  //         numColumns={2}
-  //         data={this.state.data}
-  //         keyExtractor={this.keyExtractor}
-  //         renderItem={this.renderRecipes}
-  //       />
-  //     </View>
-  //   );
-  // }
 }
 
 export default SearchScreen;

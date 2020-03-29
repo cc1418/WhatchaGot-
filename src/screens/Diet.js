@@ -17,12 +17,12 @@ class DietScreen extends React.Component {
 
     return (
           <View style={{flex: 1, marginTop: 50 }}>
-
+            <Text style = {{alignSelf:'center'}}>一一一一一一一一一一一一一一一一一一一一一一一</Text>
             <Picker selectedValue = {this.state.user} onValueChange = {this.updateUser} 
             style = {{
               height: styles.device.height / 20,
               width: styles.device.width / 2,
-              alignSelf:'center'
+              alignSelf:'center',
             }}>
 
                <Picker.Item label = "Gluten Free" value = "Eliminating gluten means avoiding wheat, barley, rye, and other gluten-containing grains and foods made from them (or that may have been cross contaminated)." />
@@ -47,6 +47,7 @@ class DietScreen extends React.Component {
 
 
             </Picker>
+            <Text style = {{alignSelf:'center'}}>一一一一一一一一一一一一一一一一一一一一一一一</Text>
             <Text style = {{alignSelf:'center', fontSize: 18, width: styles.device.width / 1.1}}>{this.state.user}</Text>
 
           </View>
