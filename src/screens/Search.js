@@ -22,22 +22,6 @@ class SearchScreen extends React.Component {
     };
   }
 
-  complexSearch() {
-    fetch("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?diet=", {
-      "method": "GET",
-      "headers": {
-        "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-        "x-rapidapi-key": "88ce1ecccdmsh26e0040a3d3946dp1180d4jsn487f1065ce58"
-      }
-    })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   componentDidMount() { //Loads the users existing 
     let userId = firebase.auth().currentUser.uid; //Creates variable related to logged in user; Firebase knows who's logged in
     let fridge
@@ -111,6 +95,7 @@ class SearchScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ data: responseJson })
+        //console.log(this.state.data)
         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
 

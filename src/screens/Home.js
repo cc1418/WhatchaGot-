@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground } from 'react-native';
-import { Button, Input, SearchBar } from 'react-native-elements';
+import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions } from 'react-native';
+import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
 import styles from '../../components/Style';
 import * as Font from 'expo-font';
@@ -41,58 +41,110 @@ class HomeScreen extends React.Component {
     //   this.setState({ name: snapshot.val().name });
     // })
 
-    firebase.database().ref('users/' + userId).on('value', snapshot => {
+    firebase.database().ref('users/' + userId).on('child_changed', snapshot => {
       this.setState({ email: snapshot.val().email });
       this.setState({ name: snapshot.val().name });
     })
 
     firebase.database().ref('items/' + userId + '/fridge/recipes/').once('value')
-    .then(snapshot => {
-      console.log("snapshot", snapshot.val())
-      recipeJson = snapshot.val();
+      .then(snapshot => {
+        //console.log("snapshot", snapshot.val())
+        recipeJson = snapshot.val();
 
-      let numRecipes = (Object.keys(recipeJson).length)
-      let i = 0
-      let recipeId = []
+        let numRecipes = (Object.keys(recipeJson).length)
+        //console.log(Object.values(recipeJson))
+        let i = 0
+        let recipeId = []
 
-      while (i<numRecipes){
-        let freshId = Object.values(recipeJson)[i].recipes
-        recipeId.push(freshId)
-        i++
-      }
-      
-      let apiId = recipeId.join(",")
-      let apiCall = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId
-      // alert(apiCall)
-      
-
-      fetch(apiCall, {
-        "method": "GET",
-        "headers": {
-          "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-          "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
+        while (i < numRecipes) {
+          let freshId = Object.values(recipeJson)[i].ID
+          console.log(Object.values(recipeJson)[i].ID)
+          recipeId.push(freshId)
+          i++
         }
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //console.log(responseJson)
-        this.state.recipeList = responseJson
+
         
-      })
+
+        let apiId = recipeId.join(",")
+        let apiCall = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId
         
+        alert(recipeId)
+        alert(apiCall)
+
+
+        fetch(apiCall, {
+          "method": "GET",
+          "headers": {
+            "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+            "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
+          }
+        })
+          .then((response) => response.json())
+          .then((responseJson) => {
+            //console.log(responseJson)
+            this.setState({recipeList : responseJson})
+            console.log("==================================================================================================");
+            //console.log(this.state.recipeList)
+            //console.log("goodbye")
+          })
+
+          .catch(err => {
+            //console.log(err);
+          });
+
+      })
       .catch(err => {
-          //console.log(err);
-      });
 
-    })
-    .catch(err => {
-
-    })
+      })
 
   }
 
-  debug(){
+  debug() {
     console.log(JSON.stringify(this.state.recipeList))
+  }
+
+  renderRecipes = ({ item, index }) => {
+
+    return (
+      <View>
+        {/* <TouchableOpacity onPress={() => this.openRecipe(item.id)}> */}
+          <Card
+            styles={{
+              borderRadius: 5
+            }}
+            containerStyle={{
+              width: (styles.device.width) / 2.4,
+              height: 275,
+              marginLeft: 0,
+              marginTop: 3,
+              borderColor: "#ff944d"
+            }}
+            image={{ uri: item.image }}
+          >
+
+
+            <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
+              {item.title}
+            </Text>
+
+            <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2 }}>
+              Likes: {item.likes}
+            </Text>
+
+            <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2 }}>
+              Missed Ingredients: {item.missedIngredientCount}
+            </Text>
+
+
+
+          </Card>
+        {/* </TouchableOpacity> */}
+      </View>
+    );
+  }
+
+  keyExtractor = (item, index) => {
+    return index.toString();
   }
 
   render() {
@@ -105,7 +157,7 @@ class HomeScreen extends React.Component {
           <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15 }}>{this.state.name} !</Text>
         </View>
 
-        <Button       
+        <Button
           buttonStyle={{
             width: "45%",
             alignSelf: 'center',
@@ -119,8 +171,26 @@ class HomeScreen extends React.Component {
           onPress={() => this.debug()}
         />
 
+        <View
+          style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
+          onStartShouldSetResponderCapture={() => {
+            this.setState({ enableScrollViewScroll: true });
+            // if (this.state.enableScrollViewScroll === false) {
+            //   this.setState({ enableScrollViewScroll: true });
+            // }
+          }}>
+          <FlatList
+            contentContainerStyle={{ alignSelf: 'flex-start' }}
+            numColumns={2}
+            data={this.state.recipeList}
+            scrollEnabled
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderRecipes}
+          />
+        </View>
+
       </View>
-      
+
     );
   }
 }
