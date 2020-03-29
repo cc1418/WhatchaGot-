@@ -34,7 +34,6 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     var userId = firebase.auth().currentUser.uid;
-    let recipeList
 
     // console.log(userId)
     // firebase.database().ref('users/' + userId).on('value', snapshot => {
@@ -59,7 +58,7 @@ class HomeScreen extends React.Component {
       
       let apiId = recipeId.join(",")
       let apiCall = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId
-      alert(apiCall)
+      // alert(apiCall)
       
 
       fetch(apiCall, {
@@ -71,15 +70,24 @@ class HomeScreen extends React.Component {
       })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson)
+        //console.log(responseJson)
+        this.state.recipeList = responseJson
+        
       })
         
       .catch(err => {
           //console.log(err);
       });
-      
+
+    })
+    .catch(err => {
+
     })
 
+  }
+
+  debug(){
+    console.log(JSON.stringify(this.state.recipeList))
   }
 
   render() {
@@ -92,7 +100,22 @@ class HomeScreen extends React.Component {
           <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15 }}>{this.state.name} !</Text>
         </View>
 
+        <Button       
+          buttonStyle={{
+            width: "45%",
+            alignSelf: 'center',
+            marginTop: 30,
+            backgroundColor: "#ff944d"
+          }}
+          titleStyle={{
+            fontSize: 19,
+          }}
+          title="Console Log Recipes"
+          onPress={() => this.debug()}
+        />
+
       </View>
+      
     );
   }
 }
