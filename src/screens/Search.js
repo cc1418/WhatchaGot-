@@ -260,7 +260,7 @@ class SearchScreen extends React.Component {
               {item.title}
             </Text>
 
-            <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2 }}>
+            <Text index={item.id} style={{ fontSize: 13, marginTop: 10, marginLeft: 2 }}>
               Likes: {item.likes}
             </Text>
 
@@ -384,44 +384,52 @@ class SearchScreen extends React.Component {
               onPress={() => this.searchByIngredient()}
             />
 
-            <View style={{ marginTop: 22 }}>
+            <View style={{ marginTop: 5 }}>
               <Modal
                 animationType="slide"
                 transparent={false}
                 visible={this.state.modalVisible}
-                onRequestClose={() => {
-                  Alert.alert('Modal has been closed.');
-                }}>
-                <View style={{ marginTop: 22 }}>
+                >
+                <View style={{ marginTop: 5 }}>
                   <View>
                     <Image
                       source={{ uri: this.state.recipeInfo.image }}
-                      style={{ width: '100%', height: 300, resizeMode: 'stretch' }}
+                      style={{ width: styles.device.width / 1.1, height: 200, resizeMode: 'center', alignSelf:'center'}}
                     />
-                    <Text>{this.state.recipeInfo.title}</Text>
-                    <Text>Number of Servings: {this.state.recipeInfo.servings}</Text>
-                    <Text>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
-                    <Text>Instructions: {this.state.recipeInfo.instructions}</Text>
+                    <View style = {{ alignSelf:'center'}}>
+                      <Text style = {{fontSize: 17, marginTop: 5, fontWeight: 'bold'}}>{this.state.recipeInfo.title}</Text>
+                      <Text style = {{fontSize: 17, fontWeight: 'bold'}}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                      <Text style = {{fontSize: 17, fontWeight: 'bold'}}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+                    </View>
+                    <Text style = {{width: styles.device.width / 1.1, alignSelf:'center'}}>Instructions: {this.state.recipeInfo.instructions}</Text>
 
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.setModalVisible(!this.state.modalVisible);
-                      }}>
-                      <Text style={{
-                        alignSelf: 'center',
-                        fontSize: 40,
-                      }}>CLOSEEEE</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
+                    <Button
+                      title='Save Recipe'
                       onPress={() => {
                         this.addRecipeToDB();
-                      }}>
-                      <Text style={{
+                      }}
+                      buttonStyle={{
+                        width: "60%",
                         alignSelf: 'center',
-                        fontSize: 40,
-                      }}>Save Recipe</Text>
-                    </TouchableOpacity>
+                        marginTop: 10,
+                        marginBottom: 20,
+                        backgroundColor: "#ff944d",
+                      }}
+                    />
+                    <Button
+                      title='Close'
+                      onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                      }}
+                      buttonStyle={{
+                        width: "60%",
+                        alignSelf: 'center',
+                        marginTop: 10,
+                        marginBottom: 20,
+                        backgroundColor: "#ff944d",
+                      }}
+                    />
+
                   </View>
                 </View>
               </Modal>
