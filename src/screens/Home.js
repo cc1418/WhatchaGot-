@@ -4,9 +4,10 @@ import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
 import styles from '../../components/Style';
 import * as Font from 'expo-font';
-
+console.disableYellowBox = true;
 
 class HomeScreen extends React.Component {
+  
   constructor() {
     super();
     this.state = {
@@ -150,47 +151,52 @@ class HomeScreen extends React.Component {
   render() {
 
     return (
-      <View style={styles.homeContainer}>
+      <View
+      onStartShouldSetResponderCapture={() => {
+        this.setState({ enableScrollViewScroll: true });
+      }}>
+      <ScrollView
+        scrollEnabled={this.state.enableScrollViewScroll}
+      >
+        <View style={styles.homeContainer}>
+          <View>
+            <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
+            <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15 }}>{this.state.name} !</Text>
+          </View>
 
-        <View>
-          <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
-          <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15 }}>{this.state.name} !</Text>
-        </View>
-
-        <Button
-          buttonStyle={{
-            width: "45%",
-            alignSelf: 'center',
-            marginTop: 30,
-            backgroundColor: "#ff944d"
-          }}
-          titleStyle={{
-            fontSize: 19,
-          }}
-          title="Console Log Recipes"
-          onPress={() => this.debug()}
-        />
-
-        <View
-          style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
-          onStartShouldSetResponderCapture={() => {
-            this.setState({ enableScrollViewScroll: true });
-            // if (this.state.enableScrollViewScroll === false) {
-            //   this.setState({ enableScrollViewScroll: true });
-            // }
-          }}>
-          <FlatList
-            contentContainerStyle={{ alignSelf: 'flex-start' }}
-            numColumns={2}
-            data={this.state.recipeList}
-            scrollEnabled
-            keyExtractor={this.keyExtractor}
-            renderItem={this.renderRecipes}
+          <Button
+            buttonStyle={{
+              width: "45%",
+              alignSelf: 'center',
+              marginTop: 30,
+              backgroundColor: "#ff944d"
+            }}
+            titleStyle={{
+              fontSize: 19,
+            }}
+            title="Console Log Recipes"
+            onPress={() => this.debug()}
           />
+
+          <View
+            style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
+            onStartShouldSetResponderCapture={() => {
+              this.setState({ enableScrollViewScroll: true });
+
+            }}>
+            <FlatList
+              contentContainerStyle={{ alignSelf: 'flex-start' }}
+              numColumns={2}
+              data={this.state.recipeList}
+              scrollEnabled
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderRecipes}
+            />
+          </View>
+
         </View>
-
-      </View>
-
+       </ScrollView>
+       </View> 
     );
   }
 }
