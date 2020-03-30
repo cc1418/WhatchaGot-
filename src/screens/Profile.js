@@ -55,7 +55,12 @@ export default class Profile extends React.Component {
     reauthenticate = (currentPassword) => {
         var user = firebase.auth().currentUser;
         var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword)
-        return user.reauthenticateWithCredential(cred)
+
+        return user.reauthenticateWithCredential(cred);
+    }
+
+    handleChange = (e) => {
+        this.setState({currentPassword: e.target.value})
     }
 
     onChangePasswordPress = () => {
@@ -218,10 +223,12 @@ export default class Profile extends React.Component {
                             containerStyle={{
 
                             }}
+                            name="currentPassword"
                             placeholder='Current Password'
                             autoCapitalize='none'
                             value={this.state.currentPassword}
                             secureTextEntry={true}
+                            onChange={this.handleChange}
                             onChangeText={(text) => { this.setState({ currentPassword: text }) }}
                         />
 
@@ -250,6 +257,7 @@ export default class Profile extends React.Component {
                                 marginBottom: 30,
                                 backgroundColor: "#ff944d",
                             }}
+                            disabled={!this.state.currentPassword}
                             onPress={this.onChangeNamePress}
                         />
 
@@ -264,6 +272,7 @@ export default class Profile extends React.Component {
                         <Button
                             title='Change Email'
                             onPress={this.onChangeEmailPress}
+                            disabled={!this.state.currentPassword}
                             buttonStyle={{
                                 width: "80%",
                                 alignSelf: 'center',
@@ -285,6 +294,7 @@ export default class Profile extends React.Component {
                         <Button
                             title='Change Password'
                             onPress={this.onChangePasswordPress}
+                            disabled={!this.state.currentPassword}
                             buttonStyle={{
                                 width: "80%",
                                 alignSelf: 'center',
@@ -306,6 +316,7 @@ export default class Profile extends React.Component {
                                 fontSize: 13,
                             }}
                             onPress={this.onDeletePress}
+                            disabled={!this.state.currentPassword}
                         />
 
                         <Button
