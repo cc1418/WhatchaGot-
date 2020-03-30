@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions } from 'react-native';
+import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions, Alert } from 'react-native';
 import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
+import renderer from 'react-test-renderer'
 
 import styles from '../../components/Style';
 
@@ -61,7 +62,6 @@ class SearchScreen extends React.Component {
     let apiKey = 'f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6'
 
     if (this.state.ingredients.length === 0) {
-      alert('enter some ingredients first')
       return
     } else if (this.state.ingredients.length > 1) {
       let newArray = []
@@ -152,15 +152,35 @@ class SearchScreen extends React.Component {
     let userId = firebase.auth().currentUser.uid;
     let recipeState = this.state.recipeInfo.id;
 
-    firebase.database().ref().child('/items/' + userId + '/fridge/recipes').push({
-      ID: recipeState
-    });
-    alert("Recipe Saved!")
-    this.setState({
-      refresh: !this.state.refresh
-    })
-  }
+    // firebase.database().ref(`items/${userId}/fridge/recipes/`).transaction(function(currentData) {
+    //   if (currentData === null) {
+    //     return Alert.alert('worked')
+    //   } else {
+    //     return Alert.alert('failed')
+    //   }
+    // })
 
+
+    firebase.database().ref(`items/${userId}/fridge/recipes/`).orderByChild('ID').limitToFirst(1).once("value").then( snapshot => {
+
+      // .child('/items/' + userId + '/fridge/recipes/ID')
+
+
+      if (snapshot.child('ID').exists()) {
+        console.log('exists')
+      } else {
+        // firebase.database().ref().child('/items/' + userId + '/fridge/recipes').push({
+        //   ID: recipeState
+        // })
+        // alert("Recipe Saved!")
+        // this.setState({
+        //   refresh: !this.state.refresh
+        // })
+        Alert.alert(snapshot.val())
+      }
+    })
+
+  }
   addFridgeToDB() {
     let userId = firebase.auth().currentUser.uid;
     let fridgeState = this.state.ingredients
@@ -279,7 +299,6 @@ class SearchScreen extends React.Component {
     );
   }
 
-
   keyExtractor = (item, index) => {
     return index.toString();
   }
@@ -329,6 +348,7 @@ class SearchScreen extends React.Component {
               lightTheme
               inputContainerStyle={{ backgroundColor: 'white' }}
               placeholder="Enter an Ingredient"
+              onChange={this.handleChange}
               onChangeText={this.updateSearch}
               value={search}
             />
@@ -356,7 +376,9 @@ class SearchScreen extends React.Component {
                 fontSize: 19,
               }}
               title="Add Item"
+              disabled={(!this.state.value.length && this.state.ingredients == 0 ? true : false)}
               onPress={() => this.updateList()}
+
             />
 
             <Button       //Button for adding value in search abr to ingredients table in DB
@@ -370,6 +392,7 @@ class SearchScreen extends React.Component {
                 fontSize: 19,
               }}
               title="Store List in Fridge"
+              disabled={(this.state.ingredients.length == 0 ? true : false)}
               onPress={() => this.addFridgeToDB()}
             />
 
@@ -384,6 +407,7 @@ class SearchScreen extends React.Component {
                 fontSize: 19,
               }}
               title="Search"
+              disabled={(this.state.ingredients.length == 0 ? true : false)}
               onPress={() => this.searchByIngredient()}
             />
 
