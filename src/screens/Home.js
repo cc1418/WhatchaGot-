@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, ActivityIndicator, ImageBackground } from 'react-native';
-import { Button, Input, SearchBar } from 'react-native-elements';
+import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions } from 'react-native';
+import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
 import styles from '../../components/Style';
 import * as Font from 'expo-font';
-
+console.disableYellowBox = true;
 
 class HomeScreen extends React.Component {
+  
   constructor() {
     super();
     this.state = {
-      fontLoaded: false
+      fontLoaded: false,
+      name: "",
+      email: "",
+      recipeList: [],
+      recipeId: []
     };
   }
 
@@ -26,13 +31,7 @@ class HomeScreen extends React.Component {
 
   }
 
-  state = {
-    name: [],
-    email: [],
-    recipeList: []
-  }
-
-  componentDidMount() {
+  async componentDidMount() {
     var userId = firebase.auth().currentUser.uid;
 
     console.log(userId)
@@ -41,81 +40,145 @@ class HomeScreen extends React.Component {
       this.setState({ name: snapshot.val().name });
     })
 
-    firebase.database().ref('items/' + userId + '/fridge/recipes/').once('value')
-      .then(snapshot => {
-        console.log("snapshot", snapshot.val())
-        recipeJson = snapshot.val();
+    firebase.database().ref('users/' + userId).on('child_changed', snapshot => {
+      this.setState({ email: snapshot.val().email });
+      this.setState({ name: snapshot.val().name });
+    })
 
-        let numRecipes = (Object.keys(recipeJson).length)
-        let i = 0
-        let recipeId = []
+    firebase.database().ref('items/' + userId + '/fridge/recipes/').on('child_added', snapshot => {
+      //console.log("snapshot", snapshot.val())
+      let recipeJson = snapshot.val();
+      console.log("==================================================================================================");
+      console.log(Object.values(recipeJson)[0])
 
-        while (i < numRecipes) {
-          let freshId = Object.values(recipeJson)[i].recipes
-          recipeId.push(freshId)
-          i++
-        }
+      //let numRecipes = (Object.keys(recipeJson).length)
+      //console.log(Object.values(recipeJson))
+      this.state.recipeId.push(Object.values(recipeJson)[0])
+      console.log(this.state.recipeId)
 
-        let apiId = recipeId.join(",")
-        let apiCall = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId
-        // alert(apiCall)
+      // while (i < numRecipes) {
+      //   let freshId = Object.values(recipeJson)[i].ID
+      //   console.log(Object.values(recipeJson)[i].ID)
+      //   recipeId.push(freshId)
+      //   i++
+      // } 
 
+      //alert(recipeId)
+      //alert(apiCall)
 
-        fetch(apiCall, {
-          "method": "GET",
-          "headers": {
-            "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-            "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
-          }
-        })
-          .then((response) => response.json())
-          .then((responseJson) => {
-            //console.log(responseJson)
-            this.state.recipeList = responseJson
+    })
+    let apiId = this.state.recipeId.join(",")
+    console.log(apiId)
+    let apiCall = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId
+    console.log(apiCall)
 
-          })
-
-          .catch(err => {
-            //console.log(err);
-          });
-
+    fetch(apiCall, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //console.log(responseJson)
+        this.setState({recipeList : responseJson})
+        console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        //console.log(this.state.recipeList)
+        //console.log("goodbye")
       })
       .catch(err => {
-
-      })
+        this.setState({recipeList: []})
+      });
 
   }
 
-  debug() {
-    console.log(JSON.stringify(this.state.recipeList))
+  // debug() {
+  //   console.log(JSON.stringify(this.state.recipeList))
+  // }
+
+  renderRecipes = ({ item, index }) => {
+
+    return (
+      <View>
+        {/* <TouchableOpacity onPress={() => this.openRecipe(item.id)}> */}
+          <Card
+            styles={{
+              borderRadius: 5
+            }}
+            containerStyle={{
+              width: (styles.device.width) / 2.3,
+              height: 240,
+              marginLeft: 0,
+              marginTop: 3,
+              borderColor: "#ff944d"
+            }}
+            image={{ uri: item.image }}
+          >
+
+            <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
+              {item.title}
+            </Text>
+
+          </Card>
+        {/* </TouchableOpacity> */}
+      </View>
+    );
+  }
+
+  keyExtractor = (item, index) => {
+    return index.toString();
   }
 
   render() {
 
     return (
-      <View style={styles.homeContainer}>
+      <View
+      onStartShouldSetResponderCapture={() => {
+        this.setState({ enableScrollViewScroll: true });
+      }}>
+      <ScrollView
+        scrollEnabled={this.state.enableScrollViewScroll}
+      >
+        <View style={styles.homeContainer}>
+          <View>
+            <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
+            <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15, marginBottom: 30}}>{this.state.name} !</Text>
+          </View>
 
-        <View>
-          <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
-          <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15 }}>{this.state.name} !</Text>
+          {/* <Button
+            buttonStyle={{
+              width: "45%",
+              alignSelf: 'center',
+              marginTop: 30,
+              backgroundColor: "#ff944d"
+            }}
+            titleStyle={{
+              fontSize: 19,
+            }}
+            title="Console Log Recipes"
+            onPress={() => this.debug()}  
+          /> */}
+
+          <View
+            style={{ marginTop: 15, marginLeft: 15 }}
+            onStartShouldSetResponderCapture={() => {
+              this.setState({ enableScrollViewScroll: true });
+            }}>
+            <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 20, marginLeft: 0, marginTop: 10, marginBottom: 10}}>Stored Recipes: </Text>
+            <FlatList
+              contentContainerStyle={{ alignSelf: 'flex-start' }}
+              numColumns={2}
+              data={this.state.recipeList}
+              scrollEnabled
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderRecipes}
+            />
+          </View>
+
         </View>
-
-        <Button
-          buttonStyle={{
-            width: "45%",
-            alignSelf: 'center',
-            marginTop: 30,
-            backgroundColor: "#ff944d"
-          }}
-          titleStyle={{
-            fontSize: 19,
-          }}
-          title="Console Log Recipes"
-          onPress={() => this.debug()}
-        />
-
-      </View>
-
+       </ScrollView>
+       </View> 
     );
   }
 }

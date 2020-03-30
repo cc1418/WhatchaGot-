@@ -6,6 +6,7 @@ import Modal from 'react-native-modal';
 //import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import styles from '../../components/Style';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Profile extends React.Component {
 
@@ -148,18 +149,19 @@ export default class Profile extends React.Component {
                         color='#ff944d'
                         onPress={this.toggleModal}
                     />
-                    <Avatar
-                        size="xlarge"
-                        rounded
-                        showEditButton
-                        icon={{ name: 'user', type: 'font-awesome' }}
-                        activeOpacity={0.7}
-                        onPress={() => this.props.navigation.navigate('PickPicture')}
-                    />
+                    <TouchableOpacity>
+                        <Avatar
+                            size="xlarge"
+                            rounded
+                            showEditButton
+                            icon={{ name: 'user', type: 'font-awesome' }}
+                            activeOpacity={0.7}
+                            onPress={() => this.props.navigation.navigate('PickPicture')}
+                        />
 
-                    <Text style={{ fontSize: 22, fontWeight: 'bold' }} >{this.state.name}</Text>
-                    {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
-
+                        <Text style={{ fontSize: 22, fontWeight: 'bold' }} >{this.state.name}</Text>
+                        {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
+                    </TouchableOpacity>
                 </View>
 
                 {/* <Button                                                 // SETTINGS
@@ -246,6 +248,7 @@ export default class Profile extends React.Component {
                                 alignSelf: 'center',
                                 marginTop: 10,
                                 marginBottom: 30,
+                                backgroundColor: "#ff944d",
                             }}
                             onPress={this.onChangeNamePress}
                         />
@@ -266,6 +269,7 @@ export default class Profile extends React.Component {
                                 alignSelf: 'center',
                                 marginTop: 10,
                                 marginBottom: 30,
+                                backgroundColor: "#ff944d",
                             }}
 
                         />
@@ -286,6 +290,7 @@ export default class Profile extends React.Component {
                                 alignSelf: 'center',
                                 marginTop: 10,
                                 marginBottom: 20,
+                                backgroundColor: "#ff944d",
                             }}
                         />
 
@@ -309,6 +314,7 @@ export default class Profile extends React.Component {
                                 width: "90%",
                                 alignSelf: 'center',
                                 marginTop: 40,
+                                backgroundColor: "#ff944d",
                             }}
                             titleStyle={{
                                 fontSize: 19,

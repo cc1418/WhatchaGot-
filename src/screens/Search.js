@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import {Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions} from 'react-native';
-import { Button, Input, SearchBar, Card, Icon} from 'react-native-elements';
+import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions } from 'react-native';
+import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
 
 import styles from '../../components/Style';
 
 class SearchScreen extends React.Component {
 
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -29,23 +29,23 @@ class SearchScreen extends React.Component {
     let obj
     let newFridge = []
     firebase.database().ref('items/' + userId + '/fridge/shelf/').once('value')
-    .then(snapshot => {
-      console.log("snapshot", snapshot.val())
-      fridge = snapshot.val()
-      
-      fridge.map((element) => {
-        obj = {id:newId, name:element};
-        newFridge.push(obj);
-        newId++;
-      });
-      this.state.ingredients = newFridge
-      //alert(JSON.stringify(newFridge))
-      this.setState({
-        refresh: !this.state.refresh
+      .then(snapshot => {
+        console.log("snapshot", snapshot.val())
+        fridge = snapshot.val()
+
+        fridge.map((element) => {
+          obj = { id: newId, name: element };
+          newFridge.push(obj);
+          newId++;
+        });
+        this.state.ingredients = newFridge
+        //alert(JSON.stringify(newFridge))
+        this.setState({
+          refresh: !this.state.refresh
+        })
+      }).catch(function (error) {
+        return
       })
-    }).catch(function(error){
-      return
-    })
   }
 
   searchByIngredient() {  //Function for creating the api call to spoonacular and fetching the call
@@ -95,7 +95,11 @@ class SearchScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ data: responseJson })
+<<<<<<< HEAD
         console.log(this.state.data)
+=======
+        //console.log(this.state.data)
+>>>>>>> dc6946c41b39b4b9ca3bd4b664190063ad170839
         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
 
@@ -175,30 +179,30 @@ class SearchScreen extends React.Component {
   renderIngredients = ({ item, index }) => {
 
     return (
-      <View style = {{marginLeft: 2}}>
-        <Card 
-        styles = {{
-          borderRadius: 1,
-        }}
-        containerStyle = {{
-          width: (styles.device.width) / 4.5,
-          height: 45,
-          marginLeft: 0,
-          marginRight: 4,
-          marginTop: 3,
-          borderColor: "#ff944d"
-        }}
-        wrapperStyle = {{
-          
-        }}
+      <View style={{ marginLeft: 2 }}>
+        <Card
+          styles={{
+            borderRadius: 1,
+          }}
+          containerStyle={{
+            width: (styles.device.width) / 4.5,
+            height: 45,
+            marginLeft: 0,
+            marginRight: 4,
+            marginTop: 3,
+            borderColor: "#ff944d"
+          }}
+          wrapperStyle={{
+
+          }}
         >
           <TouchableOpacity
             key={item.id}
             onPress={() => this.deleteFromList(item.id)}>
-          <Text index={item.id} style={{ fontSize: 13, marginTop: -5, marginLeft: -20, marginRight: -20, alignSelf: "center"}}>
-            {item.name} 
-          </Text>
-          </TouchableOpacity> 
+            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, marginLeft: -20, marginRight: -20, alignSelf: "center" }}>
+              {item.name}
+            </Text>
+          </TouchableOpacity>
         </Card>
       </View>
 
@@ -206,7 +210,7 @@ class SearchScreen extends React.Component {
   }
 
   setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+    this.setState({ modalVisible: visible });
   }
 
   openRecipe = (recipeId) => {
@@ -218,13 +222,13 @@ class SearchScreen extends React.Component {
 
     //alert(apiCall)
 
-    
+
     fetch(apiCall, {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-		"x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
-	}
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
+      }
     })
       .then((response) => response.json())
       .then((responseJson) => {
@@ -241,36 +245,36 @@ class SearchScreen extends React.Component {
     return (
       <View>
         <TouchableOpacity onPress={() => this.openRecipe(item.id)}>
-        <Card
-          styles = {{
-            borderRadius: 5
-          }}
-          containerStyle = {{
-            width: (styles.device.width) / 2.4,
-            height: 275,
-            marginLeft: 0,
-            marginTop: 3,
-            borderColor: "#ff944d"
-          }}
-          image={{uri: item.image}}
+          <Card
+            styles={{
+              borderRadius: 5
+            }}
+            containerStyle={{
+              width: (styles.device.width) / 2.4,
+              height: 275,
+              marginLeft: 0,
+              marginTop: 3,
+              borderColor: "#ff944d"
+            }}
+            image={{ uri: item.image }}
           >
-          
-          
-          <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center"}}>
-            {item.title}
-          </Text>
 
-          <Text index={item.id} style={{ fontSize: 13, marginTop: 15, marginLeft: 2}}>      
+
+            <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
+              {item.title}
+            </Text>
+
+            <Text index={item.id} style={{ fontSize: 13, marginTop: 10, marginLeft: 2 }}>
               Likes: {item.likes}
-          </Text>
+            </Text>
 
-          <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2}}>      
+            <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2 }}>
               Missed Ingredients: {item.missedIngredientCount}
-          </Text>
-         
-          
+            </Text>
 
-        </Card>
+
+
+          </Card>
         </TouchableOpacity>
       </View>
     );
@@ -298,182 +302,166 @@ class SearchScreen extends React.Component {
       </View>
     )
 
-    if (this.state.recipeInfo.instructions === ""){
+    if (this.state.recipeInfo.instructions === "") {
       this.state.recipeInfo.instructions = "Instructions could not be fetched, please visit this site for more info: "
     }
 
     return (
-      
-      <View 
-      onStartShouldSetResponderCapture={() => {
-        this.setState({ enableScrollViewScroll: true });
-      }}>
-      <ScrollView 
-      scrollEnabled={this.state.enableScrollViewScroll}
-      >
-      <View>
-        <SearchBar
-          ref={search => this.search = search}
-          inputStyle={{ backgroundColor: 'white' }}
-          containerStyle={{ 
-            backgroundColor: 'white', 
-            borderWidth: 0.3, 
-            borderRadius: 20, 
-            margin: 16, 
-            marginTop: 50, 
-            borderColor: "#ffffff00",
-          }}
-          lightTheme
-          inputContainerStyle={{ backgroundColor: 'white' }}
-          placeholder="Enter an Ingredient"
-          onChangeText={this.updateSearch}
-          value={search}
-        />
-        <View style = {{paddingLeft:10, flexDirection: "row"}}> 
-          <FlatList
-            contentContainerStyle={{alignSelf: 'flex-start'}}
-            numColumns={4}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            data={this.state.ingredients}
-            extraData={this.state.refresh}
-            keyExtractor={this.keyExtractor}
-            renderItem={this.renderIngredients}
-          />
-        </View>
 
-        <Button       //Button for adding search term to search list
-          buttonStyle={{
-            width: "45%",
-            alignSelf: 'center',
-            marginTop: 30,
-            backgroundColor: "#ff944d"
-          }}
-          titleStyle={{
-            fontSize: 19,
-          }}
-          title="Add Item"
-          onPress={() => this.updateList()}
-        />
-
-        <Button       //Button for adding value in search abr to ingredients table in DB
-          buttonStyle={{
-            width: "45%",
-            alignSelf: 'center',
-            marginTop: 30,
-            backgroundColor: "#ff944d"
-          }}
-          titleStyle={{
-            fontSize: 19,
-          }}
-          title="Store List in Fridge"
-          onPress={() => this.addFridgeToDB()}
-        />
-
-        <Button       //Call searchByIngredient function
-          buttonStyle={{
-            width: "45%",
-            alignSelf: 'center',
-            marginTop: 30,
-            backgroundColor: "#ff944d"
-          }}
-          titleStyle={{
-            fontSize: 19,
-          }}
-          title="Search"
-          onPress={() => this.searchByIngredient()}
-        />
-
-        <View style={{marginTop: 22}}>
-          <Modal
-              animationType="slide"
-              transparent={false}
-              visible={this.state.modalVisible}
-              onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-              }}>
-            <View style={{marginTop: 22}}>
-              <View>
-                <Image 
-                source={{uri: this.state.recipeInfo.image}}
-                style={{width: '100%', height: 300, resizeMode: 'stretch'}}
-                />
-                <Text>{this.state.recipeInfo.title}</Text>
-                <Text>Number of Servings: {this.state.recipeInfo.servings}</Text>
-                <Text>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
-                <Text>Instructions: {this.state.recipeInfo.instructions}</Text>
-    
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setModalVisible(!this.state.modalVisible);
-                  }}>
-                  <Text style = {{
-                    alignSelf:'center',
-                    fontSize: 40,
-                  }}>CLOSEEEE</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => {
-                    this.addRecipeToDB();
-                  }}>
-                  <Text style = {{
-                    alignSelf:'center',
-                    fontSize: 40,
-                  }}>Save Recipe</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-        </View>
-
-        <View
-          style = {{marginTop: 15, marginLeft:4, alignSelf:'center'}}
-          onStartShouldSetResponderCapture={() => {
-            this.setState({ enableScrollViewScroll: true });
-            // if (this.state.enableScrollViewScroll === false) {
-            //   this.setState({ enableScrollViewScroll: true });
-            // }
+      <View
+        onStartShouldSetResponderCapture={() => {
+          this.setState({ enableScrollViewScroll: true });
         }}>
-          <FlatList
-            contentContainerStyle={{alignSelf: 'flex-start'}}
-            numColumns={2}
-            data={this.state.data}
-            scrollEnabled
-            keyExtractor={this.keyExtractor}
-            renderItem={this.renderRecipes}
-          />
-        </View>
-        
-      </View>
+        <ScrollView
+          scrollEnabled={this.state.enableScrollViewScroll}
+        >
+          <View>
+            <SearchBar
+              ref={search => this.search = search}
+              inputStyle={{ backgroundColor: 'white' }}
+              containerStyle={{
+                backgroundColor: 'white',
+                borderWidth: 0.3,
+                borderRadius: 20,
+                margin: 16,
+                marginTop: 50,
+                borderColor: "#ffffff00",
+              }}
+              lightTheme
+              inputContainerStyle={{ backgroundColor: 'white' }}
+              placeholder="Enter an Ingredient"
+              onChangeText={this.updateSearch}
+              value={search}
+            />
+            <View style={{ paddingLeft: 10, flexDirection: "row" }}>
+              <FlatList
+                contentContainerStyle={{ alignSelf: 'flex-start' }}
+                numColumns={4}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                data={this.state.ingredients}
+                extraData={this.state.refresh}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderIngredients}
+              />
+            </View>
 
-    </ScrollView>
-    </View>
+            <Button       //Button for adding search term to search list
+              buttonStyle={{
+                width: "45%",
+                alignSelf: 'center',
+                marginTop: 30,
+                backgroundColor: "#ff944d"
+              }}
+              titleStyle={{
+                fontSize: 19,
+              }}
+              title="Add Item"
+              onPress={() => this.updateList()}
+            />
+
+            <Button       //Button for adding value in search abr to ingredients table in DB
+              buttonStyle={{
+                width: "45%",
+                alignSelf: 'center',
+                marginTop: 30,
+                backgroundColor: "#ff944d"
+              }}
+              titleStyle={{
+                fontSize: 19,
+              }}
+              title="Store List in Fridge"
+              onPress={() => this.addFridgeToDB()}
+            />
+
+            <Button       //Call searchByIngredient function
+              buttonStyle={{
+                width: "45%",
+                alignSelf: 'center',
+                marginTop: 30,
+                backgroundColor: "#ff944d"
+              }}
+              titleStyle={{
+                fontSize: 19,
+              }}
+              title="Search"
+              onPress={() => this.searchByIngredient()}
+            />
+
+            <View style={{ marginTop: 5 }}>
+              <Modal
+                animationType="slide"
+                transparent={false}
+                visible={this.state.modalVisible}
+                >
+                <View style={{ marginTop: 5 }}>
+                  <View>
+                    <Image
+                      source={{ uri: this.state.recipeInfo.image }}
+                      style={{ width: styles.device.width / 1.1, height: 200, resizeMode: 'center', alignSelf:'center'}}
+                    />
+                    <View style = {{ alignSelf:'center'}}>
+                      <Text style = {{fontSize: 17, marginTop: 5, fontWeight: 'bold'}}>{this.state.recipeInfo.title}</Text>
+                      <Text style = {{fontSize: 17, fontWeight: 'bold'}}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                      <Text style = {{fontSize: 17, fontWeight: 'bold'}}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+                    </View>
+                    <Text style = {{width: styles.device.width / 1.1, alignSelf:'center'}}>Instructions: {this.state.recipeInfo.instructions}</Text>
+
+                    <Button
+                      title='Save Recipe'
+                      onPress={() => {
+                        this.addRecipeToDB();
+                      }}
+                      buttonStyle={{
+                        width: "60%",
+                        alignSelf: 'center',
+                        marginTop: 10,
+                        marginBottom: 20,
+                        backgroundColor: "#ff944d",
+                      }}
+                    />
+                    <Button
+                      title='Close'
+                      onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                      }}
+                      buttonStyle={{
+                        width: "60%",
+                        alignSelf: 'center',
+                        marginTop: 10,
+                        marginBottom: 20,
+                        backgroundColor: "#ff944d",
+                      }}
+                    />
+
+                  </View>
+                </View>
+              </Modal>
+            </View>
+
+            <View
+              style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
+              onStartShouldSetResponderCapture={() => {
+                this.setState({ enableScrollViewScroll: true });
+              }}>
+              <FlatList
+                contentContainerStyle={{ alignSelf: 'flex-start' }}
+                numColumns={2}
+                data={this.state.data}
+                scrollEnabled
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderRecipes}
+              />
+            </View>
+
+          </View>
+
+        </ScrollView>
+      </View>
 
     );
   }
 
-  // renderFlatList(color: string) {
-  //   return (
-  //     <View
-  //       onStartShouldSetResponderCapture={() => {
-  //         this.setState({ enableScrollViewScroll: false });
-  //         if (this._myScroll.contentOffset === 0
-  //           && this.state.enableScrollViewScroll === false) {
-  //           this.setState({ enableScrollViewScroll: true });
-  //         }
-  //       }}>
-  //       <FlatList
-  //         contentContainerStyle={{alignSelf: 'flex-start'}}
-  //         backgroundColor={color}
-  //         numColumns={2}
-  //         data={this.state.data}
-  //         keyExtractor={this.keyExtractor}
-  //         renderItem={this.renderRecipes}
-  //       />
-  //     </View>
-  //   );
-  // }
 }
 
 export default SearchScreen;
