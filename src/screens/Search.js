@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions, Alert } from 'react-native';
 import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
-import renderer from 'react-test-renderer'
 
 import styles from '../../components/Style';
 
