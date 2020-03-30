@@ -12,8 +12,8 @@ class HomeScreen extends React.Component {
     super();
     this.state = {
       fontLoaded: false,
-      name: "",
-      email: "",
+      name: [],
+      email: [],
       recipeList: [],
       recipeId: []
     };
@@ -40,7 +40,7 @@ class HomeScreen extends React.Component {
     //   this.setState({ name: snapshot.val().name });
     // })
 
-    firebase.database().ref('users/' + userId).on('child_changed', snapshot => {
+    firebase.database().ref('users/' + userId).on('value', snapshot => {
       this.setState({ email: snapshot.val().email });
       this.setState({ name: snapshot.val().name });
     })
@@ -63,13 +63,13 @@ class HomeScreen extends React.Component {
       //   i++
       // } 
 
-      //alert(recipeId)
+      console.log(this.state.recipeId)
       //alert(apiCall)
 
     })
     let apiId = this.state.recipeId.join(",")
     console.log(apiId)
-    let apiCall = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId
+    let apiCall = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId)
     console.log(apiCall)
 
     fetch(apiCall, {
@@ -82,7 +82,7 @@ class HomeScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         //console.log(responseJson)
-        //this.setState({recipeList : responseJson})
+        this.setState({recipeList : responseJson})
         console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         //console.log(this.state.recipeList)
         //console.log("goodbye")
@@ -170,6 +170,7 @@ class HomeScreen extends React.Component {
               contentContainerStyle={{ alignSelf: 'flex-start' }}
               numColumns={2}
               data={this.state.recipeList}
+              extradata={this.state.refresh}
               scrollEnabled
               keyExtractor={this.keyExtractor}
               renderItem={this.renderRecipes}
