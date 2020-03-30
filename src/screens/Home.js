@@ -34,27 +34,22 @@ class HomeScreen extends React.Component {
   async componentDidMount() {
     var userId = firebase.auth().currentUser.uid;
 
-    console.log(userId)
-    firebase.database().ref('users/' + userId).on('value', snapshot => {
-      this.setState({ email: snapshot.val().email });
-      this.setState({ name: snapshot.val().name });
-    })
-
+    //console.log(userId)
     firebase.database().ref('users/' + userId).on('value', snapshot => {
       this.setState({ email: snapshot.val().email });
       this.setState({ name: snapshot.val().name });
     })
 
     firebase.database().ref('items/' + userId + '/fridge/recipes/').on('child_added', snapshot => {
-      //console.log("snapshot", snapshot.val())
+      console.log("snapshot", snapshot.val())
       let recipeJson = snapshot.val();
       console.log("==================================================================================================");
-      console.log(Object.values(recipeJson)[0])
+      //console.log(Object.values(recipeJson)[0])
 
       //let numRecipes = (Object.keys(recipeJson).length)
       //console.log(Object.values(recipeJson))
       this.state.recipeId.push(Object.values(recipeJson)[0])
-      console.log(this.state.recipeId)
+      //console.log(this.state.recipeId)
 
       // while (i < numRecipes) {
       //   let freshId = Object.values(recipeJson)[i].ID
@@ -66,12 +61,12 @@ class HomeScreen extends React.Component {
       //alert(apiCall)
 
     })
-    alert("hello")
+    //alert("hello")
     let apiId = this.state.recipeId.join(",")
     console.log(apiId)
     let apiCall = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId)
     console.log(apiCall)
-    alert("hello2")
+    //alert("hello2")
 
     fetch(apiCall, {
       "method": "GET",
@@ -83,7 +78,7 @@ class HomeScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         //console.log(responseJson)
-        alert("hello3")
+        //alert("hello3")
         this.setState({recipeList : responseJson})
         console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         //console.log(this.state.recipeList)
