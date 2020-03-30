@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Alert } from 'react-native'
 import * as firebase from 'firebase'
-import { Button, Avatar, Input, Text, Icon} from 'react-native-elements'
+import { Button, Avatar, Input, Text, Icon } from 'react-native-elements'
 import Modal from 'react-native-modal';
 //import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -53,8 +53,8 @@ export default class Profile extends React.Component {
 
     reauthenticate = (currentPassword) => {
         var user = firebase.auth().currentUser;
-        var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
-        return user.reauthenticateWithCredential(cred);
+        var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword)
+        return user.reauthenticateWithCredential(cred)
     }
 
     onChangePasswordPress = () => {
@@ -116,16 +116,8 @@ export default class Profile extends React.Component {
                     Alert.alert(error.massage)
                 }).then(this.props.navigation.navigate('Login'))
             })
-        })
-    }
-
-    onProfileChoose = () => {
-        var listRef = firebase.storage().ref('Profile/uid');
-
-        listRef.listAll()
-        .catch(function(error) {
+        }).catch((error) => {
             Alert.alert(error.message)
-            //Error
         });
     }
 
@@ -140,19 +132,19 @@ export default class Profile extends React.Component {
     render() {
 
         return (
-            <View style={{ flex: 1, backgroundColor: "#fff"}}>
+            <View style={{ flex: 1, backgroundColor: "#fff" }}>
 
                 <View style={styles.profileContainer}>
                     <Icon
-                        containerStyle = {{
-                            alignSelf:'flex-end',
+                        containerStyle={{
+                            alignSelf: 'flex-end',
                             marginRight: 10,
                             marginTop: 5,
                             marginBottom: -40
                         }}
-                        size = {40}
+                        size={40}
                         name='settings'
-                        type = 'material'
+                        type='material'
                         color='#ff944d'
                         onPress={this.toggleModal}
                     />
@@ -162,9 +154,10 @@ export default class Profile extends React.Component {
                         showEditButton
                         icon={{ name: 'user', type: 'font-awesome' }}
                         activeOpacity={0.7}
+                        onPress={() => this.props.navigation.navigate('PickPicture')}
                     />
-                                    
-                    <Text style = {{fontSize: 22, fontWeight: 'bold'}} >{this.state.name}</Text>
+
+                    <Text style={{ fontSize: 22, fontWeight: 'bold' }} >{this.state.name}</Text>
                     {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
 
                 </View>
@@ -196,8 +189,8 @@ export default class Profile extends React.Component {
                     icon={
                         <Icon
                             name="logout-variant"
-                            type = 'material-community'
-                            size = {24}
+                            type='material-community'
+                            size={24}
                             color='white'
                         />
                     }
