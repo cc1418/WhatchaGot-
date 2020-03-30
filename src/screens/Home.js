@@ -63,14 +63,15 @@ class HomeScreen extends React.Component {
       //   i++
       // } 
 
-      console.log(this.state.recipeId)
       //alert(apiCall)
 
     })
+    alert("hello")
     let apiId = this.state.recipeId.join(",")
     console.log(apiId)
     let apiCall = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId)
     console.log(apiCall)
+    alert("hello2")
 
     fetch(apiCall, {
       "method": "GET",
@@ -82,6 +83,7 @@ class HomeScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         //console.log(responseJson)
+        alert("hello3")
         this.setState({recipeList : responseJson})
         console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         //console.log(this.state.recipeList)
@@ -89,6 +91,7 @@ class HomeScreen extends React.Component {
       })
       .catch(err => {
         this.setState({recipeList: []})
+        alert("error")
       });
 
   }
