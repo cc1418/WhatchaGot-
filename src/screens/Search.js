@@ -95,7 +95,7 @@ class SearchScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ data: responseJson })
-        //console.log(this.state.data)
+        console.log(this.state.data)
         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
 
@@ -156,6 +156,9 @@ class SearchScreen extends React.Component {
       ID: recipeState
     });
     alert("Recipe Saved!")
+    this.setState({
+      refresh: !this.state.refresh
+    })
   }
 
   addFridgeToDB() {
@@ -389,20 +392,9 @@ class SearchScreen extends React.Component {
                 animationType="slide"
                 transparent={false}
                 visible={this.state.modalVisible}
-                >
+              >
                 <View style={{ marginTop: 5 }}>
                   <View>
-                    <Image
-                      source={{ uri: this.state.recipeInfo.image }}
-                      style={{ width: styles.device.width / 1.1, height: 200, resizeMode: 'center', alignSelf:'center'}}
-                    />
-                    <View style = {{ alignSelf:'center'}}>
-                      <Text style = {{fontSize: 17, marginTop: 5, fontWeight: 'bold'}}>{this.state.recipeInfo.title}</Text>
-                      <Text style = {{fontSize: 17, fontWeight: 'bold'}}>Number of Servings: {this.state.recipeInfo.servings}</Text>
-                      <Text style = {{fontSize: 17, fontWeight: 'bold'}}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
-                    </View>
-                    <Text style = {{width: styles.device.width / 1.1, alignSelf:'center'}}>Instructions: {this.state.recipeInfo.instructions}</Text>
-
                     <Button
                       title='Save Recipe'
                       onPress={() => {
@@ -429,6 +421,16 @@ class SearchScreen extends React.Component {
                         backgroundColor: "#ff944d",
                       }}
                     />
+                    <Image
+                      source={{ uri: this.state.recipeInfo.image }}
+                      style={{ width: styles.device.width / 1.1, height: 200, resizeMode: 'center', alignSelf: 'center' }}
+                    />
+                    <View style={{ alignSelf: 'center' }}>
+                      <Text style={{ fontSize: 17, marginTop: 5, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
+                      <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                      <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+                    </View>
+                    <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>Instructions: {this.state.recipeInfo.instructions}</Text>
 
                   </View>
                 </View>
