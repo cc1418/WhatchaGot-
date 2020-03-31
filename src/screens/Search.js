@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions, Alert } from 'react-native';
 import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
-import renderer from 'react-test-renderer'
 
 import styles from '../../components/Style';
 
@@ -152,35 +151,48 @@ class SearchScreen extends React.Component {
     let userId = firebase.auth().currentUser.uid;
     let recipeState = this.state.recipeInfo.id;
 
-    // firebase.database().ref(`items/${userId}/fridge/recipes/`).transaction(function(currentData) {
-    //   if (currentData === null) {
-    //     return Alert.alert('worked')
-    //   } else {
-    //     return Alert.alert('failed')
-    //   }
-    // })
-
-
-    firebase.database().ref(`items/${userId}/fridge/recipes/`).orderByChild('ID').limitToFirst(1).once("value").then( snapshot => {
-
-      // .child('/items/' + userId + '/fridge/recipes/ID')
-
-
-      if (snapshot.child('ID').exists()) {
-        console.log('exists')
-      } else {
-        // firebase.database().ref().child('/items/' + userId + '/fridge/recipes').push({
-        //   ID: recipeState
-        // })
-        // alert("Recipe Saved!")
-        // this.setState({
-        //   refresh: !this.state.refresh
-        // })
-        Alert.alert(snapshot.val())
-      }
+    firebase.database().ref().child('/items/' + userId + '/fridge/recipes').push({
+      ID: recipeState
+    });
+    alert("Recipe Saved!")
+    this.setState({
+      refresh: !this.state.refresh
     })
-
   }
+
+  // addRecipeToDB() {
+  //   let userId = firebase.auth().currentUser.uid;
+  //   let recipeState = this.state.recipeInfo.id;
+
+  //   // firebase.database().ref(`items/${userId}/fridge/recipes/`).transaction(function(currentData) {
+  //   //   if (currentData === null) {
+  //   //     return Alert.alert('worked')
+  //   //   } else {
+  //   //     return Alert.alert('failed')
+  //   //   }
+  //   // })
+
+
+  //   firebase.database().ref(`items/${userId}/fridge/recipes/`).orderByChild('ID').limitToFirst(1).once("value").then( snapshot => {
+
+  //     // .child('/items/' + userId + '/fridge/recipes/ID')
+
+
+  //     if (snapshot.child('ID').exists()) {
+  //       console.log('exists')
+  //     } else {
+  //       // firebase.database().ref().child('/items/' + userId + '/fridge/recipes').push({
+  //       //   ID: recipeState
+  //       // })
+  //       // alert("Recipe Saved!")
+  //       // this.setState({
+  //       //   refresh: !this.state.refresh
+  //       // })
+  //       Alert.alert(snapshot.val())
+  //     }
+  //   })
+
+  // }
   addFridgeToDB() {
     let userId = firebase.auth().currentUser.uid;
     let fridgeState = this.state.ingredients
