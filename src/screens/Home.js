@@ -69,9 +69,9 @@ class HomeScreen extends React.Component {
       
       //console.log("success")
       let apiId = this.state.recipeId.join(",")
-      console.log(this.state.recipeId)
+      //console.log(this.state.recipeId)
       let apiCall = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId)
-      console.log(apiCall)
+      //console.log(apiCall)
       //alert("hello2")
 
       fetch(apiCall, {
