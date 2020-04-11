@@ -163,25 +163,12 @@ export default class Profile extends React.Component {
                             activeOpacity={0.7}
                             onPress={() => this.props.navigation.navigate('PickPicture')}
                         />
-
-                        <Text style={{ fontSize: 22, fontWeight: 'bold' }} >{this.state.name}</Text>
-                        {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
                     </TouchableOpacity>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold' }} >{this.state.name}</Text>
+                        {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
+
                 </View>
 
-                {/* <Button                                                 // SETTINGS
-                    buttonStyle={{
-                        width: "40%",
-                        alignSelf: 'center',
-                        marginTop: 300,
-                        backgroundColor: "#ff944d",
-
-                    }}
-                    titleStyle={{
-                        fontSize: 18,
-                    }}
-                    title="User Settings" 
-                    onPress={this.toggleModal} /> */}
                 <Button                                                 // SIGN OUT
                     buttonStyle={{
                         width: "40%",
