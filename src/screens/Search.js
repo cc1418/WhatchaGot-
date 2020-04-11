@@ -30,7 +30,7 @@ class SearchScreen extends React.Component {
     let newFridge = []
     firebase.database().ref('items/' + userId + '/fridge/shelf/').once('value')
       .then(snapshot => {
-        console.log("snapshot", snapshot.val())
+       // console.log("snapshot", snapshot.val())
         fridge = snapshot.val()
 
         fridge.map((element) => {
@@ -94,7 +94,7 @@ class SearchScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ data: responseJson })
-        console.log(this.state.data)
+        //console.log(this.state.data)
         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
 
@@ -230,7 +230,10 @@ class SearchScreen extends React.Component {
           <TouchableOpacity
             key={item.id}
             onPress={() => this.deleteFromList(item.id)}>
-            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, marginLeft: -20, marginRight: -20, alignSelf: "center" }}>
+            <Text style={{ fontSize: 13, marginTop: -20, marginLeft: -12, marginRight: -20, color: 'grey'}}>
+              x
+              </Text>
+            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, marginLeft: -20, marginRight: -20, alignSelf: "center", textTransform: 'capitalize' }}>
               {item.name}
             </Text>
           </TouchableOpacity>
@@ -263,7 +266,7 @@ class SearchScreen extends React.Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        //console.log(JSON.stringify(responseJson))
+        console.log(JSON.stringify(responseJson))
         this.state.recipeInfo = responseJson
         this.setModalVisible(!this.state.modalVisible)
         //alert(responseJson.image)
@@ -303,8 +306,6 @@ class SearchScreen extends React.Component {
               Missed Ingredients: {item.missedIngredientCount}
             </Text>
 
-
-
           </Card>
         </TouchableOpacity>
       </View>
@@ -332,8 +333,9 @@ class SearchScreen extends React.Component {
       </View>
     )
 
-    if (this.state.recipeInfo.instructions === "") {
-      this.state.recipeInfo.instructions = "Instructions could not be fetched, please visit this site for more info: "
+    if (this.state.recipeInfo.instructions === null) {
+      this.state.recipeInfo.instructions = `Instructions could not be fetched, please visit this site for more info: 
+${this.state.recipeInfo.sourceUrl}`
     }
 
     return (
@@ -466,6 +468,7 @@ class SearchScreen extends React.Component {
                       <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
                       <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
                     </View>
+                    
                     <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>Instructions: {this.state.recipeInfo.instructions}</Text>
 
                   </View>
@@ -497,5 +500,7 @@ class SearchScreen extends React.Component {
   }
 
 }
+
+
 
 export default SearchScreen;
