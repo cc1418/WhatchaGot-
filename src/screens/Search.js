@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions, Alert } from 'react-native';
 import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
+import Dialog, { DialogTitle, DialogContent } from 'react-native-popup-dialog';
 
 import styles from '../../components/Style';
 
@@ -30,7 +31,7 @@ class SearchScreen extends React.Component {
     let newFridge = []
     firebase.database().ref('items/' + userId + '/fridge/shelf/').once('value')
       .then(snapshot => {
-        console.log("snapshot", snapshot.val())
+       // console.log("snapshot", snapshot.val())
         fridge = snapshot.val()
 
         fridge.map((element) => {
@@ -94,7 +95,7 @@ class SearchScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ data: responseJson })
-        console.log(this.state.data)
+        //console.log(this.state.data)
         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
 
@@ -221,7 +222,8 @@ class SearchScreen extends React.Component {
             marginLeft: 0,
             marginRight: 4,
             marginTop: 3,
-            borderColor: "#ff944d"
+            borderColor: "#ff944d",
+            borderRadius: 20
           }}
           wrapperStyle={{
 
@@ -230,7 +232,10 @@ class SearchScreen extends React.Component {
           <TouchableOpacity
             key={item.id}
             onPress={() => this.deleteFromList(item.id)}>
-            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, marginLeft: -20, marginRight: -20, alignSelf: "center" }}>
+            <Text style={{ fontSize: 10, marginTop: -15, marginLeft: -5, marginRight: -20, color: 'grey'}}>
+              x
+              </Text>
+            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, marginLeft: -20, marginRight: -20, alignSelf: "center", textTransform: 'capitalize' }}>
               {item.name}
             </Text>
           </TouchableOpacity>
@@ -263,7 +268,7 @@ class SearchScreen extends React.Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        //console.log(JSON.stringify(responseJson))
+        console.log(JSON.stringify(responseJson))
         this.state.recipeInfo = responseJson
         this.setModalVisible(!this.state.modalVisible)
         //alert(responseJson.image)
@@ -277,19 +282,20 @@ class SearchScreen extends React.Component {
       <View>
         <TouchableOpacity onPress={() => this.openRecipe(item.id)}>
           <Card
-            styles={{
-              borderRadius: 5
-            }}
             containerStyle={{
               width: (styles.device.width) / 2.4,
               height: 275,
-              marginLeft: 0,
-              marginTop: 3,
-              borderColor: "#ff944d"
+              marginBottom: 5,
+              marginTop: 7,
+              borderColor: "#ff944d",
+              borderRadius: 10,
+              borderWidth: 1.3
             }}
             image={{ uri: item.image }}
+            imageProps={{
+              borderRadius: 10
+            }}
           >
-
 
             <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
               {item.title}
@@ -302,8 +308,6 @@ class SearchScreen extends React.Component {
             <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2 }}>
               Missed Ingredients: {item.missedIngredientCount}
             </Text>
-
-
 
           </Card>
         </TouchableOpacity>
@@ -332,8 +336,9 @@ class SearchScreen extends React.Component {
       </View>
     )
 
-    if (this.state.recipeInfo.instructions === "") {
-      this.state.recipeInfo.instructions = "Instructions could not be fetched, please visit this site for more info: "
+    if (this.state.recipeInfo.instructions === null) {
+      this.state.recipeInfo.instructions = `Instructions could not be fetched, please visit this site for more info: 
+${this.state.recipeInfo.sourceUrl}`
     }
 
     return (
@@ -351,11 +356,13 @@ class SearchScreen extends React.Component {
               inputStyle={{ backgroundColor: 'white' }}
               containerStyle={{
                 backgroundColor: 'white',
-                borderWidth: 0.3,
+                borderWidth: 0.7,
                 borderRadius: 20,
                 margin: 16,
                 marginTop: 50,
-                borderColor: "#ffffff00",
+                borderColor: "#ff944d",
+                borderTopColor: "#ff944d",
+                borderBottomColor: "#ff944d"
               }}
               lightTheme
               inputContainerStyle={{ backgroundColor: 'white' }}
@@ -379,44 +386,80 @@ class SearchScreen extends React.Component {
 
             <Button       //Button for adding search term to search list
               buttonStyle={{
-                width: "45%",
+                width: styles.device.width / 2.2,
                 alignSelf: 'center',
-                marginTop: 30,
-                backgroundColor: "#ff944d"
+                marginTop: 25,
+                backgroundColor: "#ff944d",
+                borderRadius: 10
               }}
               titleStyle={{
-                fontSize: 19,
+                fontSize: 18,
               }}
               title="Add Item"
               disabled={(!this.state.value.length && this.state.ingredients == 0 ? true : false)}
               onPress={() => this.updateList()}
-
             />
 
-            <Button       //Button for adding value in search abr to ingredients table in DB
-              buttonStyle={{
-                width: "45%",
-                alignSelf: 'center',
-                marginTop: 30,
-                backgroundColor: "#ff944d"
-              }}
-              titleStyle={{
-                fontSize: 19,
-              }}
-              title="Store List in Fridge"
-              disabled={(this.state.ingredients.length == 0 ? true : false)}
-              onPress={() => this.addFridgeToDB()}
-            />
+            <View style={{flex: 1, flexDirection:"row", alignItems:'center', justifyContent:"center"}}>
+              <Button       //Button for adding value in search abr to ingredients table in DB
+                buttonStyle={{
+                  width: styles.device.width / 2.2,
+                  marginTop: 20,
+                  backgroundColor: "#ff944d",
+                  borderRadius: 10,
+                  alignSelf:'center',
+                  marginLeft: 27
+                }}
+                titleStyle={{
+                  fontSize: 17,
+                }}
+                // style = {{
+                //   justifyContent:'center',
+                //   alignSelf:'center'
+                // }}
+                title="Store List in Fridge"
+                disabled={(this.state.ingredients.length == 0 ? true : false)}
+                onPress={() => {this.addFridgeToDB();
+                }}
+
+              />
+
+              <Icon 
+                  containerStyle={{
+                    marginTop: 20,
+                    marginLeft: 10
+                  }}
+                  size={20}
+                  name='information-outline'
+                  type='material-community'
+                  //color='#ff944d'
+                  onPress={() => this.setState({ visible: true })}
+              />
+            </View>
+
+            <Dialog
+                visible={this.state.visible}
+                onTouchOutside={() => {
+                  this.setState({ visible: false });
+                }}
+                dialogTitle={<DialogTitle title="What is Fridge" textStyle = {{fontSize: 15}}/>}
+                width = {styles.device.width / 1.4}
+              >
+                <DialogContent>
+                  <Text style = {{marginTop: 10}}>Fridge stores your current list of ingredients as your default ingredients</Text>
+                </DialogContent>
+              </Dialog>
 
             <Button       //Call searchByIngredient function
               buttonStyle={{
-                width: "45%",
+                width: styles.device.width / 2.2,
                 alignSelf: 'center',
-                marginTop: 30,
-                backgroundColor: "#ff944d"
+                marginTop: 20,
+                backgroundColor: "#ff944d",
+                borderRadius: 10
               }}
               titleStyle={{
-                fontSize: 19,
+                fontSize: 18,
               }}
               title="Search"
               disabled={(this.state.ingredients.length == 0 ? true : false)}
@@ -474,7 +517,7 @@ class SearchScreen extends React.Component {
             </View>
 
             <View
-              style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
+              style={{ marginTop: 15, marginLeft: -5, alignSelf: 'center' }}
               onStartShouldSetResponderCapture={() => {
                 this.setState({ enableScrollViewScroll: true });
               }}>
@@ -497,5 +540,7 @@ class SearchScreen extends React.Component {
   }
 
 }
+
+
 
 export default SearchScreen;
