@@ -92,7 +92,7 @@ class LoginScreen extends React.Component {
                   marginTop: 20
                 }}
                 inputStyle={{
-                  marginLeft: 8
+                  marginLeft: 12
                 }}
                 placeholder=' Password'
                 secureTextEntry={true}

@@ -144,9 +144,9 @@ export default class Profile extends React.Component {
                     <Icon
                         containerStyle={{
                             alignSelf: 'flex-end',
-                            marginRight: 10,
-                            marginTop: 5,
-                            marginBottom: -40
+                            marginRight: 15,
+                            marginTop: 10,
+                            marginBottom: -30
                         }}
                         size={40}
                         name='settings'

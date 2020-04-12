@@ -17,8 +17,10 @@ class HomeScreen extends React.Component {
       user: [],
       recipeList: [],
       recipeId: [],
+      recipeInfo: '',
       apiRun: false,
-      recipeTrue: false
+      recipeTrue: false,
+      modalVisible: false,
     };
   }
 
@@ -99,6 +101,37 @@ class HomeScreen extends React.Component {
 
   }
 
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
+  openRecipe = (recipeId) => {
+    let apiCall
+    let apiHead1 = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
+    let apiHead2 = '/information'
+
+    apiCall = apiHead1 + recipeId + apiHead2
+
+    //alert(apiCall)
+
+
+    fetch(apiCall, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        this.state.recipeInfo = responseJson
+        this.setModalVisible(!this.state.modalVisible)
+        //alert(responseJson.image)
+      });
+
+  }
   // debug() {
   //   console.log(JSON.stringify(this.state.recipeList))
   // }
@@ -107,19 +140,21 @@ class HomeScreen extends React.Component {
 
     return (
       <View>
-        {/* <TouchableOpacity onPress={() => this.openRecipe(item.id)}> */}
+        <TouchableOpacity onPress={() => this.openRecipe(item.id)}>
         <Card
-          styles={{
-            borderRadius: 5
-          }}
           containerStyle={{
-            width: (styles.device.width) / 2.3,
+            width: (styles.device.width) / 2.4,
             height: 240,
-            marginLeft: 0,
+            marginLeft: 1,
             marginTop: 3,
-            borderColor: "#ff944d"
+            borderColor: "#ff944d",
+            borderRadius: 10,
+            borderWidth: 1.3
           }}
           image={{ uri: item.image }}
+          imageProps={{
+            borderRadius: 10
+          }}
         >
 
           <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
@@ -127,7 +162,7 @@ class HomeScreen extends React.Component {
           </Text>
 
         </Card>
-        {/* </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     );
   }
@@ -185,6 +220,67 @@ class HomeScreen extends React.Component {
 
           </View>
         </ScrollView>
+
+        <View>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+        >
+        <ScrollView style={{ marginTop: 5 }}>
+          <View>
+            <View style={{flexDirection:"row"}}>
+
+            <Icon                                     // CLOSE MODAL
+                containerStyle={{
+                  width: styles.device.width / 5,
+                  alignSelf:'center',
+                  marginTop: -150,
+                  marginLeft: -20
+                }}
+                size={40}
+                name='arrow-left'
+                type='material-community'
+                color='#ff944d'
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}
+            />
+
+              <Image
+                source={{ uri: this.state.recipeInfo.image }}
+                style={{ width: styles.device.width / 1.7, height: 200, alignSelf:'center', justifyContent:'center', marginTop: 20, marginLeft:20}}
+              />
+
+            <Icon                                    // DELETE RECIPE
+                containerStyle={{
+                  width: styles.device.width / 5,
+                  alignSelf:'center',
+                  marginTop: -150,
+                  marginLeft: 15
+                }}
+                size={33}
+                name= 'delete-forever-outline'
+                type='material-community'
+                color='red'
+                // onPress={() => {
+                //   this.addRecipeToDB();
+                // }}
+            />
+
+              
+            </View>
+            <View style={{ marginLeft: 22 }}>
+              <Text style={{ fontSize: 17, marginTop: 10, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
+              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+              <Text style={{ fontSize: 17, marginBottom: 10,fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+            </View>
+            <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>{this.state.recipeInfo.instructions}</Text>
+
+          </View>
+        </ScrollView>
+      </Modal>
+        </View>
       </View>
     );
   }

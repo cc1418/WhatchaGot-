@@ -223,7 +223,8 @@ class SearchScreen extends React.Component {
             marginLeft: 0,
             marginRight: 4,
             marginTop: 3,
-            borderColor: "#ff944d"
+            borderColor: "#ff944d",
+            borderRadius: 20
           }}
           wrapperStyle={{
 
@@ -232,7 +233,7 @@ class SearchScreen extends React.Component {
           <TouchableOpacity
             key={item.id}
             onPress={() => this.deleteFromList(item.id)}>
-            <Text style={{ fontSize: 13, marginTop: -20, marginLeft: -12, marginRight: -20, color: 'grey'}}>
+            <Text style={{ fontSize: 10, marginTop: -15, marginLeft: -5, marginRight: -20, color: 'grey'}}>
               x
               </Text>
             <Text index={item.id} style={{ fontSize: 13, marginTop: -5, marginLeft: -20, marginRight: -20, alignSelf: "center", textTransform: 'capitalize' }}>
@@ -282,19 +283,20 @@ class SearchScreen extends React.Component {
       <View>
         <TouchableOpacity onPress={() => this.openRecipe(item.id)}>
           <Card
-            styles={{
-              borderRadius: 5
-            }}
             containerStyle={{
               width: (styles.device.width) / 2.4,
               height: 275,
-              marginLeft: 0,
-              marginTop: 3,
-              borderColor: "#ff944d"
+              marginBottom: 5,
+              marginTop: 7,
+              borderColor: "#ff944d",
+              borderRadius: 10,
+              borderWidth: 1.3
             }}
             image={{ uri: item.image }}
+            imageProps={{
+              borderRadius: 10
+            }}
           >
-
 
             <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
               {item.title}
@@ -355,11 +357,13 @@ ${this.state.recipeInfo.sourceUrl}`
               inputStyle={{ backgroundColor: 'white' }}
               containerStyle={{
                 backgroundColor: 'white',
-                borderWidth: 0.3,
+                borderWidth: 0.7,
                 borderRadius: 20,
                 margin: 16,
                 marginTop: 50,
-                borderColor: "#ffffff00",
+                borderColor: "#ff944d",
+                borderTopColor: "#ff944d",
+                borderBottomColor: "#ff944d"
               }}
               lightTheme
               inputContainerStyle={{ backgroundColor: 'white' }}
@@ -385,11 +389,12 @@ ${this.state.recipeInfo.sourceUrl}`
               buttonStyle={{
                 width: "45%",
                 alignSelf: 'center',
-                marginTop: 30,
-                backgroundColor: "#ff944d"
+                marginTop: 25,
+                backgroundColor: "#ff944d",
+                borderRadius: 10
               }}
               titleStyle={{
-                fontSize: 19,
+                fontSize: 18,
               }}
               title="Add Item"
               disabled={(!this.state.value.length && this.state.ingredients == 0 ? true : false)}
@@ -401,11 +406,12 @@ ${this.state.recipeInfo.sourceUrl}`
               buttonStyle={{
                 width: "45%",
                 alignSelf: 'center',
-                marginTop: 30,
-                backgroundColor: "#ff944d"
+                marginTop: 20,
+                backgroundColor: "#ff944d",
+                borderRadius: 10
               }}
               titleStyle={{
-                fontSize: 19,
+                fontSize: 17,
               }}
               title="Store List in Fridge"
               disabled={(this.state.ingredients.length == 0 ? true : false)}
@@ -416,11 +422,12 @@ ${this.state.recipeInfo.sourceUrl}`
               buttonStyle={{
                 width: "45%",
                 alignSelf: 'center',
-                marginTop: 30,
-                backgroundColor: "#ff944d"
+                marginTop: 20,
+                backgroundColor: "#ff944d",
+                borderRadius: 10
               }}
               titleStyle={{
-                fontSize: 19,
+                fontSize: 18,
               }}
               title="Search"
               disabled={(this.state.ingredients.length == 0 ? true : false)}
@@ -428,7 +435,7 @@ ${this.state.recipeInfo.sourceUrl}`
             />
 
             <View
-              style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
+              style={{ marginTop: 15, marginLeft: -5, alignSelf: 'center' }}
               onStartShouldSetResponderCapture={() => {
                 this.setState({ enableScrollViewScroll: true });
               }}>
