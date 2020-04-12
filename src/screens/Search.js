@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions, Alert } from 'react-native';
 import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
+import Dialog, { DialogTitle, DialogContent } from 'react-native-popup-dialog';
 
 import styles from '../../components/Style';
 
@@ -387,7 +388,7 @@ ${this.state.recipeInfo.sourceUrl}`
 
             <Button       //Button for adding search term to search list
               buttonStyle={{
-                width: "45%",
+                width: styles.device.width / 2.2,
                 alignSelf: 'center',
                 marginTop: 25,
                 backgroundColor: "#ff944d",
@@ -399,28 +400,61 @@ ${this.state.recipeInfo.sourceUrl}`
               title="Add Item"
               disabled={(!this.state.value.length && this.state.ingredients == 0 ? true : false)}
               onPress={() => this.updateList()}
-
             />
 
-            <Button       //Button for adding value in search abr to ingredients table in DB
-              buttonStyle={{
-                width: "45%",
-                alignSelf: 'center',
-                marginTop: 20,
-                backgroundColor: "#ff944d",
-                borderRadius: 10
-              }}
-              titleStyle={{
-                fontSize: 17,
-              }}
-              title="Store List in Fridge"
-              disabled={(this.state.ingredients.length == 0 ? true : false)}
-              onPress={() => this.addFridgeToDB()}
-            />
+            <View style={{flex: 1, flexDirection:"row", alignItems:'center', justifyContent:"center"}}>
+              <Button       //Button for adding value in search abr to ingredients table in DB
+                buttonStyle={{
+                  width: styles.device.width / 2.2,
+                  marginTop: 20,
+                  backgroundColor: "#ff944d",
+                  borderRadius: 10,
+                  alignSelf:'center',
+                  marginLeft: 27
+                }}
+                titleStyle={{
+                  fontSize: 17,
+                }}
+                // style = {{
+                //   justifyContent:'center',
+                //   alignSelf:'center'
+                // }}
+                title="Store List in Fridge"
+                disabled={(this.state.ingredients.length == 0 ? true : false)}
+                onPress={() => {this.addFridgeToDB();
+                }}
+
+              />
+
+              <Icon 
+                  containerStyle={{
+                    marginTop: 20,
+                    marginLeft: 10
+                  }}
+                  size={20}
+                  name='information-outline'
+                  type='material-community'
+                  //color='#ff944d'
+                  onPress={() => this.setState({ visible: true })}
+              />
+            </View>
+
+            <Dialog
+                visible={this.state.visible}
+                onTouchOutside={() => {
+                  this.setState({ visible: false });
+                }}
+                dialogTitle={<DialogTitle title="What is Fridge" textStyle = {{fontSize: 15}}/>}
+                width = {styles.device.width / 1.4}
+              >
+                <DialogContent>
+                  <Text style = {{marginTop: 10}}>Fridge stores your current list of ingredients as your default ingredients</Text>
+                </DialogContent>
+              </Dialog>
 
             <Button       //Call searchByIngredient function
               buttonStyle={{
-                width: "45%",
+                width: styles.device.width / 2.2,
                 alignSelf: 'center',
                 marginTop: 20,
                 backgroundColor: "#ff944d",
