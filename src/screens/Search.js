@@ -17,9 +17,7 @@ class SearchScreen extends React.Component {
       ingredients: [],         //initialize empty array in state to hold user input
       data: [],
       recipeInfo: '',
-      modalVisible: false,
-      iconName: "heart-outline"
-
+      modalVisible: false
       //enableScrollViewScroll: true,
     };
   }
@@ -339,7 +337,7 @@ class SearchScreen extends React.Component {
     }
 
     return (
-      <View>
+
       <View
         onStartShouldSetResponderCapture={() => {
           this.setState({ enableScrollViewScroll: true });
@@ -425,6 +423,56 @@ class SearchScreen extends React.Component {
               onPress={() => this.searchByIngredient()}
             />
 
+            <View style={{ marginTop: 5 }}>
+              <Modal
+                animationType="slide"
+                transparent={false}
+                visible={this.state.modalVisible}
+              >
+                <View style={{ marginTop: 5 }}>
+                  <View>
+                    <Button
+                      title='Save Recipe'
+                      onPress={() => {
+                        this.addRecipeToDB();
+                      }}
+                      buttonStyle={{
+                        width: "60%",
+                        alignSelf: 'center',
+                        marginTop: 10,
+                        marginBottom: 20,
+                        backgroundColor: "#ff944d",
+                      }}
+                    />
+                    <Button
+                      title='Close'
+                      onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                      }}
+                      buttonStyle={{
+                        width: "60%",
+                        alignSelf: 'center',
+                        marginTop: 10,
+                        marginBottom: 20,
+                        backgroundColor: "#ff944d",
+                      }}
+                    />
+                    <Image
+                      source={{ uri: this.state.recipeInfo.image }}
+                      style={{ width: styles.device.width / 1.1, height: 200, resizeMode: 'center', alignSelf: 'center' }}
+                    />
+                    <View style={{ alignSelf: 'center' }}>
+                      <Text style={{ fontSize: 17, marginTop: 5, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
+                      <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                      <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+                    </View>
+                    <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>Instructions: {this.state.recipeInfo.instructions}</Text>
+
+                  </View>
+                </View>
+              </Modal>
+            </View>
+
             <View
               style={{ marginTop: 15, marginLeft: 4, alignSelf: 'center' }}
               onStartShouldSetResponderCapture={() => {
@@ -445,70 +493,6 @@ class SearchScreen extends React.Component {
         </ScrollView>
       </View>
 
-      <View style={{ marginTop: 5 }}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={this.state.modalVisible}
-      >
-        <ScrollView style={{ marginTop: 5 }}>
-          <View>
-            <View style={{flexDirection:"row"}}>
-
-            <Icon                                     // CLOSE MODAL
-                containerStyle={{
-                  width: styles.device.width / 5,
-                  alignSelf:'center',
-                  marginTop: -150
-                }}
-                size={40}
-                name='arrow-left'
-                type='material-community'
-                color='#ff944d'
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                  this.setState(
-                    { iconName: "heart-outline" });
-                }}
-            />
-
-              <Image
-                source={{ uri: this.state.recipeInfo.image }}
-                style={{ width: styles.device.width / 1.7, height: 200, alignSelf:'center', justifyContent:'center', marginTop: 20}}
-              />
-
-            <Icon                                    // SAVE RECIPE
-                containerStyle={{
-                  width: styles.device.width / 5,
-                  alignSelf:'center',
-                  marginTop: -150
-                }}
-                size={33}
-                name= {this.state.iconName}
-                type='material-community'
-                color='red'
-                onPress={() => {
-                  this.addRecipeToDB();
-                  this.setState(
-                    { iconName: "heart" })
-                }}
-            />
-
-              
-            </View>
-            <View style={{ marginLeft: 22 }}>
-              <Text style={{ fontSize: 17, marginTop: 10, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
-              <Text style={{ fontSize: 17, marginBottom: 10,fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
-            </View>
-            <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>{this.state.recipeInfo.instructions}</Text>
-
-          </View>
-        </ScrollView>
-      </Modal>
-    </View>
-
-    </View>
     );
   }
 
