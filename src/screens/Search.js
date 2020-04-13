@@ -60,7 +60,7 @@ class SearchScreen extends React.Component {
     let apiHead = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
     let apiFunction = 'findByIngredients?'
     let apiList
-    let apiFoot = 'number=8&ranking=2&ingredients='
+    let apiFoot = 'number=1&ranking=2&ingredients='
     let apiKey = 'f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6'
 
     if (this.state.ingredients.length === 0) {
@@ -97,7 +97,7 @@ class SearchScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ data: responseJson })
-        //console.log(this.state.data)
+        console.log(this.state.data)
         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
 
