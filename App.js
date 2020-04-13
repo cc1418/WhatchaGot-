@@ -33,7 +33,7 @@ const AppNavigator = createBottomTabNavigator(
       screen: HomeScreen,
       navigationOptions: {
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="home" color={"#ffffff"} size={35} />
+          <MaterialCommunityIcons name="home" color={"#ffffff"} size={34} />
         ),
       }
     },
@@ -41,7 +41,7 @@ const AppNavigator = createBottomTabNavigator(
       screen: SearchScreen,
       navigationOptions: {
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="magnify" color={"#ffffff"} size={35} />
+          <MaterialCommunityIcons name="magnify" color={"#ffffff"} size={34} />
         ),
       }
     },
@@ -49,7 +49,7 @@ const AppNavigator = createBottomTabNavigator(
       screen: DietScreen,
       navigationOptions: {
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="food-apple" color={"#ffffff"} size={34} />
+          <MaterialCommunityIcons name="apple" color={"#ffffff"} size={34} />
         ),
       }
     },
@@ -57,7 +57,7 @@ const AppNavigator = createBottomTabNavigator(
       screen: Profile,
       navigationOptions: {
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="account-circle" color={"#ffffff"} size={34} />
+          <MaterialCommunityIcons name="account-circle-outline" color={"#ffffff"} size={34} />
         ),
       }
     },

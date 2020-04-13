@@ -260,7 +260,7 @@ class HomeScreen extends React.Component {
                   marginLeft: 15
                 }}
                 size={33}
-                name= 'delete-forever-outline'
+                name= 'delete-outline'
                 type='material-community'
                 color='red'
                 // onPress={() => {
