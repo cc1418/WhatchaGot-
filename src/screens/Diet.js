@@ -32,8 +32,6 @@ class DietScreen extends React.Component {
     let apiCall = apiHead + this.state.diet
     //alert(apiCall)
 
-    
-    
     fetch(apiCall, {
       "method": "GET",
       "headers": {
