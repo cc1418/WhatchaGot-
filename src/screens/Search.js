@@ -60,7 +60,7 @@ class SearchScreen extends React.Component {
     let apiHead = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
     let apiFunction = 'findByIngredients?'
     let apiList
-    let apiFoot = 'number=1&ranking=2&ingredients='
+    let apiFoot = 'number=8&ranking=2&ingredients='
     let apiKey = 'f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6'
 
     if (this.state.ingredients.length === 0) {
@@ -345,13 +345,8 @@ ${this.state.recipeInfo.sourceUrl}`
 
     return (
       <View>
-      <View
-        onStartShouldSetResponderCapture={() => {
-          this.setState({ enableScrollViewScroll: true });
-        }}>
-        <ScrollView
-          scrollEnabled={this.state.enableScrollViewScroll}
-        >
+      <View>
+        <ScrollView>
           <View>
             <SearchBar
               ref={search => this.search = search}
@@ -488,7 +483,7 @@ ${this.state.recipeInfo.sourceUrl}`
         </ScrollView>
       </View>
 
-      <View style={{ marginTop: 5 }}>
+    <View style={{ marginTop: 5 }}>
       <Modal
         animationType="slide"
         transparent={false}
