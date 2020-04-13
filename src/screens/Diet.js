@@ -27,11 +27,14 @@ class DietScreen extends React.Component {
 
   updateDiet = (diet) => {
     this.setState({ diet: diet })
+    this.setState({
+      refresh: !this.state.refresh
+    })
   }
 
   findDiets() {
 
-    let apiHead = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?number=1&diet="
+    let apiHead = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?number=6&diet="
     let apiCall = apiHead + this.state.diet
     //alert(apiCall)
 
@@ -55,10 +58,10 @@ class DietScreen extends React.Component {
   }
 
   addRecipeToDB() {
-    let userId = firebase.auth().currentUser.uid;
+    // let userId = firebase.auth().currentUser.uid;
     let recipeState = this.state.recipeInfo.id;
 
-    firebase.database().ref().child('/items/' + userId + '/fridge/recipes').push({
+    firebase.database().ref().child('/items/' + this.state.user + '/fridge/recipes').push({
       ID: recipeState
     });
     alert("Recipe Saved!")
@@ -212,6 +215,7 @@ class DietScreen extends React.Component {
           <FlatList
             contentContainerStyle={{ alignSelf: 'flex-start' }}
             numColumns={2}
+            extraData={this.state.refresh}
             data={this.state.data}
             scrollEnabled
             keyExtractor={this.keyExtractor}
