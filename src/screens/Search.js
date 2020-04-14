@@ -97,7 +97,7 @@ class SearchScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ data: responseJson })
-        //console.log(this.state.data)
+        console.log(this.state.data)
         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
 
@@ -345,13 +345,8 @@ ${this.state.recipeInfo.sourceUrl}`
 
     return (
       <View>
-      <View
-        onStartShouldSetResponderCapture={() => {
-          this.setState({ enableScrollViewScroll: true });
-        }}>
-        <ScrollView
-          scrollEnabled={this.state.enableScrollViewScroll}
-        >
+      <View>
+        <ScrollView>
           <View>
             <SearchBar
               ref={search => this.search = search}
@@ -488,7 +483,7 @@ ${this.state.recipeInfo.sourceUrl}`
         </ScrollView>
       </View>
 
-      <View style={{ marginTop: 5 }}>
+    <View style={{ marginTop: 5 }}>
       <Modal
         animationType="slide"
         transparent={false}
