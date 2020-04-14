@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions } from 'react-native';
+import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions, Alert } from 'react-native';
 import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
 import * as firebase from 'firebase'
 import styles from '../../components/Style';
@@ -38,7 +38,7 @@ class HomeScreen extends React.Component {
 
   componentWillMount() {
     var userId = firebase.auth().currentUser.uid;
-    this.setState ({user: userId})
+    this.setState({ user: userId })
 
     //console.log(userId)
     firebase.database().ref('users/' + userId).on('value', snapshot => {
@@ -46,8 +46,9 @@ class HomeScreen extends React.Component {
       this.setState({ name: snapshot.val().name });
     })
 
-    firebase.database().ref('items/' + userId + '/fridge/recipes/').on('child_added', snapshot => {
-      //console.log("snapshot", snapshot.val())
+    firebase.database().ref('items/' + userId + '/fridge/recipes/').orderByKey().on('child_added', snapshot => {
+      console.log("snapshot", snapshot.val())
+      console.log("key", snapshot.key)
       let recipeJson = snapshot.val();
       console.log("==================================================================================================");
       //console.log(Object.values(recipeJson)[0])
@@ -56,10 +57,10 @@ class HomeScreen extends React.Component {
       //console.log(Object.values(recipeJson))
       this.state.recipeId.push(Object.values(recipeJson)[0])
       //console.log(this.state.recipeId)
-      this.setState({apiRun: true})
+      this.setState({ apiRun: true })
     })
 
-    
+
     //alert("hello")
 
 
@@ -68,7 +69,7 @@ class HomeScreen extends React.Component {
   componentDidUpdate() {
     console.log(this.state.apiRun)
     if (this.state.apiRun === true && this.state.recipeTrue === false) {
-      
+
       //console.log("success")
       let apiId = this.state.recipeId.join(",")
       //console.log(this.state.recipeId)
@@ -88,7 +89,7 @@ class HomeScreen extends React.Component {
           //console.log(responseJson)
           //alert("hello3")
           this.setState({ recipeList: responseJson })
-          this.setState({recipeTrue: true})
+          this.setState({ recipeTrue: true })
           console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
           //console.log(this.state.recipeList)
           //console.log("goodbye")
@@ -141,30 +142,55 @@ class HomeScreen extends React.Component {
     return (
       <View>
         <TouchableOpacity onPress={() => this.openRecipe(item.id)}>
-        <Card
-          containerStyle={{
-            width: (styles.device.width) / 2.4,
-            height: 240,
-            marginLeft: 1,
-            marginTop: 3,
-            borderColor: "#ff944d",
-            borderRadius: 10,
-            borderWidth: 1.3
-          }}
-          image={{ uri: item.image }}
-          imageProps={{
-            borderRadius: 10
-          }}
-        >
+          <Card
+            containerStyle={{
+              width: (styles.device.width) / 2.4,
+              height: 240,
+              marginLeft: 1,
+              marginTop: 3,
+              borderColor: "#ff944d",
+              borderRadius: 10,
+              borderWidth: 1.3
+            }}
+            image={{ uri: item.image }}
+            imageProps={{
+              borderRadius: 10
+            }}
+          >
 
-          <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
-            {item.title}
-          </Text>
+            <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
+              {item.title}
+            </Text>
 
-        </Card>
+          </Card>
         </TouchableOpacity>
       </View>
     );
+  }
+
+  deleteFromDB = () => {
+
+    var userId = firebase.auth().currentUser.uid;
+    let recipeState = this.state.recipeInfo.id;
+    let recipeRef = firebase.database().ref('/items/' + userId + '/fridge/recipes/')
+    recipeRef.on('child_added', snapshot => {
+      console.log(snapshot.key)
+    });
+    let recipeRef2 = recipeRef.child(snapshot.key);
+    console.log(recipeRef2)
+    // console.log(recipeRef)
+    // recipeRef.remove().then(() => {
+    //   Alert.alert('Recipe Deleted')
+    // }).catch((error) => {
+    //   Alert.alert(error.message)
+    // }).then(this.props.navigation.navigate('Home'));
+    // console.log(recipeState)
+
+      // recipeRef.child(snapshot.val()).remove().then(() => {
+      //   Alert.alert('Recipe was Deleted')
+      // }).catch((error) => {
+      //   Alert.alert(error.message)
+      // }).then(this.props.navigation.navigate('Home'))
   }
 
   keyExtractor = (item, index) => {
@@ -222,66 +248,66 @@ class HomeScreen extends React.Component {
         </ScrollView>
 
         <View>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-        >
-        <ScrollView style={{ marginTop: 5 }}>
-          <View>
-            <View style={{flexDirection:"row"}}>
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.modalVisible}
+          >
+            <ScrollView style={{ marginTop: 5 }}>
+              <View>
+                <View style={{ flexDirection: "row" }}>
 
-            <Icon                                     // CLOSE MODAL
-                containerStyle={{
-                  width: styles.device.width / 5,
-                  alignSelf:'center',
-                  marginTop: -150,
-                  marginLeft: -20
-                }}
-                size={40}
-                name='arrow-left'
-                type='material-community'
-                color='#ff944d'
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}
-            />
+                  <Icon                                     // CLOSE MODAL
+                    containerStyle={{
+                      width: styles.device.width / 5,
+                      alignSelf: 'center',
+                      marginTop: -150,
+                      marginLeft: -20
+                    }}
+                    size={40}
+                    name='arrow-left'
+                    type='material-community'
+                    color='#ff944d'
+                    onPress={() => {
+                      this.setModalVisible(!this.state.modalVisible);
+                    }}
+                  />
 
-              <Image
-                source={{ uri: this.state.recipeInfo.image }}
-                style={{ width: styles.device.width / 1.7, height: 200, alignSelf:'center', justifyContent:'center', marginTop: 20, marginLeft:20}}
-              />
+                  <Image
+                    source={{ uri: this.state.recipeInfo.image }}
+                    style={{ width: styles.device.width / 1.7, height: 200, alignSelf: 'center', justifyContent: 'center', marginTop: 20, marginLeft: 20 }}
+                  />
 
-            <Icon                                    // DELETE RECIPE
-                containerStyle={{
-                  width: styles.device.width / 5,
-                  alignSelf:'center',
-                  marginTop: -150,
-                  marginLeft: 15
-                }}
-                size={33}
-                name= 'delete-forever-outline'
-                type='material-community'
-                color='red'
-                // onPress={() => {
-                //   this.addRecipeToDB();
-                // }}
-            />
+                  <Icon                                    // DELETE RECIPE
+                    containerStyle={{
+                      width: styles.device.width / 5,
+                      alignSelf: 'center',
+                      marginTop: -150,
+                      marginLeft: 15
+                    }}
+                    size={33}
+                    name='delete-forever-outline'
+                    type='material-community'
+                    color='red'
+                    onPress={() => {
+                      this.deleteFromDB();
+                    }}
+                  />
 
-              
-            </View>
-            <View style={{ marginLeft: 22 }}>
-              <Text style={{ fontSize: 17, marginTop: 10, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
-              <Text style={{ fontSize: 17, marginBottom: 10,fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
-            </View>
-            <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>{this.state.recipeInfo.instructions}</Text>
 
-          </View>
-        </ScrollView>
-      </Modal>
+                </View>
+                <View style={{ marginLeft: 22 }}>
+                  <Text style={{ fontSize: 17, marginTop: 10, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                  <Text style={{ fontSize: 17, marginBottom: 10, fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+                </View>
+                <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>{this.state.recipeInfo.instructions}</Text>
+
+              </View>
+            </ScrollView>
+          </Modal>
         </View>
-      </View>
+      </View >
     );
   }
 }
