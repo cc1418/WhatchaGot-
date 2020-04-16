@@ -205,7 +205,7 @@ class SearchScreen extends React.Component {
     });
 
     alert(fridgePush)
-    firebase.database().ref().child('/items/' + userId + '/fridge').set({
+    firebase.database().ref().child('/items/' + userId + '/fridge/fridge').set({
       shelf: fridgePush
     });
   }
@@ -234,10 +234,10 @@ class SearchScreen extends React.Component {
           <TouchableOpacity
             key={item.id}
             onPress={() => this.deleteFromList(item.id)}>
-            <Text style={{ fontSize: 10, marginTop: -15, marginLeft: -5, marginRight: -20, color: 'grey'}}>
+            <Text style={{ fontSize: 10, marginTop: -15, marginLeft: 27, marginRight: -20, color: 'grey'}}>
               x
               </Text>
-            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, marginLeft: -20, marginRight: -20, alignSelf: "center", textTransform: 'capitalize' }}>
+            <Text index={item.id} style={{ fontSize: 13, marginTop: -2, marginLeft: -20, marginRight: -20, alignSelf: "center", textTransform: 'capitalize' }}>
               {item.name}
             </Text>
           </TouchableOpacity>
@@ -439,11 +439,11 @@ ${this.state.recipeInfo.sourceUrl}`
                 onTouchOutside={() => {
                   this.setState({ visible: false });
                 }}
-                dialogTitle={<DialogTitle title="What is Fridge" textStyle = {{fontSize: 15}}/>}
+                dialogTitle={<DialogTitle title="What is Fridge?" textStyle = {{fontSize: 15}}/>}
                 width = {styles.device.width / 1.4}
               >
                 <DialogContent>
-                  <Text style = {{marginTop: 10}}>Fridge stores your current list of ingredients as your default ingredients</Text>
+                  <Text style = {{marginTop: 10}}>Fridge stores your current list of ingredients as your default set of ingredients.</Text>
                 </DialogContent>
               </Dialog>
 

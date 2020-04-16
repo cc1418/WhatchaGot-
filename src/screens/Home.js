@@ -147,7 +147,7 @@ class HomeScreen extends React.Component {
               width: (styles.device.width) / 2.4,
               height: 240,
               marginLeft: 1,
-              marginTop: 3,
+              marginTop: 12,
               borderColor: "#ff944d",
               borderRadius: 10,
               borderWidth: 1.3

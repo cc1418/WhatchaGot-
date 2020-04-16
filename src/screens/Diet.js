@@ -14,6 +14,7 @@ class DietScreen extends React.Component {
       diet: '',
       data: [],
       user: [],
+      likes: [],
       recipeInfo: '',
       modalVisible: false,
       iconName: "heart-outline"
@@ -102,7 +103,7 @@ class DietScreen extends React.Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        //console.log(JSON.stringify(responseJson))
+        console.log(JSON.stringify(responseJson))
         this.state.recipeInfo = responseJson
         this.setModalVisible(!this.state.modalVisible)
         //alert(responseJson.image)
@@ -137,10 +138,7 @@ class DietScreen extends React.Component {
 
             <Text index={item.id} style={{ fontSize: 13, marginTop: 10, marginLeft: 2 }}>
               Likes: {item.likes}
-            </Text>
-
-            <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2 }}>
-              Missed Ingredients: {item.missedIngredientCount}
+              
             </Text>
 
           </Card>
