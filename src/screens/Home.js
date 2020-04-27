@@ -26,6 +26,8 @@ class HomeScreen extends React.Component {
 
   async componentDidMount() {
     await Font.loadAsync({
+      'Baskerville-bold': require('../../assets/fonts/LibreBaskerville-Bold.ttf'),
+      'Baskerville': require('../../assets/fonts/LibreBaskerville-Regular.ttf'),
       'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
       'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
       'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
@@ -143,7 +145,7 @@ class HomeScreen extends React.Component {
           <Card
             containerStyle={{
               width: (styles.device.width) / 2.4,
-              height: 240,
+              height: 215,
               marginLeft: 1,
               marginTop: 12,
               borderColor: "#ff944d",
@@ -156,7 +158,7 @@ class HomeScreen extends React.Component {
             }}
           >
 
-            <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
+            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, alignSelf: "center", fontFamily: 'Baskerville'}}>
               {item.title}
             </Text>
 
@@ -197,116 +199,122 @@ class HomeScreen extends React.Component {
 
   render() {
 
-    return (
-      <View
-        onStartShouldSetResponderCapture={() => {
-          this.setState({ enableScrollViewScroll: true });
-        }}>
-        <ScrollView
-          scrollEnabled={this.state.enableScrollViewScroll}
-        >
-          <View style={styles.homeContainer}>
-            <View>
-              <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
-              <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 35, marginLeft: 15, marginBottom: 30 }}>{this.state.name} !</Text>
-            </View>
+    const {fontLoaded} = this.state;
 
-            {/* <Button
-            buttonStyle={{
-              width: "45%",
-              alignSelf: 'center',
-              marginTop: 30,
-              backgroundColor: "#ff944d"
-            }}
-            titleStyle={{
-              fontSize: 19,
-            }}
-            title="Console Log Recipes"
-            onPress={() => this.debug()}  
-          /> */}
-
-            <View
-              style={{ marginTop: 15, marginLeft: 15 }}
-              onStartShouldSetResponderCapture={() => {
-                this.setState({ enableScrollViewScroll: true });
-              }}>
-              <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 20, marginLeft: 0, marginTop: 10, marginBottom: 10 }}>Stored Recipes: </Text>
-              <FlatList
-                contentContainerStyle={{ alignSelf: 'flex-start' }}
-                numColumns={2}
-                data={this.state.recipeList}
-                extradata={this.state.refresh}
-                scrollEnabled
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderRecipes}
-              />
-            </View>
-
-          </View>
-        </ScrollView>
-
+    if (fontLoaded) {
+      return (
         <View>
-          <Modal
-            animationType="slide"
-            transparent={false}
-            visible={this.state.modalVisible}
-          >
-            <ScrollView style={{ marginTop: 5 }}>
+          <ScrollView>
+            <View style={styles.homeContainer}>
               <View>
-                <View style={{ flexDirection: "row" }}>
-
-                  <Icon                                     // CLOSE MODAL
-                    containerStyle={{
-                      width: styles.device.width / 5,
-                      alignSelf: 'center',
-                      marginTop: -150,
-                      marginLeft: -20
-                    }}
-                    size={40}
-                    name='arrow-left'
-                    type='material-community'
-                    color='#ff944d'
-                    onPress={() => {
-                      this.setModalVisible(!this.state.modalVisible);
-                    }}
-                  />
-
-                  <Image
-                    source={{ uri: this.state.recipeInfo.image }}
-                    style={{ width: styles.device.width / 1.7, height: 200, alignSelf: 'center', justifyContent: 'center', marginTop: 20, marginLeft: 20 }}
-                  />
-
-                  <Icon                                    // DELETE RECIPE
-                    containerStyle={{
-                      width: styles.device.width / 5,
-                      alignSelf: 'center',
-                      marginTop: -150,
-                      marginLeft: 15
-                    }}
-                    size={33}
-                    name='delete-outline'
-                    type='material-community'
-                    color='red'
-                  // onPress={() => {
-                  //   this.addRecipeToDB();
-                  // }}
-                  />
-
-
-                </View>
-                <View style={{ marginLeft: 22 }}>
-                  <Text style={{ fontSize: 17, marginTop: 10, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
-                  <Text style={{ fontSize: 17, marginBottom: 10, fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
-                </View>
-                <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>{this.state.recipeInfo.instructions}</Text>
-
+                <Text style={{ fontFamily: "Baskerville-bold", fontSize: 27, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
+                <Text style={{ fontFamily: "Baskerville-bold", fontSize: 32, marginLeft: 15, marginBottom: 30 }}>{this.state.name} !</Text>
               </View>
-            </ScrollView>
-          </Modal>
+  
+              {/* <Button
+              buttonStyle={{
+                width: "45%",
+                alignSelf: 'center',
+                marginTop: 30,
+                backgroundColor: "#ff944d"
+              }}
+              titleStyle={{
+                fontSize: 19,
+              }}
+              title="Console Log Recipes"
+              onPress={() => this.debug()}  
+            /> */}
+  
+              <View
+                style={{ marginTop: 15, marginLeft: 15 }}
+                onStartShouldSetResponderCapture={() => {
+                  this.setState({ enableScrollViewScroll: true });
+                }}>
+                <Text style={{ fontFamily: "Baskerville-bold", fontSize: 20, marginLeft: 0, marginTop: 10, marginBottom: 10 }}>Stored Recipes: </Text>
+                <FlatList
+                  contentContainerStyle={{ alignSelf: 'flex-start' }}
+                  numColumns={2}
+                  data={this.state.recipeList}
+                  extradata={this.state.refresh}
+                  scrollEnabled
+                  keyExtractor={this.keyExtractor}
+                  renderItem={this.renderRecipes}
+                />
+              </View>
+  
+            </View>
+          </ScrollView>
+  
+          <View>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.modalVisible}
+            >
+              <ScrollView style={{ marginTop: 5 }}>
+                <View>
+                  <View style={{ flexDirection: "row" }}>
+  
+                    <Icon                                     // CLOSE MODAL
+                      containerStyle={{
+                        width: styles.device.width / 5,
+                        alignSelf: 'center',
+                        marginTop: -150,
+                        marginLeft: -20
+                      }}
+                      size={40}
+                      name='arrow-left'
+                      type='material-community'
+                      color='#ff944d'
+                      onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible);
+                      }}
+                    />
+  
+                    <Image
+                      source={{ uri: this.state.recipeInfo.image }}
+                      style={{ width: styles.device.width / 1.7, height: 200, alignSelf: 'center', justifyContent: 'center', marginTop: 20, marginLeft: 20 }}
+                    />
+  
+                    <Icon                                    // DELETE RECIPE
+                      containerStyle={{
+                        width: styles.device.width / 5,
+                        alignSelf: 'center',
+                        marginTop: -150,
+                        marginLeft: 15
+                      }}
+                      size={33}
+                      name='delete-outline'
+                      type='material-community'
+                      color='red'
+                    // onPress={() => {
+                    //   this.addRecipeToDB();
+                    // }}
+                    />
+  
+  
+                  </View>
+                  <View style={{alignItems:'center' }}>
+                    <Text style={{ fontSize: 17, marginTop: 10, fontFamily: 'Baskerville-bold'}}>{this.state.recipeInfo.title}</Text>
+                    <Text style={{ fontSize: 17, fontFamily: 'Baskerville-bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                    <Text style={{ fontSize: 17, marginBottom: 10, fontFamily: 'Baskerville-bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+                  </View>
+                  <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center', fontFamily: 'Baskerville', lineHeight: 25, fontSize: 14}}>{this.state.recipeInfo.instructions}</Text>
+  
+                </View>
+              </ScrollView>
+            </Modal>
+          </View>
+        </View >
+      );
+    }
+    else {
+      return (
+        <View style={styles.container}>
+            <Text>LOADING</Text>
         </View>
-      </View >
-    );
+      ) 
+    };
   }
 }
 
