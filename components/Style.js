@@ -114,8 +114,18 @@ const styles = StyleSheet.create({
     },
     logo2: {
       width: 100, 
-      height: 50,
-      marginLeft: 130,
+      height: 100,
+      borderRadius: 16
+      //marginLeft: 35,
+    },
+
+    logo3: {
+      width: 100, 
+      height: 100,
+      borderRadius: 16,
+      marginLeft: 30,
+      marginRight: 30,
+      //marginLeft: 35,
     },
   
     username: {

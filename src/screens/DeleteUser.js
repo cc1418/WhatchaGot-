@@ -31,19 +31,18 @@ export default class DeleteUserScreen extends React.Component {
                 style={{ 
                     color: 'red', 
                     fontSize: 30, 
-                    marginTop: 50, 
+                    marginTop: 250, 
                     marginLeft: 10, 
                     textAlign: 'center',
-
                     }}>
-                    ARE YOU SURE YOU WANT TO DELETE YOUR USER?
+                    ARE YOU SURE YOU WANT TO DELETE THIS USER?
                 </Text>
                 <Button
                     title='Delete User'
                     buttonStyle={{
                         width: "80%",
                         alignSelf: 'center',
-                        marginTop: 20,
+                        marginTop: 60,
                         marginBottom: 20,
                         backgroundColor: "red",
                     }}
@@ -53,7 +52,7 @@ export default class DeleteUserScreen extends React.Component {
                     onPress={() => {this.onDeletePress()}}
                 />
                 <Button
-                    title='Cancel'
+                    title='Back'
                     buttonStyle={{
                         width: "80%",
                         alignSelf: 'center',

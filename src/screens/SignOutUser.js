@@ -17,21 +17,20 @@ export default class SignOutUserScreen extends React.Component {
             <View>
                 <Text 
                 style={{ 
-                    color: 'red', 
+                    color: 'black', 
                     fontSize: 30, 
-                    marginTop: 50, 
+                    marginTop: 250, 
                     marginLeft: 10, 
                     textAlign: 'center',
-
                     }}>
-                    ARE YOU SURE YOU WANT TO SIGN OUT?
+                    You are signing out...
                 </Text>
                 <Button
-                    title='Sign Out'
+                    title='Continue'
                     buttonStyle={{
                         width: "80%",
                         alignSelf: 'center',
-                        marginTop: 20,
+                        marginTop: 50,
                         marginBottom: 20,
                         backgroundColor: "red",
                     }}
@@ -41,7 +40,7 @@ export default class SignOutUserScreen extends React.Component {
                     onPress={() => {this.signOut()}}
                 />
                 <Button
-                    title='Cancel'
+                    title='Return'
                     buttonStyle={{
                         width: "80%",
                         alignSelf: 'center',

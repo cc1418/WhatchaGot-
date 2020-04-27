@@ -17,6 +17,8 @@ export default class Profile extends React.Component {
 
     async componentDidMount() {
         await Font.loadAsync({
+            'Baskerville-bold': require('../../assets/fonts/LibreBaskerville-Bold.ttf'),
+            'Baskerville': require('../../assets/fonts/LibreBaskerville-Regular.ttf'),
             'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
             'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
             'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
@@ -144,6 +146,9 @@ export default class Profile extends React.Component {
                         onPress={this.toggleModal}
                     />
                     <Avatar
+                        containerStyle = {{
+                            marginTop: 200
+                        }}
                         size="xlarge"
                         rounded
                         showEditButton
@@ -152,7 +157,7 @@ export default class Profile extends React.Component {
                         onPress={() => this.props.navigation.navigate('PickPicture')}
                     />
 
-                    <Text style={{ fontSize: 22, fontWeight: 'bold' }} >{this.state.name}</Text>
+                    <Text style={{ fontSize: 19, fontFamily:'Baskerville-bold', marginTop: 10}} >{this.state.name}</Text>
                     {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
 
                 </View>
@@ -161,12 +166,13 @@ export default class Profile extends React.Component {
                     buttonStyle={{
                         width: "40%",
                         alignSelf: 'center',
-                        marginTop: 410,
+                        marginTop: 100,
                         backgroundColor: "#ff944d",
-
                     }}
                     titleStyle={{
                         fontSize: 18,
+                        fontFamily: 'open-sans',
+                        fontWeight: 'bold'
                     }}
                     icon={
                         <Icon
