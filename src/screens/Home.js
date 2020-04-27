@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, Image, TouchableOpacity, FlatList, ScrollView, Modal, Dimensions, Alert } from 'react-native';
-import { Button, Input, SearchBar, Card, Icon } from 'react-native-elements';
+import { Button, Input, SearchBar, Card, Icon, Avatar } from 'react-native-elements';
 import * as firebase from 'firebase'
 import styles from '../../components/Style';
 import * as Font from 'expo-font';
@@ -62,7 +62,9 @@ class HomeScreen extends React.Component {
       this.setState({ apiRun: true })
     })
     //alert("hello")
-
+    firebase.database().ref('profile/' + userId).on('value', snapshot => {
+      this.setState({ profile: snapshot.val().profilePicture })
+    })
 
   }
 
@@ -158,7 +160,7 @@ class HomeScreen extends React.Component {
             }}
           >
 
-            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, alignSelf: "center", fontFamily: 'Baskerville'}}>
+            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, alignSelf: "center", fontFamily: 'Baskerville' }}>
               {item.title}
             </Text>
 
@@ -199,7 +201,7 @@ class HomeScreen extends React.Component {
 
   render() {
 
-    const {fontLoaded} = this.state;
+    const { fontLoaded } = this.state;
 
     if (fontLoaded) {
       return (
@@ -209,8 +211,17 @@ class HomeScreen extends React.Component {
               <View>
                 <Text style={{ fontFamily: "Baskerville-bold", fontSize: 27, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
                 <Text style={{ fontFamily: "Baskerville-bold", fontSize: 32, marginLeft: 15, marginBottom: 30 }}>{this.state.name} !</Text>
+                <Avatar
+                  containerStyle={{
+                    marginTop: -10,
+                    alignSelf: 'center'
+                  }}
+                  rounded
+                  size="xlarge"
+                  source={{ uri: `${this.state.profile}` }}>
+                </Avatar>
               </View>
-  
+
               {/* <Button
               buttonStyle={{
                 width: "45%",
@@ -224,7 +235,7 @@ class HomeScreen extends React.Component {
               title="Console Log Recipes"
               onPress={() => this.debug()}  
             /> */}
-  
+
               <View
                 style={{ marginTop: 15, marginLeft: 15 }}
                 onStartShouldSetResponderCapture={() => {
@@ -241,10 +252,10 @@ class HomeScreen extends React.Component {
                   renderItem={this.renderRecipes}
                 />
               </View>
-  
+
             </View>
           </ScrollView>
-  
+
           <View>
             <Modal
               animationType="slide"
@@ -254,7 +265,7 @@ class HomeScreen extends React.Component {
               <ScrollView style={{ marginTop: 5 }}>
                 <View>
                   <View style={{ flexDirection: "row" }}>
-  
+
                     <Icon                                     // CLOSE MODAL
                       containerStyle={{
                         width: styles.device.width / 5,
@@ -270,12 +281,12 @@ class HomeScreen extends React.Component {
                         this.setModalVisible(!this.state.modalVisible);
                       }}
                     />
-  
+
                     <Image
                       source={{ uri: this.state.recipeInfo.image }}
                       style={{ width: styles.device.width / 1.7, height: 200, alignSelf: 'center', justifyContent: 'center', marginTop: 20, marginLeft: 20 }}
                     />
-  
+
                     <Icon                                    // DELETE RECIPE
                       containerStyle={{
                         width: styles.device.width / 5,
@@ -291,16 +302,16 @@ class HomeScreen extends React.Component {
                     //   this.addRecipeToDB();
                     // }}
                     />
-  
-  
+
+
                   </View>
-                  <View style={{alignItems:'center' }}>
-                    <Text style={{ fontSize: 17, marginTop: 10, fontFamily: 'Baskerville-bold'}}>{this.state.recipeInfo.title}</Text>
+                  <View style={{ alignItems: 'center' }}>
+                    <Text style={{ fontSize: 17, marginTop: 10, fontFamily: 'Baskerville-bold' }}>{this.state.recipeInfo.title}</Text>
                     <Text style={{ fontSize: 17, fontFamily: 'Baskerville-bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
                     <Text style={{ fontSize: 17, marginBottom: 10, fontFamily: 'Baskerville-bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
                   </View>
-                  <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center', fontFamily: 'Baskerville', lineHeight: 25, fontSize: 14}}>{this.state.recipeInfo.instructions}</Text>
-  
+                  <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center', fontFamily: 'Baskerville', lineHeight: 25, fontSize: 14 }}>{this.state.recipeInfo.instructions}</Text>
+
                 </View>
               </ScrollView>
             </Modal>
@@ -311,9 +322,9 @@ class HomeScreen extends React.Component {
     else {
       return (
         <View style={styles.container}>
-            <Text>LOADING</Text>
+          <Text>LOADING</Text>
         </View>
-      ) 
+      )
     };
   }
 }
