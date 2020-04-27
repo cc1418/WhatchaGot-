@@ -35,6 +35,7 @@ export default class Profile extends React.Component {
         newName: '',
         modalVisible: false,
         photos: [],
+        profile: [],
     }
 
     componentDidMount() {
@@ -42,6 +43,10 @@ export default class Profile extends React.Component {
         firebase.database().ref('users/' + userId).on('value', snapshot => {
             this.setState({ email: snapshot.val().email });
             this.setState({ name: snapshot.val().name });
+            
+        })
+        firebase.database().ref('profile/' + userId).on('value', snapshot => {
+            this.setState({ profile: snapshot.val().profilePicture})
         })
     }
 
@@ -152,12 +157,11 @@ export default class Profile extends React.Component {
                         color='#ff944d'
                         onPress={this.toggleModal}
                     />
-
                     <Avatar
                         size="xlarge"
                         rounded
                         showEditButton
-                        icon={{ name: 'user', type: 'font-awesome' }}
+                        source={{ uri: `${this.state.profile}`, }}
                         activeOpacity={0.7}
                         onPress={() => this.props.navigation.navigate('PickPicture')}
                     />

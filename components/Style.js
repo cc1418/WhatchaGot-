@@ -112,6 +112,11 @@ const styles = StyleSheet.create({
       width:220,
       height:220,
     },
+    logo2: {
+      width: 100, 
+      height: 50,
+      marginLeft: 130,
+    },
   
     username: {
       fontWeight: 'bold',
