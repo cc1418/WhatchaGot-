@@ -43,16 +43,11 @@ export default class Profile extends React.Component {
         firebase.database().ref('users/' + userId).on('value', snapshot => {
             this.setState({ email: snapshot.val().email });
             this.setState({ name: snapshot.val().name });
-            
+
         })
         firebase.database().ref('profile/' + userId).on('value', snapshot => {
-            this.setState({ profile: snapshot.val().profilePicture})
+            this.setState({ profile: snapshot.val().profilePicture })
         })
-    }
-
-    signOut = () => {
-        firebase.auth().signOut()
-            .then(this.props.navigation.navigate('Login'))
     }
 
     reauthenticate = (currentPassword) => {
@@ -63,7 +58,7 @@ export default class Profile extends React.Component {
     }
 
     handleChange = (e) => {
-        this.setState({currentPassword: e.target.value})
+        this.setState({ currentPassword: e.target.value })
     }
 
     onChangePasswordPress = () => {
@@ -112,27 +107,18 @@ export default class Profile extends React.Component {
         })
     }
 
-    onDeletePress = () => {
-        var user = firebase.auth().currentUser;
-        var userId = firebase.auth().currentUser.uid;
-        let userRef = firebase.database().ref('/users');
-        firebase.database().ref('users/' + userId).off('value');
-        this.reauthenticate(this.state.currentPassword).then(() => {
-            userRef.child(userId).remove().then(() => {
-                user.delete().then(() => {
-                    Alert.alert('User was Deleted')
-                }).catch((error) => {
-                    Alert.alert(error.massage)
-                }).then(this.props.navigation.navigate('Login'))
-            })
-        }).catch((error) => {
-            Alert.alert(error.message)
-        });
-    }
-
     state = {
         isModalVisible: false,
     };
+
+    onDeleteUser = () => {
+        this.reauthenticate(this.state.currentPassword).then(() => {
+            this.toggleModal();
+            this.props.navigation.navigate('DeleteUser');
+        }).catch((error) => {
+            Alert.alert(error.message);
+        })
+    }
 
     toggleModal = () => {
         this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -167,7 +153,7 @@ export default class Profile extends React.Component {
                     />
 
                     <Text style={{ fontSize: 22, fontWeight: 'bold' }} >{this.state.name}</Text>
-                        {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
+                    {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
 
                 </View>
 
@@ -191,7 +177,9 @@ export default class Profile extends React.Component {
                         />
                     }
                     title=' Sign Out'
-                    onPress={this.signOut}
+                    onPress={() => {
+                        this.props.navigation.navigate('SignOutUser')
+                    }}
                 />
 
                 <Modal
@@ -304,7 +292,7 @@ export default class Profile extends React.Component {
                             titleStyle={{
                                 fontSize: 13,
                             }}
-                            onPress={this.onDeletePress}
+                            onPress={() => this.onDeleteUser()}
                             disabled={!this.state.currentPassword}
                         />
 
