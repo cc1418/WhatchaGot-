@@ -59,8 +59,6 @@ class HomeScreen extends React.Component {
       //console.log(this.state.recipeId)
       this.setState({ apiRun: true })
     })
-
-
     //alert("hello")
 
 
@@ -186,11 +184,11 @@ class HomeScreen extends React.Component {
     // }).then(this.props.navigation.navigate('Home'));
     // console.log(recipeState)
 
-      // recipeRef.child(snapshot.val()).remove().then(() => {
-      //   Alert.alert('Recipe was Deleted')
-      // }).catch((error) => {
-      //   Alert.alert(error.message)
-      // }).then(this.props.navigation.navigate('Home'))
+    // recipeRef.child(snapshot.val()).remove().then(() => {
+    //   Alert.alert('Recipe was Deleted')
+    // }).catch((error) => {
+    //   Alert.alert(error.message)
+    // }).then(this.props.navigation.navigate('Home'))
   }
 
   keyExtractor = (item, index) => {
@@ -248,64 +246,64 @@ class HomeScreen extends React.Component {
         </ScrollView>
 
         <View>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-        >
-        <ScrollView style={{ marginTop: 5 }}>
-          <View>
-            <View style={{flexDirection:"row"}}>
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.modalVisible}
+          >
+            <ScrollView style={{ marginTop: 5 }}>
+              <View>
+                <View style={{ flexDirection: "row" }}>
 
-            <Icon                                     // CLOSE MODAL
-                containerStyle={{
-                  width: styles.device.width / 5,
-                  alignSelf:'center',
-                  marginTop: -150,
-                  marginLeft: -20
-                }}
-                size={40}
-                name='arrow-left'
-                type='material-community'
-                color='#ff944d'
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}
-            />
+                  <Icon                                     // CLOSE MODAL
+                    containerStyle={{
+                      width: styles.device.width / 5,
+                      alignSelf: 'center',
+                      marginTop: -150,
+                      marginLeft: -20
+                    }}
+                    size={40}
+                    name='arrow-left'
+                    type='material-community'
+                    color='#ff944d'
+                    onPress={() => {
+                      this.setModalVisible(!this.state.modalVisible);
+                    }}
+                  />
 
-              <Image
-                source={{ uri: this.state.recipeInfo.image }}
-                style={{ width: styles.device.width / 1.7, height: 200, alignSelf:'center', justifyContent:'center', marginTop: 20, marginLeft:20}}
-              />
+                  <Image
+                    source={{ uri: this.state.recipeInfo.image }}
+                    style={{ width: styles.device.width / 1.7, height: 200, alignSelf: 'center', justifyContent: 'center', marginTop: 20, marginLeft: 20 }}
+                  />
 
-            <Icon                                    // DELETE RECIPE
-                containerStyle={{
-                  width: styles.device.width / 5,
-                  alignSelf:'center',
-                  marginTop: -150,
-                  marginLeft: 15
-                }}
-                size={33}
-                name= 'delete-outline'
-                type='material-community'
-                color='red'
-                // onPress={() => {
-                //   this.addRecipeToDB();
-                // }}
-            />
+                  <Icon                                    // DELETE RECIPE
+                    containerStyle={{
+                      width: styles.device.width / 5,
+                      alignSelf: 'center',
+                      marginTop: -150,
+                      marginLeft: 15
+                    }}
+                    size={33}
+                    name='delete-outline'
+                    type='material-community'
+                    color='red'
+                  // onPress={() => {
+                  //   this.addRecipeToDB();
+                  // }}
+                  />
 
-              
-            </View>
-            <View style={{ marginLeft: 22 }}>
-              <Text style={{ fontSize: 17, marginTop: 10, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
-              <Text style={{ fontSize: 17, marginBottom: 10,fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
-            </View>
-            <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>{this.state.recipeInfo.instructions}</Text>
 
-          </View>
-        </ScrollView>
-      </Modal>
+                </View>
+                <View style={{ marginLeft: 22 }}>
+                  <Text style={{ fontSize: 17, marginTop: 10, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                  <Text style={{ fontSize: 17, marginBottom: 10, fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+                </View>
+                <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>{this.state.recipeInfo.instructions}</Text>
+
+              </View>
+            </ScrollView>
+          </Modal>
         </View>
       </View >
     );

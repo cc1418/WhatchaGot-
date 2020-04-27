@@ -17,7 +17,8 @@ import Profile from './src/screens/Profile'
 import AddItem from './src/screens/AddItem';
 import ListItem from './src/screens/ListItem';  
 import UploadScreen from './src/screens/Upload';
-import PickPictureScreen from './src/screens/PickPicture.js';
+import PickPictureScreen from './src/screens/PickPicture';
+import SignUpPickPictureScreen from './src/screens/SignUpPickPicture';
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
@@ -87,6 +88,7 @@ const ScreenNavigator = createStackNavigator(
     ListItem: ListItem,
     Upload: UploadScreen,
     PickPicture: PickPictureScreen, 
+    SignUpPickPicture: SignUpPickPictureScreen, 
   },
   {
     initialRouteName: 'Login',
