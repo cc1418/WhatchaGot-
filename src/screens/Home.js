@@ -20,12 +20,14 @@ class HomeScreen extends React.Component {
       name: [],
       email: [],
       user: userId,
-      recipeId: recipe,  //recipe IDs as they are in the user's database
+      recipeId: [],  //recipe IDs as they are in the user's database
       apiId: recipe,  //recipe IDs fetched to be displayed; initialized to same value as reipeId since recipes automatically fetched on load
       recipeList: [],  //recipes displayed on the home page
       recipeInfo: '',
       modalVisible: false,
     };
+
+    console.log(this.state.recipeList)
 
   }
 
@@ -60,10 +62,13 @@ class HomeScreen extends React.Component {
       //console.log("snapshot", snapshot.val())
       //console.log("key", snapshot.key)
       let recipeJson = snapshot.val();
-      Object.values(recipeJson).map((data) => {
-        recipe.push(data.ID)
-      })
-      
+
+      if(recipeJson != null) {
+        Object.values(recipeJson).map((data) => {
+          recipe.push(data.ID)
+        })
+      }
+
       console.log(recipe)
       this.setRecipes(recipe)
       recipe = []
@@ -85,13 +90,23 @@ class HomeScreen extends React.Component {
   getInitialRecipes(userId) {  //returns an array of stored ids based on user's id
     let recipe = []
 
-    firebase.database().ref('items/' + userId + '/fridge/recipes/').orderByKey().on('child_added', snapshot => {
+    firebase.database().ref('items/' + userId + '/fridge/recipes/').orderByKey().on('value', snapshot => {
       //console.log("snapshot", snapshot.val())
       //console.log("key", snapshot.key)
       let recipeJson = snapshot.val();
-      recipe.push(Object.values(recipeJson)[0])
+
+      if(recipeJson != null) {
+        Object.values(recipeJson).map((data) => {
+          recipe.push(data.ID)
+        })
+      } else {
+        console.log("empty")
+      }
+      //let recipeJson = snapshot.val();
+      //console.log("Initial", recipeJson)
+      //recipe.push(Object.values(recipeJson)[0])
     })
-    console.log("first")
+    console.log(recipe)
     return recipe;
   };
 
@@ -101,7 +116,12 @@ class HomeScreen extends React.Component {
 
   setRecipes(idArray) {
     //console.log(idArray)
-    this.fetchRecipes(idArray);
+    if(idArray.length > 0){
+      console.log("running")
+      this.fetchRecipes(idArray);
+    }
+    
+
   }
 
   fetchRecipes(idArray) {
@@ -231,6 +251,14 @@ class HomeScreen extends React.Component {
     return index.toString();
   }
 
+  _listEmptyComponent = () => {
+    return (
+        <View>
+            // any activity indicator or error component
+        </View>
+    )
+}
+
   render() {
 
     const { fontLoaded } = this.state;
@@ -279,16 +307,18 @@ class HomeScreen extends React.Component {
                   this.setState({ enableScrollViewScroll: true });
                 }}>
                 <Text style={{ fontFamily: "Baskerville-bold", fontSize: 20, marginLeft: 0, marginTop: 10, marginBottom: 10 }}>Stored Recipes: </Text>
+                
                 <FlatList
                   contentContainerStyle={{ alignSelf: 'flex-start' }}
                   numColumns={2}
                   data={this.state.recipeList}
+                  ListEmptyComponent = {this.ListEmpty}
                   extradata={this.state.refresh}
                   scrollEnabled
                   keyExtractor={this.keyExtractor}
                   renderItem={this.renderRecipes}
-                  ListEmptyComponent = {this.ListEmpty}
                 />
+
               </View>
 
             </View>
