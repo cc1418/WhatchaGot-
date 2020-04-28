@@ -298,147 +298,170 @@ export default class SignUpPickPictureScreen extends Component {
 
     render() {
         return (
-            <View>
-                <TouchableOpacity
-                    onPress={() => this.changeApples()}>
-                    <Image
-                        source={{ uri: `${this.state.apples}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => this.changeAsparagus()}>
-                    <Image
-                        source={{ uri: `${this.state.asparagus}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+            <View style = {{
+                flex: 1,
+                alignItems: 'center'
+            }}>
+                <View style = {{flex: 1, flexDirection: 'row', marginTop: 50, alignContent: 'center'}}>
+                    <TouchableOpacity
+                        onPress={() => this.changeApples()}>
+                        <Image
+                            source={{ uri: `${this.state.apples}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.changeAsparagus()}>
+                        <Image
+                            source={{ uri: `${this.state.asparagus}` }}
+                            style={styles.logo3}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeBananas()}>
-                    <Image
-                        source={{ uri: `${this.state.bananas}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.bananas}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                </View>
+
+                <View style = {{flex: 1, flexDirection: 'row'}}>
+                    <TouchableOpacity
                     onPress={() => this.changeBlueberries()}>
-                    <Image
-                        source={{ uri: `${this.state.blueberries}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.blueberries}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeBroccoli()}>
-                    <Image
-                        source={{ uri: `${this.state.broccoli}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.broccoli}` }}
+                            style={styles.logo3}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeCabbage()}>
-                    <Image
-                        source={{ uri: `${this.state.cabbage}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.cabbage}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                </View>
+
+                <View style = {{flex: 1, flexDirection: 'row'}}>
+                    <TouchableOpacity
                     onPress={() => this.changeCherries()}>
-                    <Image
-                        source={{ uri: `${this.state.cherries}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.cherries}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeCorn()}>
-                    <Image
-                        source={{ uri: `${this.state.corn}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.corn}` }}
+                            style={styles.logo3}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeCucumber()}>
-                    <Image
-                        source={{ uri: `${this.state.cucumber}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.cucumber}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                </View>
+
+                <View style = {{flex: 1, flexDirection: 'row'}}>
+                    <TouchableOpacity
                     onPress={() => this.changeDates()}>
-                    <Image
-                        source={{ uri: `${this.state.dates}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.dates}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeGinger()}>
-                    <Image
-                        source={{ uri: `${this.state.ginger}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.ginger}` }}
+                            style={styles.logo3}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeGrapes()}>
-                    <Image
-                        source={{ uri: `${this.state.grapes}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.grapes}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                </View>
+
+                <View style = {{flex: 1, flexDirection: 'row' }}>
+                    <TouchableOpacity
                     onPress={() => this.changeKiwis()}>
-                    <Image
-                        source={{ uri: `${this.state.kiwis}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.kiwis}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeMushroom()}>
-                    <Image
-                        source={{ uri: `${this.state.mushroom}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.mushroom}` }}
+                            style={styles.logo3}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeOranges()}>
-                    <Image
-                        source={{ uri: `${this.state.oranges}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.oranges}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                </View>
+
+                <View style = {{flex: 1, flexDirection: 'row' }}>
+                    <TouchableOpacity
                     onPress={() => this.changePeas()}>
-                    <Image
-                        source={{ uri: `${this.state.peas}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.peas}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeRaspberries()}>
-                    <Image
-                        source={{ uri: `${this.state.raspberries}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
-                <TouchableOpacity
+                        <Image
+                            source={{ uri: `${this.state.raspberries}` }}
+                            style={styles.logo3}>
+                        </Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                     onPress={() => this.changeSpinach()}>
-                    <Image
-                        source={{ uri: `${this.state.spinach}` }}
-                        style={styles.logo2}>
-                    </Image>
-                </TouchableOpacity>
+                        <Image
+                            source={{ uri: `${this.state.spinach}` }}
+                            style={styles.logo2}>
+                        </Image>
+                    </TouchableOpacity>
+                </View>
+
+                <View style = {{flex: 1, flexDirection: 'row' }}>
                 <TouchableOpacity
-                    onPress={() => this.changeStrawberries()}>
+                onPress={() => this.changeStrawberries()}>
                     <Image
                         source={{ uri: `${this.state.strawberries}` }}
                         style={styles.logo2}>
                     </Image>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => this.changeTomatoes()}>
+                onPress={() => this.changeTomatoes()}>
                     <Image
                         source={{ uri: `${this.state.tomatoes}` }}
-                        style={styles.logo2}>
+                        style={styles.logo3}>
                     </Image>
                 </TouchableOpacity>
+                </View>
             </View>
         )
     }
