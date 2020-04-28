@@ -183,7 +183,6 @@ class HomeScreen extends React.Component {
               borderRadius: 10
             }}
           >
-
             <Text index={item.id} style={{ fontSize: 13, marginTop: -5, alignSelf: "center", fontFamily: 'Baskerville' }}>
               {item.title}
             </Text>
@@ -219,6 +218,15 @@ class HomeScreen extends React.Component {
     // }).then(this.props.navigation.navigate('Home'))
   }
 
+  ListEmpty = () => {
+    return (
+      //View to show when list is empty
+      <View style={styles.MainContainer}>
+        <Text style={{ textAlign: 'center' }}>No recipe stored...</Text>
+      </View>
+    );
+  };
+
   keyExtractor = (item, index) => {
     return index.toString();
   }
@@ -233,17 +241,22 @@ class HomeScreen extends React.Component {
           <ScrollView>
             <View style={styles.homeContainer}>
               <View>
-                <Text style={{ fontFamily: "Baskerville-bold", fontSize: 27, marginLeft: 15, marginTop: 50 }}>Welcome Back,</Text>
-                <Text style={{ fontFamily: "Baskerville-bold", fontSize: 32, marginLeft: 15, marginBottom: 30 }}>{this.state.name} !</Text>
-                <Avatar
-                  containerStyle={{
-                    marginTop: -10,
-                    alignSelf: 'center'
-                  }}
-                  rounded
-                  size="xlarge"
-                  source={{ uri: `${this.state.profile}` }}>
-                </Avatar>
+                <View style = {{flex: 1, flexDirection: 'row' }}>
+                  <Text style={{ fontFamily: "Baskerville-bold", fontSize: 27, marginLeft: 15, marginTop: 60 }}>Welcome Back,</Text>
+                  <Avatar
+                    containerStyle={{
+                      marginTop: 30,
+                      marginLeft: 20,
+                      marginBottom: -20,
+                      alignSelf: 'center',
+
+                    }}
+                    rounded
+                    size="large"
+                    source={{ uri: `${this.state.profile}` }}>
+                  </Avatar>
+                </View>
+                <Text style={{ fontFamily: "Baskerville-bold", fontSize: 32, marginLeft: 15, marginBottom: 30, marginTop: 10}}>{this.state.name} !</Text>
               </View>
 
               {/* <Button
@@ -274,6 +287,7 @@ class HomeScreen extends React.Component {
                   scrollEnabled
                   keyExtractor={this.keyExtractor}
                   renderItem={this.renderRecipes}
+                  ListEmptyComponent = {this.ListEmpty}
                 />
               </View>
 
