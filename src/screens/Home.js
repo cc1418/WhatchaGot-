@@ -66,6 +66,10 @@ class HomeScreen extends React.Component {
 
   }
 
+  refreshRecipes() {
+    
+  }
+
   componentDidUpdate() {
     console.log(this.state.apiRun)
     if (this.state.apiRun === true && this.state.recipeTrue === false) {
