@@ -43,7 +43,7 @@ class HomeScreen extends React.Component {
 
   }
 
-  async componentWillMount() {
+  componentWillMount() {
 
     firebase.database().ref('users/' + this.state.user).on('value', snapshot => {
       this.setState({ email: snapshot.val().email });
