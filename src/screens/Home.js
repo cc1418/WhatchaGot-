@@ -10,18 +10,23 @@ class HomeScreen extends React.Component {
 
   constructor() {
     super();
+
+    var userId = firebase.auth().currentUser.uid;
+    let recipe;
+    recipe = this.getInitialRecipes(userId);
+
     this.state = {
       fontLoaded: false,
       name: [],
       email: [],
-      user: [],
-      recipeList: [],
-      recipeId: [],
+      user: userId,
+      recipeId: recipe,  //recipe IDs as they are in the user's database
+      apiId: recipe,  //recipe IDs fetched to be displayed; initialized to same value as reipeId since recipes automatically fetched on load
+      recipeList: [],  //recipes displayed on the home page
       recipeInfo: '',
-      apiRun: false,
-      recipeTrue: false,
       modalVisible: false,
     };
+
   }
 
   async componentDidMount() {
@@ -38,76 +43,91 @@ class HomeScreen extends React.Component {
 
   }
 
-  componentWillMount() {
-    var userId = firebase.auth().currentUser.uid;
-    this.setState({ user: userId })
+  async componentWillMount() {
 
-    //console.log(userId)
-    firebase.database().ref('users/' + userId).on('value', snapshot => {
+    firebase.database().ref('users/' + this.state.user).on('value', snapshot => {
       this.setState({ email: snapshot.val().email });
       this.setState({ name: snapshot.val().name });
     })
 
-    firebase.database().ref('items/' + userId + '/fridge/recipes/').orderByKey().on('child_added', snapshot => {
-      console.log("snapshot", snapshot.val())
-      console.log("key", snapshot.key)
-      let recipeJson = snapshot.val();
-      console.log("==================================================================================================");
-      //console.log(Object.values(recipeJson)[0])
-
-      //let numRecipes = (Object.keys(recipeJson).length)
-      //console.log(Object.values(recipeJson))
-      this.state.recipeId.push(Object.values(recipeJson)[0])
-      //console.log(this.state.recipeId)
-      this.setState({ apiRun: true })
-    })
-    //alert("hello")
-    firebase.database().ref('profile/' + userId).on('value', snapshot => {
+    firebase.database().ref('profile/' + this.state.user ).on('value', snapshot => {
       this.setState({ profile: snapshot.val().profilePicture })
     })
 
-  }
-
-  refreshRecipes() {
-    
-  }
-
-  componentDidUpdate() {
-    console.log(this.state.apiRun)
-    if (this.state.apiRun === true && this.state.recipeTrue === false) {
-
-      //console.log("success")
-      let apiId = this.state.recipeId.join(",")
-      //console.log(this.state.recipeId)
-      let apiCall = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId)
-      //console.log(apiCall)
-      //alert("hello2")
-
-      fetch(apiCall, {
-        "method": "GET",
-        "headers": {
-          "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-          "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
-        }
+    let recipe = [];
+    let i = 0;
+    firebase.database().ref('items/' + this.state.user + '/fridge/recipes/').orderByKey().on('value', snapshot => {
+      //console.log("snapshot", snapshot.val())
+      //console.log("key", snapshot.key)
+      let recipeJson = snapshot.val();
+      Object.values(recipeJson).map((data) => {
+        recipe.push(data.ID)
       })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          //console.log(responseJson)
-          //alert("hello3")
-          this.setState({ recipeList: responseJson })
-          this.setState({ recipeTrue: true })
-          console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-          //console.log(this.state.recipeList)
-          //console.log("goodbye")
-        })
-        .catch(err => {
-          this.setState({ recipeList: [] })
-          alert("error")
-        });
-    }
+      
+      console.log(recipe)
+      this.setRecipes(recipe)
+      recipe = []
+      return;
+      //console.log(Object.values(recipeJson)[i].ID)
+      //recipe.push(Object.values(recipeJson)[0]);
+      //this.setRecipes(recipe)
+    })
+
+    
+
+    // window.setInterval(() => {
+    //   this.setRecipes;
+    //  }, 4000);
+  }
+
+
+
+  getInitialRecipes(userId) {  //returns an array of stored ids based on user's id
+    let recipe = []
+
+    firebase.database().ref('items/' + userId + '/fridge/recipes/').orderByKey().on('child_added', snapshot => {
+      //console.log("snapshot", snapshot.val())
+      //console.log("key", snapshot.key)
+      let recipeJson = snapshot.val();
+      recipe.push(Object.values(recipeJson)[0])
+    })
+    console.log("first")
+    return recipe;
+  };
+
+  compareRecipeIds() {
 
   }
 
+  setRecipes(idArray) {
+    //console.log(idArray)
+    this.fetchRecipes(idArray);
+  }
+
+  fetchRecipes(idArray) {
+    console.log("repeating")
+    let apiId = idArray.join(",")
+    let apiCall = ("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/informationBulk?ids=" + apiId)
+
+    fetch(apiCall, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "x-rapidapi-key": "f7edf2ef0dmsh3fd3127a79e6f9dp1f017bjsn56de39cdf5b6"
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //console.log(responseJson)
+        this.setState({ recipeList: responseJson })  //<<<<<-------------------------------------------------------------------
+        console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        //console.log(this.state.recipeList)
+      })
+      .catch(err => {
+        this.setState({ recipeList: [] })
+        alert("error")
+      });
+  }
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });

@@ -46,9 +46,9 @@ class SearchScreen extends React.Component {
     let newId = 0
     let obj
     let newFridge = []
-    firebase.database().ref('items/' + userId + '/fridge/shelf/').once('value')
+    firebase.database().ref('items/' + userId + '/fridge/fridge/shelf/').once('value')
       .then(snapshot => {
-       // console.log("snapshot", snapshot.val())
+        console.log("snapshot", snapshot.val())
         fridge = snapshot.val()
 
         fridge.map((element) => {
@@ -64,6 +64,10 @@ class SearchScreen extends React.Component {
       }).catch(function (error) {
         return
       })
+    
+    firebase.database().ref('items/' + this.state.user + '/fridge/recipes/').orderByKey().on('value', snapshot => {
+
+    })
   }
 
   searchByIngredient() {  //Function for creating the api call to spoonacular and fetching the call
@@ -112,7 +116,7 @@ class SearchScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({ data: responseJson })
-        console.log(this.state.data)
+        //console.log(this.state.data)
         //alert(responseJson[0].title)  //Debugging: make sure recipes come through
       });
 
@@ -219,7 +223,7 @@ class SearchScreen extends React.Component {
       fridgePush.push(item.name);
     });
 
-    alert(fridgePush)
+    alert("List Stored!")
     firebase.database().ref().child('/items/' + userId + '/fridge/fridge').set({
       shelf: fridgePush
     });
