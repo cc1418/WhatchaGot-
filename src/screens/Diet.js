@@ -11,9 +11,10 @@ class DietScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      fontLoaded: false,
       diet: '',
       data: [],
-      user: [],
+      user: [], 
       likes: [],
       recipeInfo: '',
       modalVisible: false,
@@ -23,6 +24,8 @@ class DietScreen extends React.Component {
 
   async componentDidMount() { //Loads the users existing 
     await Font.loadAsync({
+      'Baskerville-bold': require('../../assets/fonts/LibreBaskerville-Bold.ttf'),
+      'Baskerville': require('../../assets/fonts/LibreBaskerville-Regular.ttf'),
       'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
       'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
       'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
@@ -119,7 +122,7 @@ class DietScreen extends React.Component {
           <Card
             containerStyle={{
               width: (styles.device.width) / 2.4,
-              height: 275,
+              height: 235,
               marginBottom: 5,
               marginTop: 7,
               borderColor: "#ff944d",
@@ -132,13 +135,8 @@ class DietScreen extends React.Component {
             }}
           >
 
-            <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
+            <Text index={item.id} style={{ fontSize: 13, marginTop: -5, alignSelf: "center", fontFamily: 'Baskerville'}}>
               {item.title}
-            </Text>
-
-            <Text index={item.id} style={{ fontSize: 13, marginTop: 10, marginLeft: 2 }}>
-              Likes: {item.likes}
-              
             </Text>
 
           </Card>
@@ -157,9 +155,9 @@ class DietScreen extends React.Component {
     return (
       <View style={{ flex: 1, marginTop: 50 }}>
         <ScrollView>
-          <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 33, marginLeft: 20}}> Search Diet recipes </Text>
+          <Text style={{ fontFamily: "Baskerville-bold", fontSize: 28, marginLeft: 20}}> Search Diet recipes </Text>
           <View style = {{flex: 1, flexDirection: 'row'}}>
-            <Text style={{ fontFamily: "Raleway-semibold-i", fontSize: 33, marginLeft: 20}}> for</Text>
+            <Text style={{ fontFamily: "Baskerville-bold", fontSize: 28, marginLeft: 20, lineHeight: 47}}> for</Text>
             <Picker selectedValue={this.state.diet} onValueChange={this.updateDiet}
               style={{
                 height: styles.device.height / 16,
@@ -167,10 +165,10 @@ class DietScreen extends React.Component {
                 marginLeft: styles.device.width / 18,
                 marginBottom: -5,
                 transform: [{ scaleX: 1.25 }, { scaleY: 1.25 }],
-                fontFamily: "Raleway-semibold-i"
+                fontFamily: "Baskerville-bold"
               }}
               itemStyle = {{
-                fontFamily: "Raleway-semibold-i"
+                fontFamily: "Baskerville-bold"
               }}
               
               // font family change doesn't work on Android because it only supports IOS as this point
@@ -245,13 +243,15 @@ class DietScreen extends React.Component {
             renderItem={this.renderRecipes}
           />
         </View>
+      </ScrollView>
 
-        <View style={{ marginTop: 5 }}>
+      <View style={{ marginTop: 5 }}>
           <Modal
             animationType="slide"
             transparent={false}
             visible={this.state.modalVisible}
           >
+            <ScrollView style={{ marginTop: 5 }}>
               <View>
                 <View style={{ flexDirection: "row" }}>
 
@@ -296,17 +296,18 @@ class DietScreen extends React.Component {
 
 
                 </View>
-                <View style={{ marginLeft: 22 }}>
-                  <Text style={{ fontSize: 17, marginTop: 10, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
-                  <Text style={{ fontSize: 17, marginBottom: 10, fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+                <View style={{alignItems:'center' }}>
+                  <Text style={{ fontSize: 17, marginTop: 10, fontFamily: 'Baskerville-bold'}}>{this.state.recipeInfo.title}</Text>
+                  <Text style={{ fontSize: 17, fontFamily: 'Baskerville-bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                  <Text style={{ fontSize: 17, marginBottom: 10, fontFamily: 'Baskerville-bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
                 </View>
-                <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>{this.state.recipeInfo.instructions}</Text>
+                <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center', fontFamily: 'Baskerville', lineHeight: 25, fontSize: 14}}>{this.state.recipeInfo.instructions}</Text>
 
               </View>
+            </ScrollView>
           </Modal>
         </View>
-      </ScrollView>
+
       </View>
     );
   }

@@ -13,6 +13,7 @@ class SearchScreen extends React.Component {
     super(props);
     this.state = {
       open: false,
+      fontLoaded: false,
       isLoading: false,
       value: '',               //initialize state to hold user search entry
       ingredients: [],         //initialize empty array in state to hold user input
@@ -23,6 +24,20 @@ class SearchScreen extends React.Component {
 
       //enableScrollViewScroll: true,
     };
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Baskerville-bold': require('../../assets/fonts/LibreBaskerville-Bold.ttf'),
+      'Baskerville': require('../../assets/fonts/LibreBaskerville-Regular.ttf'),
+      'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
+      'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
+      'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
+      'open-sans': require('../../assets/fonts/OpenSans-Regular.ttf'),
+    });
+
+    this.setState({ fontLoaded: true });
+
   }
 
   componentDidMount() { //Loads the users existing 
@@ -234,10 +249,10 @@ class SearchScreen extends React.Component {
           <TouchableOpacity
             key={item.id}
             onPress={() => this.deleteFromList(item.id)}>
-            <Text style={{ fontSize: 10, marginTop: -15, marginLeft: 27, marginRight: -20, color: 'grey'}}>
+            <Text style={{ fontSize: 10, marginTop: -15, marginLeft: 0, marginRight: -15, marginBottom: -3 ,color: 'grey', fontFamily: 'open-sans'}}>
               x
               </Text>
-            <Text index={item.id} style={{ fontSize: 13, marginTop: -2, marginLeft: -20, marginRight: -20, alignSelf: "center", textTransform: 'capitalize' }}>
+            <Text index={item.id} style={{ fontSize: 13, marginTop: -1, marginLeft: -20, marginRight: -20, alignSelf: "center", textTransform: 'capitalize',  fontFamily: 'Baskerville'}}>
               {item.name}
             </Text>
           </TouchableOpacity>
@@ -299,15 +314,15 @@ class SearchScreen extends React.Component {
             }}
           >
 
-            <Text index={item.id} style={{ fontSize: 15, marginTop: -5, alignSelf: "center" }}>
+            <Text index={item.id} style={{ fontSize: 14, marginTop: -5, alignSelf: "center", fontFamily: 'Baskerville'}}>
               {item.title}
             </Text>
 
-            <Text index={item.id} style={{ fontSize: 13, marginTop: 10, marginLeft: 2 }}>
+            <Text index={item.id} style={{ fontSize: 12, marginTop: 10, marginLeft: 2, fontFamily: 'Baskerville'}}>
               Likes: {item.likes}
             </Text>
 
-            <Text index={item.id} style={{ fontSize: 13, marginTop: 2, marginLeft: 2 }}>
+            <Text index={item.id} style={{ fontSize: 12, marginTop: 2, marginLeft: 2, fontFamily: 'Baskerville'}}>
               Missed Ingredients: {item.missedIngredientCount}
             </Text>
 
@@ -350,7 +365,7 @@ ${this.state.recipeInfo.sourceUrl}`
           <View>
             <SearchBar
               ref={search => this.search = search}
-              inputStyle={{ backgroundColor: 'white' }}
+              inputStyle={{ backgroundColor: 'white', fontFamily: 'open-sans'}}
               containerStyle={{
                 backgroundColor: 'white',
                 borderWidth: 0.7,
@@ -390,7 +405,8 @@ ${this.state.recipeInfo.sourceUrl}`
                 borderRadius: 10
               }}
               titleStyle={{
-                fontSize: 18,
+                fontSize: 16,
+                fontFamily: 'Baskerville-bold',
               }}
               title="Add Item"
               disabled={(!this.state.value.length && this.state.ingredients == 0 ? true : false)}
@@ -408,7 +424,8 @@ ${this.state.recipeInfo.sourceUrl}`
                   marginLeft: 27
                 }}
                 titleStyle={{
-                  fontSize: 17,
+                  fontSize: 16,
+                  fontFamily: 'Baskerville-bold',
                 }}
                 // style = {{
                 //   justifyContent:'center',
@@ -439,13 +456,13 @@ ${this.state.recipeInfo.sourceUrl}`
                 onTouchOutside={() => {
                   this.setState({ visible: false });
                 }}
-                dialogTitle={<DialogTitle title="What is Fridge?" textStyle = {{fontSize: 15}}/>}
+                dialogTitle={<DialogTitle title="What is Fridge?" textStyle = {{fontSize: 15, fontFamily: 'Baskerville-bold'}}/>}
                 width = {styles.device.width / 1.4}
               >
                 <DialogContent>
-                  <Text style = {{marginTop: 10}}>Fridge stores your current list of ingredients as your default set of ingredients.</Text>
+                  <Text style = {{marginTop: 10,  fontFamily: 'Baskerville'}}>Fridge stores your current list of ingredients as your default set of ingredients.</Text>
                 </DialogContent>
-              </Dialog>
+            </Dialog>
 
             <Button       //Call searchByIngredient function
               buttonStyle={{
@@ -456,7 +473,8 @@ ${this.state.recipeInfo.sourceUrl}`
                 borderRadius: 10
               }}
               titleStyle={{
-                fontSize: 18,
+                fontSize: 16,
+                fontFamily: 'Baskerville-bold',
               }}
               title="Search"
               disabled={(this.state.ingredients.length == 0 ? true : false)}
@@ -531,15 +549,14 @@ ${this.state.recipeInfo.sourceUrl}`
                     { iconName: "heart" })
                 }}
             />
-
               
             </View>
-            <View style={{ marginLeft: 22 }}>
-              <Text style={{ fontSize: 17, marginTop: 10, fontWeight: 'bold' }}>{this.state.recipeInfo.title}</Text>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
-              <Text style={{ fontSize: 17, marginBottom: 10,fontWeight: 'bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
-            </View>
-            <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center' }}>{this.state.recipeInfo.instructions}</Text>
+              <View style={{alignItems:'center' }}>
+                <Text style={{ fontSize: 17, marginTop: 10, fontFamily: 'Baskerville-bold'}}>{this.state.recipeInfo.title}</Text>
+                <Text style={{ fontSize: 17, fontFamily: 'Baskerville-bold' }}>Number of Servings: {this.state.recipeInfo.servings}</Text>
+                <Text style={{ fontSize: 17, marginBottom: 10, fontFamily: 'Baskerville-bold' }}>Ready in: {this.state.recipeInfo.readyInMinutes} minutes</Text>
+              </View>
+            <Text style={{ width: styles.device.width / 1.1, alignSelf: 'center', fontFamily: 'Baskerville', lineHeight: 25, fontSize: 14}}>{this.state.recipeInfo.instructions}</Text>
 
           </View>
         </ScrollView>

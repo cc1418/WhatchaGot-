@@ -11,7 +11,9 @@ class SignUpScreen extends React.Component {
   state = {
     name: '',
     email: '',
-    password: ''
+    password: '',
+    avatar: [],
+    profilePicture: [],
   }
 
   handleSignUp = () => {
@@ -24,8 +26,8 @@ class SignUpScreen extends React.Component {
             name: name,
             email: email
           }).then(() => {
-            this.props.navigation.navigate('Login');
-            Alert.alert('User Created Successfully. Please Login.')
+            this.props.navigation.navigate('SignUpPickPicture');
+            Alert.alert('User Created Successfully. Please Pick A Profile Picture.')
           })
         }).catch(error => {
           alert(error.message);

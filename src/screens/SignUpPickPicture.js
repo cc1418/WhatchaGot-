@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Input, Button, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Input, Button, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import * as firebase from 'firebase';
 import { Card } from 'react-native-elements';
 import styles from '../../components/Style';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
-export default class PickPictureScreen extends Component {
+
+
+export default class SignUpPickPictureScreen extends Component {
 
     state = {
         apples: [],
@@ -118,308 +120,325 @@ export default class PickPictureScreen extends Component {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.apples
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeAsparagus() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.asparagus
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeBananas() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.bananas
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeBlueberries() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.blueberries
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeBroccoli() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.broccoli
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeCabbage() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.cabbage
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeCherries() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.cherries
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeCorn() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.corn
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeCucumber() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.cucumber
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeDates() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.dates
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeGinger() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.ginger
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeGrapes() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.grapes
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeKiwis() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.kiwis
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeMushroom() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.mushroom
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeOranges() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.oranges
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changePeas() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.peas
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeRaspberries() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.raspberries
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeSpinach() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.spinach
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeStrawberries() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.strawberries
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     changeTomatoes() {
         var userId = firebase.auth().currentUser.uid;
         firebase.database().ref('/profile/' + userId).set({
             profilePicture: this.state.tomatoes
-        }).then(() => this.props.navigation.navigate('Profile'))
+        }).then(Alert.alert('Profile Picture Selection Successful. Please Login.'))
+
+            .then(() => this.props.navigation.navigate('Login'))
     }
 
     render() {
         return (
-            <View style = {{
-                flex: 1,
-                alignItems: 'center'
-            }}>
-                <View style = {{flex: 1, flexDirection: 'row', marginTop: 50, alignContent: 'center'}}>
-                    <TouchableOpacity
-                        onPress={() => this.changeApples()}>
-                        <Image
-                            source={{ uri: `${this.state.apples}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.changeAsparagus()}>
-                        <Image
-                            source={{ uri: `${this.state.asparagus}` }}
-                            style={styles.logo3}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeBananas()}>
-                        <Image
-                            source={{ uri: `${this.state.bananas}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                </View>
-
-                <View style = {{flex: 1, flexDirection: 'row'}}>
-                    <TouchableOpacity
-                    onPress={() => this.changeBlueberries()}>
-                        <Image
-                            source={{ uri: `${this.state.blueberries}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeBroccoli()}>
-                        <Image
-                            source={{ uri: `${this.state.broccoli}` }}
-                            style={styles.logo3}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeCabbage()}>
-                        <Image
-                            source={{ uri: `${this.state.cabbage}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                </View>
-
-                <View style = {{flex: 1, flexDirection: 'row'}}>
-                    <TouchableOpacity
-                    onPress={() => this.changeCherries()}>
-                        <Image
-                            source={{ uri: `${this.state.cherries}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeCorn()}>
-                        <Image
-                            source={{ uri: `${this.state.corn}` }}
-                            style={styles.logo3}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeCucumber()}>
-                        <Image
-                            source={{ uri: `${this.state.cucumber}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                </View>
-
-                <View style = {{flex: 1, flexDirection: 'row'}}>
-                    <TouchableOpacity
-                    onPress={() => this.changeDates()}>
-                        <Image
-                            source={{ uri: `${this.state.dates}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeGinger()}>
-                        <Image
-                            source={{ uri: `${this.state.ginger}` }}
-                            style={styles.logo3}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeGrapes()}>
-                        <Image
-                            source={{ uri: `${this.state.grapes}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                </View>
-
-                <View style = {{flex: 1, flexDirection: 'row' }}>
-                    <TouchableOpacity
-                    onPress={() => this.changeKiwis()}>
-                        <Image
-                            source={{ uri: `${this.state.kiwis}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeMushroom()}>
-                        <Image
-                            source={{ uri: `${this.state.mushroom}` }}
-                            style={styles.logo3}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeOranges()}>
-                        <Image
-                            source={{ uri: `${this.state.oranges}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                </View>
-
-                <View style = {{flex: 1, flexDirection: 'row' }}>
-                    <TouchableOpacity
-                    onPress={() => this.changePeas()}>
-                        <Image
-                            source={{ uri: `${this.state.peas}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeRaspberries()}>
-                        <Image
-                            source={{ uri: `${this.state.raspberries}` }}
-                            style={styles.logo3}>
-                        </Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    onPress={() => this.changeSpinach()}>
-                        <Image
-                            source={{ uri: `${this.state.spinach}` }}
-                            style={styles.logo2}>
-                        </Image>
-                    </TouchableOpacity>
-                </View>
-
-                <View style = {{flex: 1, flexDirection: 'row' }}>
+            <View>
                 <TouchableOpacity
-                onPress={() => this.changeStrawberries()}>
+                    onPress={() => this.changeApples()}>
+                    <Image
+                        source={{ uri: `${this.state.apples}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeAsparagus()}>
+                    <Image
+                        source={{ uri: `${this.state.asparagus}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeBananas()}>
+                    <Image
+                        source={{ uri: `${this.state.bananas}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeBlueberries()}>
+                    <Image
+                        source={{ uri: `${this.state.blueberries}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeBroccoli()}>
+                    <Image
+                        source={{ uri: `${this.state.broccoli}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeCabbage()}>
+                    <Image
+                        source={{ uri: `${this.state.cabbage}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeCherries()}>
+                    <Image
+                        source={{ uri: `${this.state.cherries}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeCorn()}>
+                    <Image
+                        source={{ uri: `${this.state.corn}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeCucumber()}>
+                    <Image
+                        source={{ uri: `${this.state.cucumber}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeDates()}>
+                    <Image
+                        source={{ uri: `${this.state.dates}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeGinger()}>
+                    <Image
+                        source={{ uri: `${this.state.ginger}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeGrapes()}>
+                    <Image
+                        source={{ uri: `${this.state.grapes}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeKiwis()}>
+                    <Image
+                        source={{ uri: `${this.state.kiwis}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeMushroom()}>
+                    <Image
+                        source={{ uri: `${this.state.mushroom}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeOranges()}>
+                    <Image
+                        source={{ uri: `${this.state.oranges}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changePeas()}>
+                    <Image
+                        source={{ uri: `${this.state.peas}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeRaspberries()}>
+                    <Image
+                        source={{ uri: `${this.state.raspberries}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeSpinach()}>
+                    <Image
+                        source={{ uri: `${this.state.spinach}` }}
+                        style={styles.logo2}>
+                    </Image>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.changeStrawberries()}>
                     <Image
                         source={{ uri: `${this.state.strawberries}` }}
                         style={styles.logo2}>
                     </Image>
                 </TouchableOpacity>
                 <TouchableOpacity
-                onPress={() => this.changeTomatoes()}>
+                    onPress={() => this.changeTomatoes()}>
                     <Image
                         source={{ uri: `${this.state.tomatoes}` }}
-                        style={styles.logo3}>
+                        style={styles.logo2}>
                     </Image>
                 </TouchableOpacity>
-                </View>
             </View>
         )
     }
