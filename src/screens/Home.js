@@ -12,8 +12,6 @@ class HomeScreen extends React.Component {
     super();
 
     var userId = firebase.auth().currentUser.uid;
-    let recipe;
-    recipe = this.getInitialRecipes(userId);
 
     this.state = {
       fontLoaded: false,
@@ -21,27 +19,13 @@ class HomeScreen extends React.Component {
       email: [],
       user: userId,
       recipeId: [],  //recipe IDs as they are in the user's database
-      apiId: recipe,  //recipe IDs fetched to be displayed; initialized to same value as reipeId since recipes automatically fetched on load
+      apiId: [],  //recipe IDs fetched to be displayed; initialized to same value as reipeId since recipes automatically fetched on load
       recipeList: [],  //recipes displayed on the home page
       recipeInfo: '',
       modalVisible: false,
     };
 
-    console.log(this.state.recipeList)
-
-  }
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      'Baskerville-bold': require('../../assets/fonts/LibreBaskerville-Bold.ttf'),
-      'Baskerville': require('../../assets/fonts/LibreBaskerville-Regular.ttf'),
-      'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
-      'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
-      'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
-      'open-sans': require('../../assets/fonts/OpenSans-Regular.ttf'),
-    });
-
-    this.setState({ fontLoaded: true });
+    
 
   }
 
@@ -54,64 +38,62 @@ class HomeScreen extends React.Component {
 
     firebase.database().ref('profile/' + this.state.user ).on('value', snapshot => {
       this.setState({ profile: snapshot.val().profilePicture })
-    })
+    })   
 
+  }
+
+  async componentDidMount() {
     let recipe = [];
-    let i = 0;
+    let i = 0
     firebase.database().ref('items/' + this.state.user + '/fridge/recipes/').orderByKey().on('value', snapshot => {
       //console.log("snapshot", snapshot.val())
       //console.log("key", snapshot.key)
       let recipeJson = snapshot.val();
 
-      if(recipeJson != null) {
-        Object.values(recipeJson).map((data) => {
-          recipe.push(data.ID)
-        })
+      if(recipeJson == undefined) {
+        console.log("no recipes")
+        return;
+      } else {
+        console.log("why")
+        recipe = this.createRecipeList(recipeJson);
+        this.setRecipes(recipe);
+        this.setState({recipeId: recipe});
+        console.log("firebase", recipe);
       }
 
-      console.log(recipe)
-      this.setRecipes(recipe)
-      recipe = []
+      
+      
+      recipe = [];
       return;
       //console.log(Object.values(recipeJson)[i].ID)
       //recipe.push(Object.values(recipeJson)[0]);
       //this.setRecipes(recipe)
     })
 
-    
+    await Font.loadAsync({
+      'Baskerville-bold': require('../../assets/fonts/LibreBaskerville-Bold.ttf'),
+      'Baskerville': require('../../assets/fonts/LibreBaskerville-Regular.ttf'),
+      'sriracha': require('../../assets/fonts/Sriracha-Regular.ttf'),
+      'montserrat-bold': require('../../assets/fonts/Montserrat-Bold.ttf'),
+      'Raleway-semibold-i': require('../../assets/fonts/Raleway-SemiBoldItalic.ttf'),
+      'open-sans': require('../../assets/fonts/OpenSans-Regular.ttf'),
+    });
 
-    // window.setInterval(() => {
-    //   this.setRecipes;
-    //  }, 4000);
+    this.setState({ fontLoaded: true }); 
+
+    // firebase.database().ref('/items/' + this.state.user + '/fridge/recipes/')
+
   }
 
-
-
-  getInitialRecipes(userId) {  //returns an array of stored ids based on user's id
-    let recipe = []
-
-    firebase.database().ref('items/' + userId + '/fridge/recipes/').orderByKey().on('value', snapshot => {
-      //console.log("snapshot", snapshot.val())
-      //console.log("key", snapshot.key)
-      let recipeJson = snapshot.val();
-
-      if(recipeJson != null) {
-        Object.values(recipeJson).map((data) => {
-          recipe.push(data.ID)
-        })
-      } else {
-        console.log("empty")
-      }
-      //let recipeJson = snapshot.val();
-      //console.log("Initial", recipeJson)
-      //recipe.push(Object.values(recipeJson)[0])
-    })
+  createRecipeList(json) {
+    let recipe = [];
+    if (json == undefined) return recipe;
+    Object.values(json).map((data) => {
+      console.log("success");
+      recipe.push(data.ID);
+    });
     console.log(recipe)
     return recipe;
-  };
-
-  compareRecipeIds() {
-
   }
 
   setRecipes(idArray) {
@@ -121,7 +103,6 @@ class HomeScreen extends React.Component {
       this.fetchRecipes(idArray);
     }
     
-
   }
 
   fetchRecipes(idArray) {
@@ -140,6 +121,7 @@ class HomeScreen extends React.Component {
       .then((responseJson) => {
         //console.log(responseJson)
         this.setState({ recipeList: responseJson })  //<<<<<-------------------------------------------------------------------
+        //console.log(JSON.stringify(responseJson))
         console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         //console.log(this.state.recipeList)
       })
@@ -172,7 +154,7 @@ class HomeScreen extends React.Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(JSON.stringify(responseJson))
+        //console.log(JSON.stringify(responseJson))
         this.state.recipeInfo = responseJson
         this.setModalVisible(!this.state.modalVisible)
         //alert(responseJson.image)
@@ -215,27 +197,32 @@ class HomeScreen extends React.Component {
 
   deleteFromDB = () => {
 
-    var userId = firebase.auth().currentUser.uid;
     let recipeState = this.state.recipeInfo.id;
-    let recipeRef = firebase.database().ref('/items/' + userId + '/fridge/recipes/')
-    recipeRef.on('child_added', snapshot => {
-      console.log(snapshot.key)
-    });
-    let recipeRef2 = recipeRef.child(snapshot.key);
-    console.log(recipeRef2)
-    // console.log(recipeRef)
-    // recipeRef.remove().then(() => {
-    //   Alert.alert('Recipe Deleted')
-    // }).catch((error) => {
-    //   Alert.alert(error.message)
-    // }).then(this.props.navigation.navigate('Home'));
-    // console.log(recipeState)
+    //console.log(recipeState)
+    let recipeRef
+    let targetObjectKey
+    firebase.database().ref('/items/' + this.state.user + '/fridge/recipes/').once('value', snapshot => {
+      let recipeJson = snapshot.val();
+      //console.log(Object.keys(recipeJson))
+      //console.log(Object.values(recipeJson))
+      console.log("delete")
 
-    // recipeRef.child(snapshot.val()).remove().then(() => {
-    //   Alert.alert('Recipe was Deleted')
-    // }).catch((error) => {
-    //   Alert.alert(error.message)
-    // }).then(this.props.navigation.navigate('Home'))
+      let i = 0;
+      
+      Object.values(recipeJson).map((data) => {   // Identify recipe key
+        if (data.ID == recipeState){
+          targetObjectKey = Object.keys(recipeJson)[i]
+        } else {
+          i++
+        }
+      })
+
+    });
+
+    //console.log(targetObjectKey)
+
+    firebase.database().ref('/items/' + this.state.user + '/fridge/recipes/' + targetObjectKey).remove()
+    this.setState({recipeList: []})
   }
 
   ListEmpty = () => {
@@ -366,9 +353,9 @@ class HomeScreen extends React.Component {
                       name='delete-outline'
                       type='material-community'
                       color='red'
-                    // onPress={() => {
-                    //   this.addRecipeToDB();
-                    // }}
+                    onPress={() => {
+                      this.deleteFromDB(), this.setModalVisible(!this.state.modalVisible);
+                    }}
                     />
 
 

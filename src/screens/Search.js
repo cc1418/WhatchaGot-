@@ -289,7 +289,7 @@ class SearchScreen extends React.Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(JSON.stringify(responseJson))
+        //console.log(JSON.stringify(responseJson))
         this.state.recipeInfo = responseJson
         this.setModalVisible(!this.state.modalVisible)
         //alert(responseJson.image)
