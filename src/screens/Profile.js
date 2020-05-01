@@ -145,9 +145,21 @@ export default class Profile extends React.Component {
                         color='#ff944d'
                         onPress={this.toggleModal}
                     />
+                    <Icon
+                        containerStyle={{
+                            alignSelf: 'flex-end',
+                            marginRight: 15,
+                            marginTop: 50,
+                        }}
+                        name="logout-variant"
+                        type='material-community'
+                        size={40}
+                        color='#ff944d'
+                        onPress={() => this.props.navigation.navigate('SignOutUser')}
+                    />
                     <Avatar
                         containerStyle = {{
-                            marginTop: 200
+                            marginTop: 160
                         }}
                         size="xlarge"
                         rounded
@@ -161,32 +173,6 @@ export default class Profile extends React.Component {
                     {/* <Text style = {{fontSize: 20}} >{this.state.email}</Text> */}
 
                 </View>
-
-                <Button                                                 // SIGN OUT
-                    buttonStyle={{
-                        width: "40%",
-                        alignSelf: 'center',
-                        marginTop: 100,
-                        backgroundColor: "#ff944d",
-                    }}
-                    titleStyle={{
-                        fontSize: 18,
-                        fontFamily: 'open-sans',
-                        fontWeight: 'bold'
-                    }}
-                    icon={
-                        <Icon
-                            name="logout-variant"
-                            type='material-community'
-                            size={24}
-                            color='white'
-                        />
-                    }
-                    title=' Sign Out'
-                    onPress={() => {
-                        this.props.navigation.navigate('SignOutUser')
-                    }}
-                />
 
                 <Modal
                     isVisible={this.state.isModalVisible}
